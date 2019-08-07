@@ -5,6 +5,11 @@ namespace Fluent.UI.Controls
 {
     internal class ButtonExtension : ControlExtension<Button, ButtonExtension>
     {
+        public ButtonExtension()
+        {
+
+        }
+
         internal override void ChangeVisualState(bool useTransitions = true)
         {
             string visualState;
@@ -29,6 +34,7 @@ namespace Fluent.UI.Controls
         }
 
         internal override void OnPointerPressed(object sender, MouseButtonEventArgs args) => ChangeVisualState();
+
         internal override void OnPointerOver(object sender, MouseEventArgs args) => ChangeVisualState();
     }
 }
