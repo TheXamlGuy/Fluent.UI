@@ -50,7 +50,7 @@
   <ItemGroup>
     <Compile Include="Button\ButtonExtension.cs" />
     <Compile Include="CheckBox\CheckBoxExtension.cs" />
-    <Compile Include="Class1.cs" />
+    <Compile Include="DependencyPropertyObserver.cs" />
     <Compile Include="VisualStates.cs" />
     <Compile Include="ContentDialog\ContentDialog.cs" />
     <Compile Include="ContentDialog\ContentDialogButton.cs" />
