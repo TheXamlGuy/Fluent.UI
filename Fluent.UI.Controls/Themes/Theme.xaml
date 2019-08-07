@@ -5,12 +5,8 @@
         <ResourceDictionary Source="pack://application:,,,/Fluent.UI.Controls;component/Button/Button.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Fluent.UI.Controls;component/TextBox/TextBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Fluent.UI.Controls;component/PasswordBox/PasswordBox.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/Fluent.UI.Controls;component/DataView/DataView.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/Fluent.UI.Controls;component/DatePicker/DatePicker.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Fluent.UI.Controls;component/CheckBox/CheckBox.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/Fluent.UI.Controls;component/ComboBox/ComboBox1.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Fluent.UI.Controls;component/ToolTip/ToolTip.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/Fluent.UI.Controls;component/HeaderedContentControl/HeaderedContentControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Fluent.UI.Controls;component/Frame/Frame.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

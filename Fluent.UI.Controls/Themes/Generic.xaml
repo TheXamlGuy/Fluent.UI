@@ -1,28 +1,3 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/Fluent.UI.Controls;component/ApplicationView/ApplicationView.xaml" />
-        <ResourceDictionary Source="/Fluent.UI.Controls;component/SplitVIew/SplitVIew.xaml" />
-        <ResourceDictionary Source="/Fluent.UI.Controls;component/NavigationView/NavigationView.xaml" />
-        <ResourceDictionary Source="/Fluent.UI.Controls;component/AppBar/AppBar.xaml" />
-        <ResourceDictionary Source="/Fluent.UI.Controls;component/FontIcon/FontIcon.xaml" />
-        <ResourceDictionary Source="/Fluent.UI.Controls;component/PathIcon/PathIcon.xaml" />
-        <ResourceDictionary Source="/Fluent.UI.Controls;component/ContentDialog/ContentDialog.xaml" />
-        <ResourceDictionary Source="/Fluent.UI.Controls;component/DataView/DataView.xaml" />
-        <ResourceDictionary Source="/Fluent.UI.Controls;component/SearchBox/SearchBox.xaml" />
-        <ResourceDictionary Source="/Fluent.UI.Controls;component/Flyout/Flyout.xaml" />
-        <ResourceDictionary Source="/Fluent.UI.Controls;component/MenuFlyout/MenuFlyout.xaml" />
-        <ResourceDictionary Source="/Fluent.UI.Controls;component/LoadingContent/LoadingContent.xaml" />
-        <ResourceDictionary Source="/Fluent.UI.Controls;component/ProgressRing/ProgressRing.xaml" />
-        <ResourceDictionary Source="/Fluent.UI.Controls;component/NotificationFlyout/NotificationFlyout.xaml" />
-        <ResourceDictionary Source="/Fluent.UI.Controls;component/TimePicker/TimePicker.xaml" />
-        <ResourceDictionary Source="/Fluent.UI.Controls;component/CommandBar/CommandBar.xaml" />
-        <ResourceDictionary Source="/Fluent.UI.Controls;component/NavigationViewCommandBar/NavigationViewCommandBar.xaml" />
-        <ResourceDictionary Source="/Fluent.UI.Controls;component/NavigationHeader/NavigationHeader.xaml" />
-        <ResourceDictionary Source="/Fluent.UI.Controls;component/HeaderedTextBlock/HeaderedTextBlock.xaml" />
-        <ResourceDictionary Source="/Fluent.UI.Controls;component/ContentTile/ContentTile.xaml" />
-        <ResourceDictionary Source="/Fluent.UI.Controls;component/RadialProgressBar/RadialProgressBar.xaml" />
-        <ResourceDictionary Source="/Fluent.UI.Controls;component/LoopingSelector/LoopingSelector.xaml" />
-        <ResourceDictionary Source="/Fluent.UI.Controls;component/ContentFrame/ContentFrame.xaml" />
-        <ResourceDictionary Source="/Fluent.UI.Controls;component/ContentPage/ContentPage.xaml" />
-    </ResourceDictionary.MergedDictionaries>
+    <ResourceDictionary.MergedDictionaries />
 </ResourceDictionary>

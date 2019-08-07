@@ -48,20 +48,8 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppBar\AppBar.cs" />
-    <Compile Include="AppBar\AppBarButton.cs" />
-    <Compile Include="AppBar\AppBarToggleButton.cs" />
-    <Compile Include="ApplicationView\ApplicationView.cs" />
-    <Compile Include="ApplicationView\ApplicationViewBackButtonVisibility.cs" />
-    <Compile Include="ApplicationView\ApplicationViewBackRequestedEventArgs.cs" />
-    <Compile Include="ApplicationView\ApplicationViewButton.cs" />
     <Compile Include="Button\ButtonExtension.cs" />
     <Compile Include="CheckBox\CheckBoxExtension.cs" />
-    <Compile Include="ComboBox\ComboBoxExtension.cs" />
-    <Compile Include="ComboBox\ComboBoxFlyoutPresenter.cs" />
-    <Compile Include="ComboBox\ComboBoxItemExtension.cs" />
-    <Compile Include="CommandBar\CommandBar.cs" />
-    <Compile Include="CommandBar\ICommandBarElement.cs" />
     <Compile Include="VisualStates.cs" />
     <Compile Include="ContentDialog\ContentDialog.cs" />
     <Compile Include="ContentDialog\ContentDialogButton.cs" />
@@ -73,64 +61,14 @@
     <Compile Include="ContentDialog\ContentDialogOpenedEventArgs.cs" />
     <Compile Include="ContentDialog\ContentDialogOpeningEventArgs.cs" />
     <Compile Include="ContentDialog\ContentDialogResult.cs" />
-    <Compile Include="ContentFrame\ContentFrame.cs" />
-    <Compile Include="ContentFrame\NavigatedEventHandler.cs" />
-    <Compile Include="ContentFrame\NavigatingCancelEventArgs.cs" />
-    <Compile Include="ContentFrame\NavigatingCancelEventHandler.cs" />
-    <Compile Include="ContentFrame\NavigationEventArgs.cs" />
-    <Compile Include="ContentFrame\PageStackEntry.cs" />
-    <Compile Include="ContentPage\ContentPage.cs" />
     <Compile Include="ContentPresenter\ContentPresenterEx.cs" />
-    <Compile Include="ContentTileView\ContentTitleView.cs" />
-    <Compile Include="ContentTile\ContentTile.cs" />
     <Compile Include="Control\ControlExtension.cs" />
-    <Compile Include="Converters\TimeSpanToDateTimeConverter.cs" />
-    <Compile Include="DatePicker\DatePickerExtension.cs" />
-    <Compile Include="DatePicker\DatePickerFlyoutPresenter.cs" />
-    <Compile Include="DatePicker\DatePickerItem.cs" />
-    <Compile Include="DatePicker\DayDataSource.cs" />
-    <Compile Include="DatePicker\MonthDataSource.cs" />
-    <Compile Include="DatePicker\YearDataSource.cs" />
-    <Compile Include="Events\ItemClickEventArgs.cs" />
-    <Compile Include="Events\ItemClickEventHandler.cs" />
-    <Compile Include="Events\ItemDoubleClickEventArgs.cs" />
-    <Compile Include="Events\ItemDoubleClickEventHandler.cs" />
-    <Compile Include="Flyout\Flyout.cs" />
-    <Compile Include="Flyout\FlyoutBase.cs" />
-    <Compile Include="Flyout\FlyoutBaseClosingEventArgs.cs" />
-    <Compile Include="Flyout\FlyoutPlacementMode.cs" />
-    <Compile Include="Flyout\FlyoutPresenter.cs" />
     <Compile Include="FontIcon\FontIcon.cs" />
-    <Compile Include="HeaderedTextBlock\HeaderedTextBlock.cs" />
     <Compile Include="IconElement\IconElement.cs" />
     <Compile Include="ListBox\ListBoxItemExtension.cs" />
     <Compile Include="ListView\ListViewItemExtension.cs" />
-    <Compile Include="LoadingContent\LoadingContent.cs" />
-    <Compile Include="LoopingSelector\LoopingSelector.cs" />
-    <Compile Include="LoopingSelector\LoopingSelectorItem.cs" />
-    <Compile Include="LoopingSelector\LoopingSelectorPanel.cs" />
-    <Compile Include="MenuFlyout\MenuFlyout.cs" />
-    <Compile Include="MenuFlyout\MenuFlyoutItem.cs" />
-    <Compile Include="MenuFlyout\MenuFlyoutItemBase.cs" />
-    <Compile Include="MenuFlyout\MenuFlyoutPresenter.cs" />
-    <Compile Include="NavigationHeader\NavigationHeader.cs" />
-    <Compile Include="NavigationHeader\NavigationHeaderItem.cs" />
-    <Compile Include="NavigationHeader\NavigationHeaderItemInvokedEventArgs.cs" />
-    <Compile Include="NavigationHeader\NavigationHeaderList.cs" />
-    <Compile Include="NavigationHeader\NavigationHeaderSelectionChangedEventArgs.cs" />
-    <Compile Include="NavigationViewCommandBar\NavigationViewCommandBar.cs" />
-    <Compile Include="NavigationViewHeader\NavigationViewHeader.cs" />
-    <Compile Include="NavigationView\NavigationView.cs" />
-    <Compile Include="NavigationView\NavigationViewItem.cs" />
-    <Compile Include="NavigationView\NavigationViewItemInvokedEventArgs.cs" />
-    <Compile Include="NavigationView\NavigationViewList.cs" />
-    <Compile Include="NavigationView\NavigationViewSelectionChangedEventArgs.cs" />
-    <Compile Include="NotificationFlyout\NotificationFlyout.cs" />
-    <Compile Include="NotificationFlyout\NotificationFlyoutPresenter.cs" />
     <Compile Include="PasswordBox\PasswordBoxExtension.cs" />
     <Compile Include="PathIcon\PathIcon.cs" />
-    <Compile Include="PopupRoot\PopupRoot.cs" />
-    <Compile Include="ProgressRing\ProgressRing.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -144,36 +82,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="RadialProgressBar\RadialProgressBar.cs" />
-    <Compile Include="RelativePanel\RelativePanel.cs" />
-    <Compile Include="ResponsivePanel\BreakPoints.cs" />
-    <Compile Include="ResponsivePanel\BreakPointsTypeConverter.cs" />
-    <Compile Include="ResponsivePanel\ResponsivePanel.cs" />
-    <Compile Include="SearchBox\SearchBox.cs" />
-    <Compile Include="SearchBox\SearchBoxQueryClearedEventArgs.cs" />
-    <Compile Include="SearchBox\SearchBoxQuerySubmittedEventArgs.cs" />
-    <Compile Include="SplitView\LightDismissOverlayMode.cs" />
-    <Compile Include="SplitView\SplitView.cs" />
-    <Compile Include="SplitView\SplitViewDisplayMode.cs" />
-    <Compile Include="SplitView\SplitViewPaneClosingEventArgs.cs" />
-    <Compile Include="SplitView\SplitViewPanePlacement.cs" />
-    <Compile Include="SplitView\SplitViewTemplateSettings.cs" />
-    <Compile Include="StateTrigger\AdaptiveTrigger.cs" />
-    <Compile Include="StateTrigger\CompareStateTrigger.cs" />
-    <Compile Include="StateTrigger\Comparison.cs" />
-    <Compile Include="StateTrigger\EqualsStateTrigger.cs" />
-    <Compile Include="StateTrigger\StateTrigger.cs" />
-    <Compile Include="StateTrigger\StateTriggerBase.cs" />
-    <Compile Include="StateTrigger\VisualStateManagerHook.cs" />
-    <Compile Include="StateTrigger\VisualStateTrigger.cs" />
     <Compile Include="TextBox\TextBoxExtension.cs" />
-    <Compile Include="TimePicker\AmPmDataSource.cs" />
-    <Compile Include="TimePicker\MinuteDataSource.cs" />
-    <Compile Include="TimePicker\TimePicker.cs" />
-    <Compile Include="TimePicker\TimePickerFlyoutPresenter.cs" />
-    <Compile Include="TimePicker\TimePickerItem.cs" />
-    <Compile Include="TimePicker\TwelveHourDataSource.cs" />
-    <Compile Include="TimePicker\TwentyFourHourDataSource.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -184,14 +93,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="AppBar\AppBar.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ApplicationView\ApplicationView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Button\Button.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -200,35 +101,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ComboBox\ComboBox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="CommandBar\CommandBar.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="ContentDialog\ContentDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ContentFrame\ContentFrame.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ContentPage\ContentPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ContentTile\ContentTile.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="DatePicker\DatePicker.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Flyout\Flyout.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -240,14 +113,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="HeaderedContentControl\HeaderedContentControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="HeaderedTextBlock\HeaderedTextBlock.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="ListBox\ListBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -256,55 +121,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="LoadingContent\LoadingContent.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="LoopingSelector\LoopingSelector.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MenuFlyout\MenuFlyout.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="NavigationHeader\NavigationHeader.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="NavigationViewCommandBar\NavigationViewCommandBar.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="NavigationView\NavigationView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="NotificationFlyout\NotificationFlyout.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="PasswordBox\PasswordBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="PathIcon\PathIcon.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ProgressRing\ProgressRing.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="RadialProgressBar\RadialProgressBar.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="SearchBox\SearchBox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="SplitView\SplitView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -321,10 +142,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\ThemeResources.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="TimePicker\TimePicker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

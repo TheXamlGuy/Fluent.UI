@@ -254,10 +254,6 @@
                                                 TextBlock.FontFamily="{StaticResource ContentControlThemeFontFamily}"
                                                 TextBlock.FontSize="{StaticResource ControlContentThemeFontSize}"
                                                 TextBlock.Foreground="{TemplateBinding Foreground}" />
-                                            <ContentControl
-                                                Grid.Row="1"
-                                                Content="{TemplateBinding Loader}"
-                                                IsTabStop="False" />
                                         </Grid>
                                     </ScrollViewer>
                                     <Grid

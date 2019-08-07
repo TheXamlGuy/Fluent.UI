@@ -17,11 +17,6 @@ namespace Fluent.UI.Controls
                 typeof(Brush), typeof(ContentDialog),
                 new PropertyMetadata(null));
 
-        public static readonly DependencyProperty LoaderProperty =
-            DependencyProperty.Register(nameof(Loader),
-                typeof(LoadingContent), typeof(ContentDialog),
-                new PropertyMetadata(null));
-
         public static DependencyProperty CloseButtonCommandParameterProperty =
             DependencyProperty.Register(nameof(CloseButtonCommandParameter),
                 typeof(object), typeof(ContentDialog),
@@ -190,12 +185,6 @@ namespace Fluent.UI.Controls
         {
             get => (bool)GetValue(IsSecondaryButtonEnabledProperty);
             set => SetValue(IsSecondaryButtonEnabledProperty, value);
-        }
-
-        public LoadingContent Loader
-        {
-            get => (LoadingContent)GetValue(LoaderProperty);
-            set => SetValue(LoaderProperty, value);
         }
 
         public ICommand PrimaryButtonCommand
@@ -531,32 +520,32 @@ namespace Fluent.UI.Controls
 
         private void PrepareContentDialog()
         {
-            var applicationView = Application.Current.MainWindow as ApplicationView;
-            if (applicationView != null && !applicationView.IsLoaded)
-            {
-                applicationView.Loaded -= OnApplicationViewLoaded;
-                applicationView.Loaded += OnApplicationViewLoaded;
-                return;
-            }
+            //var applicationView = Application.Current.MainWindow as ApplicationView;
+            //if (applicationView != null && !applicationView.IsLoaded)
+            //{
+            //    applicationView.Loaded -= OnApplicationViewLoaded;
+            //    applicationView.Loaded += OnApplicationViewLoaded;
+            //    return;
+            //}
 
-            if (applicationView.FindDescendantByName("PopupRoot") is PopupRoot popupRoot)
-            {
-                if (_isTemplateApplied)
-                {
-                    if (GetTemplateChild("LayoutRoot") is Grid layoutRoot)
-                    {
-                        if (GetTemplateChild("Container") is Border container)
-                        {
-                            container.Child = null;
-                            popupRoot.Children.Add(layoutRoot);
-                        }
-                    }
-                }
-                else
-                {
-                    popupRoot.Children.Add(this);
-                }
-            }
+            //if (applicationView.FindDescendantByName("PopupRoot") is PopupRoot popupRoot)
+            //{
+            //    if (_isTemplateApplied)
+            //    {
+            //        if (GetTemplateChild("LayoutRoot") is Grid layoutRoot)
+            //        {
+            //            if (GetTemplateChild("Container") is Border container)
+            //            {
+            //                container.Child = null;
+            //                popupRoot.Children.Add(layoutRoot);
+            //            }
+            //        }
+            //    }
+            //    else
+            //    {
+            //        popupRoot.Children.Add(this);
+            //    }
+            //}
 
             Focus();
         }
@@ -683,25 +672,25 @@ namespace Fluent.UI.Controls
 
         private void RemoveContentDialog()
         {
-            var applicationView = Application.Current.MainWindow as ApplicationView;
-            if (applicationView.FindDescendantByName("PopupRoot") is PopupRoot popupRoot)
-            {
-                if (_isTemplateApplied)
-                {
-                    if (popupRoot.FindDescendantByName("LayoutRoot") is Grid layoutRoot)
-                    {
-                        if (GetTemplateChild("Container") is Border container)
-                        {
-                            popupRoot.Children.Remove(layoutRoot);
-                            container.Child = layoutRoot;
-                        }
-                    }
-                }
-                else
-                {
-                    popupRoot.Children.Remove(this);
-                }
-            }
+            //var applicationView = Application.Current.MainWindow as ApplicationView;
+            //if (applicationView.FindDescendantByName("PopupRoot") is PopupRoot popupRoot)
+            //{
+            //    if (_isTemplateApplied)
+            //    {
+            //        if (popupRoot.FindDescendantByName("LayoutRoot") is Grid layoutRoot)
+            //        {
+            //            if (GetTemplateChild("Container") is Border container)
+            //            {
+            //                popupRoot.Children.Remove(layoutRoot);
+            //                container.Child = layoutRoot;
+            //            }
+            //        }
+            //    }
+            //    else
+            //    {
+            //        popupRoot.Children.Remove(this);
+            //    }
+            //}
         }
 
         private void SetButtonVisualStates()
