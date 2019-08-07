@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Fluent.UI.Controls
 {
@@ -25,14 +26,37 @@ namespace Fluent.UI.Controls
             extensionBase.PepareToAttach(control);
         }
 
-        protected virtual void PepareToAttach(TControl control)
+        internal virtual void PepareToAttach(TControl control)
         {
             AttachedControl = control;
 
             AttachedControl.Loaded -= OnLoaded;
             AttachedControl.Loaded += OnLoaded;
 
+            AttachedControl.MouseLeftButtonDown -= OnPointerPressed;
+            AttachedControl.MouseLeftButtonDown += OnPointerPressed;
+
+            AttachedControl.MouseEnter -= OnPointerOver;
+            AttachedControl.MouseEnter += OnPointerOver;
+
             OnAttached(control);
+        }
+
+        internal virtual void OnPointerOver(object sender, MouseEventArgs args)
+        {
+
+        }
+
+        internal virtual void OnPointerPressed(object sender, MouseButtonEventArgs args)
+        {
+
+        }
+
+        internal void GoToVisualState(string stateName, bool useTransitions = true) => VisualStateManager.GoToState(AttachedControl, stateName, useTransitions);
+
+        internal virtual void ChangeVisualState(bool useTransitions = true)
+        {
+
         }
 
         private void OnLoaded(object sender, RoutedEventArgs args)
@@ -47,14 +71,14 @@ namespace Fluent.UI.Controls
 
         protected TControl AttachedControl;
 
-        protected virtual void OnApplyTemplate()
+        internal virtual void OnApplyTemplate()
         {
 
         }
 
-        protected virtual void OnAttached(TControl element)
+        internal virtual void OnAttached(TControl element)
         {
-
+           
         }
 
         public static bool GetIsAttached(DependencyObject dependencyObject)

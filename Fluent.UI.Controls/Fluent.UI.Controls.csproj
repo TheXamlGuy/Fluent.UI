@@ -62,6 +62,7 @@
     <Compile Include="ComboBox\ComboBoxItemExtension.cs" />
     <Compile Include="CommandBar\CommandBar.cs" />
     <Compile Include="CommandBar\ICommandBarElement.cs" />
+    <Compile Include="VisualStates.cs" />
     <Compile Include="ContentDialog\ContentDialog.cs" />
     <Compile Include="ContentDialog\ContentDialogButton.cs" />
     <Compile Include="ContentDialog\ContentDialogButtonClickDeferral.cs" />
