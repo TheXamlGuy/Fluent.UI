@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -105,24 +106,19 @@ namespace Fluent.UI.Controls
         private readonly TaskCompletionSource<object> _taskCompletionSource = new TaskCompletionSource<object>();
 
         private Button _closeButton;
-
         private bool _isClosing;
-
-        private bool _isOpening;
-
         private bool _isShowing;
-
         private bool _isTemplateApplied;
-
-        private object _parameter;
-
         private Button _primaryButton;
-
         private Button _secondaryButton;
+        private ContentDialogAdorner _adornerDialog;
 
         public ContentDialog()
         {
             DefaultStyleKey = typeof(ContentDialog);
+
+            var contentPresenter = Application.Current.MainWindow.FindDescendant<ContentPresenter>();
+            _adornerDialog = new ContentDialogAdorner(contentPresenter, this);
         }
 
         public event TypedEventHandler<ContentDialog, ContentDialogButtonClickEventArgs> CloseButtonClick;
@@ -247,11 +243,6 @@ namespace Fluent.UI.Controls
             set => SetValue(TitleTemplateProperty, value);
         }
 
-        public void Hide()
-        {
-            PrepareClosingContentDialog();
-        }
-
         public override void OnApplyTemplate()
         {
             if (!_isShowing && !_isTemplateApplied)
@@ -281,89 +272,61 @@ namespace Fluent.UI.Controls
             PrepareCloseButton();
             PrepareDefaultButton();
 
-            if (_isShowing)
-            {
-                SetContentDialogVisualStates();
-            }
-
-            SetButtonVisualStates();
+            UpdateButtonVisualStates();
+            UpdateShowingVisualStates();
         }
 
         public async Task ShowAsync()
         {
-            await ShowAsync(null);
-        }
-
-        public async Task ShowAsync(object parameter)
-        {
-            _parameter = parameter;
-            PrepareOpeningContentDialog();
-
+            PrepareOpening();
             await _taskCompletionSource.Task.ConfigureAwait(false);
         }
 
         private static void OnCloseButtonTextPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             var contentDialog = dependencyObject as ContentDialog;
-            contentDialog?.SetButtonVisualStates();
+            contentDialog?.UpdateButtonVisualStates();
         }
 
         private static void OnDefaultButtonPropertyChangek(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             var contentDialog = dependencyObject as ContentDialog;
-            contentDialog?.OnDefaultButtonPropertyChangek();
+            contentDialog?.OnDefaultButtonPropertyChange();
         }
 
         private static void OnPrimaryButtonTextPropertChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             var contentDialog = dependencyObject as ContentDialog;
-            contentDialog?.SetButtonVisualStates();
+            contentDialog?.UpdateButtonVisualStates();
         }
 
         private static void OnSecondaryButtonTextPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             var contentDialog = dependencyObject as ContentDialog;
-            contentDialog?.SetButtonVisualStates();
+            contentDialog?.UpdateButtonVisualStates();
         }
 
-        private void CloseContentDialog()
+        private void FinalizeClosing()
         {
-            if (!_isClosing)
-            {
-                return;
-            }
-
             _taskCompletionSource.SetResult(null);
-            RemoveContentDialog();
+            _adornerDialog.Close();
 
             if (Closed != null)
             {
                 var contentDialogClosedEventArgs = new ContentDialogClosedEventArgs();
                 Closed.Invoke(this, contentDialogClosedEventArgs);
             }
-
-            _isClosing = false;
         }
 
         private void FinalizeOpening()
         {
-            if (!_isOpening)
-            {
-                return;
-            }
-
             if (Opened != null)
             {
-                var args = new ContentDialogOpenedEventArgs(_parameter);
+                var args = new ContentDialogOpenedEventArgs();
                 Opened.Invoke(this, args);
             }
 
-            _isOpening = false;
-        }
-
-        private void OnApplicationViewLoaded(object sender, RoutedEventArgs routedEventArgs)
-        {
-            PrepareContentDialog();
+            _isShowing = false;
         }
 
         private async void OnCloseButtonClick(object sender, RoutedEventArgs args)
@@ -390,23 +353,14 @@ namespace Fluent.UI.Controls
             }
 
             CloseButtonCommand?.Execute(CloseButtonCommandParameter);
-            PrepareClosingContentDialog();
+            PrepareClosing();
         }
 
-        private void OnDefaultButtonPropertyChangek()
-        {
-            PrepareDefaultButton();
-        }
+        private void OnDefaultButtonPropertyChange() => PrepareDefaultButton();
 
-        private void OnDialogClosingCompleted(object sender, EventArgs args)
-        {
-            CloseContentDialog();
-        }
+        private void OnDialogClosingCompleted(object sender, EventArgs args) => FinalizeClosing();
 
-        private void OnDialogShowingCompleted(object sender, EventArgs args)
-        {
-            FinalizeOpening();
-        }
+        private void OnDialogShowingCompleted(object sender, EventArgs args) => FinalizeOpening();
 
         private async void OnPrimaryButtonClick(object sender, RoutedEventArgs routedEventArgs)
         {
@@ -432,7 +386,7 @@ namespace Fluent.UI.Controls
             }
 
             PrimaryButtonCommand?.Execute(PrimaryButtonCommandParameter);
-            PrepareClosingContentDialog();
+            PrepareClosing();
         }
 
         private async void OnSecondaryButtonClick(object sender, RoutedEventArgs args)
@@ -459,7 +413,7 @@ namespace Fluent.UI.Controls
             }
 
             SecondaryButtonCommand?.Execute(SecondaryButtonCommandParameter);
-            PrepareClosingContentDialog();
+            PrepareClosing();
         }
 
         private void PrepareCloseButton()
@@ -486,7 +440,7 @@ namespace Fluent.UI.Controls
             }
         }
 
-        private async void PrepareClosingContentDialog()
+        private async void PrepareClosing()
         {
             if (Closing != null)
             {
@@ -513,41 +467,7 @@ namespace Fluent.UI.Controls
                 }
             }
 
-            _isClosing = true;
-            _isShowing = false;
-            SetContentDialogVisualStates();
-        }
-
-        private void PrepareContentDialog()
-        {
-            //var applicationView = Application.Current.MainWindow as ApplicationView;
-            //if (applicationView != null && !applicationView.IsLoaded)
-            //{
-            //    applicationView.Loaded -= OnApplicationViewLoaded;
-            //    applicationView.Loaded += OnApplicationViewLoaded;
-            //    return;
-            //}
-
-            //if (applicationView.FindDescendantByName("PopupRoot") is PopupRoot popupRoot)
-            //{
-            //    if (_isTemplateApplied)
-            //    {
-            //        if (GetTemplateChild("LayoutRoot") is Grid layoutRoot)
-            //        {
-            //            if (GetTemplateChild("Container") is Border container)
-            //            {
-            //                container.Child = null;
-            //                popupRoot.Children.Add(layoutRoot);
-            //            }
-            //        }
-            //    }
-            //    else
-            //    {
-            //        popupRoot.Children.Add(this);
-            //    }
-            //}
-
-            Focus();
+            UpdateShowingVisualStates();
         }
 
         private void PrepareDefaultButton()
@@ -601,11 +521,11 @@ namespace Fluent.UI.Controls
             VisualStateManager.GoToState(this, state, true);
         }
 
-        private void PrepareOpeningContentDialog()
+        private void PrepareOpening()
         {
             if (Opening != null)
             {
-                var args = new ContentDialogOpeningEventArgs(_parameter);
+                var args = new ContentDialogOpeningEventArgs();
                 foreach (var eventDelegate in Opening.GetInvocationList())
                 {
                     var handler = (TypedEventHandler<ContentDialog, ContentDialogOpeningEventArgs>)eventDelegate;
@@ -617,9 +537,8 @@ namespace Fluent.UI.Controls
                 }
             }
 
-            _isOpening = true;
+            _adornerDialog.Show();
             _isShowing = true;
-            PrepareContentDialog();
         }
 
         private void PreparePrimaryButton()
@@ -670,30 +589,7 @@ namespace Fluent.UI.Controls
             }
         }
 
-        private void RemoveContentDialog()
-        {
-            //var applicationView = Application.Current.MainWindow as ApplicationView;
-            //if (applicationView.FindDescendantByName("PopupRoot") is PopupRoot popupRoot)
-            //{
-            //    if (_isTemplateApplied)
-            //    {
-            //        if (popupRoot.FindDescendantByName("LayoutRoot") is Grid layoutRoot)
-            //        {
-            //            if (GetTemplateChild("Container") is Border container)
-            //            {
-            //                popupRoot.Children.Remove(layoutRoot);
-            //                container.Child = layoutRoot;
-            //            }
-            //        }
-            //    }
-            //    else
-            //    {
-            //        popupRoot.Children.Remove(this);
-            //    }
-            //}
-        }
-
-        private void SetButtonVisualStates()
+        private void UpdateButtonVisualStates()
         {
             var isPrimaryButtonVisible = !string.IsNullOrEmpty(PrimaryButtonText);
             var isSecondaryButtonVisible = !string.IsNullOrEmpty(SecondaryButtonText);
@@ -737,7 +633,7 @@ namespace Fluent.UI.Controls
             VisualStateManager.GoToState(this, state, true);
         }
 
-        private void SetContentDialogVisualStates()
+        private void UpdateShowingVisualStates()
         {
             VisualStateManager.GoToState(this, _isShowing ? "DialogShowing" : "DialogHidden", true);
         }

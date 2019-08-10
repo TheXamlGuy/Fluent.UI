@@ -48,10 +48,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Button\ButtonExtension.cs" />
-    <Compile Include="CheckBox\CheckBoxExtension.cs" />
-    <Compile Include="DependencyPropertyObserver.cs" />
-    <Compile Include="VisualStates.cs" />
+    <Compile Include="ContentDialog\ContentDialogAdorner.cs" />
     <Compile Include="ContentDialog\ContentDialog.cs" />
     <Compile Include="ContentDialog\ContentDialogButton.cs" />
     <Compile Include="ContentDialog\ContentDialogButtonClickDeferral.cs" />
@@ -62,14 +59,6 @@
     <Compile Include="ContentDialog\ContentDialogOpenedEventArgs.cs" />
     <Compile Include="ContentDialog\ContentDialogOpeningEventArgs.cs" />
     <Compile Include="ContentDialog\ContentDialogResult.cs" />
-    <Compile Include="ContentPresenter\ContentPresenterEx.cs" />
-    <Compile Include="Control\ControlExtension.cs" />
-    <Compile Include="FontIcon\FontIcon.cs" />
-    <Compile Include="IconElement\IconElement.cs" />
-    <Compile Include="ListBox\ListBoxItemExtension.cs" />
-    <Compile Include="ListView\ListViewItemExtension.cs" />
-    <Compile Include="PasswordBox\PasswordBoxExtension.cs" />
-    <Compile Include="PathIcon\PathIcon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -83,7 +72,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="TextBox\TextBoxExtension.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -94,43 +82,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Button\Button.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="CheckBox\CheckBox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="ContentDialog\ContentDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="FontIcon\FontIcon.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Frame\Frame.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ListBox\ListBox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ListView\ListView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PasswordBox\PasswordBox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="PathIcon\PathIcon.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="TextBox\TextBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -138,15 +90,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Themes\Theme.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Themes\ThemeResources.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ToolTip\ToolTip.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
