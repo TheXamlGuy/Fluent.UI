@@ -33,6 +33,7 @@ namespace Fluent.UI.Demo
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             var contentDialog = new ContentDialog();
+            contentDialog.PrimaryButtonText = "sf";
             contentDialog.ShowAsync();
         }
 

@@ -576,6 +576,11 @@ namespace Fluent.UI.Controls
                 }
             }
 
+            if (!_isTemplateReady)
+            {
+                ApplyTemplate();
+            }
+
             _container.Child = null;
             _adornerDialog.Add(_layoutRoot);
 
