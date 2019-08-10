@@ -2,9 +2,9 @@
 {
     internal class VisualStates
     {
-        internal const string StateDisabled = "";
-        internal const string StatePressed = "";
-        internal const string StatePointerOver = "";
-        internal const string StateNormal = "";
+        internal const string StateDisabled = "Disabled";
+        internal const string StatePressed = "Pressed";
+        internal const string StatePointerOver = "PointerOver";
+        internal const string StateNormal = "Normal";
     }
 }
