@@ -12,30 +12,24 @@ namespace Fluent.UI.Controls
         public ContentDialogAdorner(UIElement adornedElement) : base(adornedElement)
         {
             _adornerLayer = AdornerLayer.GetAdornerLayer(adornedElement);
+        }
+
+        public void Add(UIElement adorningElement)
+        {
             _adornerLayer.Add(this);
+            _adorningElement = adorningElement;
+
+            AddLogicalChild(adorningElement);
+            AddVisualChild(adorningElement);
         }
 
-        public void Add(UIElement control)
+        public void Remove(UIElement adorningElement)
         {
-            _adorningElement = control;
+            RemoveLogicalChild(adorningElement);
+            RemoveVisualChild(adorningElement);
 
-            AddLogicalChild(control);
-            AddVisualChild(control);
-
-            Focusable = true;
-        }
-
-        public void Remove(UIElement control)
-        {
+            _adornerLayer.Remove(this);
             _adorningElement = null;
-
-            RemoveLogicalChild(control);
-            RemoveVisualChild(control);
-        }
-
-        public UIElement Fo()
-        {
-            return GetVisualChild(0) as UIElement;
         }
 
         protected override int VisualChildrenCount => _adorningElement == null ? 0 : 1;

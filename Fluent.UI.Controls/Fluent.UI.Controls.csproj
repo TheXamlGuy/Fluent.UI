@@ -48,6 +48,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContentDialog\ContentDialogPlacement.cs" />
     <Compile Include="ContentDialog\ContentDialogAdorner.cs" />
     <Compile Include="ContentDialog\ContentDialog.cs" />
     <Compile Include="ContentDialog\ContentDialogButton.cs" />

@@ -111,25 +111,7 @@ namespace Fluent.UI.Controls
         private Button _secondaryButton;
         private ContentDialogAdorner _adornerDialog;
 
-        public ContentDialog()
-        {
-            DefaultStyleKey = typeof(ContentDialog);
-
-            ContentPresenter contentPresenter = null;
-            if (Application.Current.MainWindow.IsLoaded)
-            {
-                contentPresenter = Application.Current.MainWindow.FindDescendant<ContentPresenter>();
-                _adornerDialog = new ContentDialogAdorner(contentPresenter);
-            }
-            else
-            {
-                Application.Current.MainWindow.Loaded += (sender, args) =>
-                {
-                    contentPresenter = Application.Current.MainWindow.FindDescendant<ContentPresenter>();
-                    _adornerDialog = new ContentDialogAdorner(contentPresenter);
-                };
-            }
-        }
+        public ContentDialog() => DefaultStyleKey = typeof(ContentDialog);
 
         public event TypedEventHandler<ContentDialog, ContentDialogButtonClickEventArgs> CloseButtonClick;
 
@@ -295,6 +277,14 @@ namespace Fluent.UI.Controls
             }
         }
 
+        private ContentDialogPlacement _placement;
+
+        public async Task ShowAsync(ContentDialogPlacement placement)
+        {
+            _placement = placement;
+            await ShowAsync();
+        }
+
         public async Task ShowAsync()
         {
             PrepareOpening();
@@ -337,13 +327,18 @@ namespace Fluent.UI.Controls
                 Closed.Invoke(this, contentDialogClosedEventArgs);
             }
 
-            _adornerDialog.Remove(_layoutRoot);
-            _container.Child = _layoutRoot;
+            if (_placement == ContentDialogPlacement.Popup)
+            {
+                _adornerDialog.Remove(_layoutRoot);
+                _container.Child = _layoutRoot;
+                _adornerDialog = null;
+            }
+
 
             _isOpen = false;
         }
 
-        bool _isOpen;
+        private bool _isOpen;
         private void FinalizeOpening()
         {
             if (Opened != null)
@@ -581,8 +576,26 @@ namespace Fluent.UI.Controls
                 ApplyTemplate();
             }
 
-            _container.Child = null;
-            _adornerDialog.Add(_layoutRoot);
+            if (_placement == ContentDialogPlacement.Popup)
+            {
+                ContentPresenter contentPresenter = null;
+                if (Application.Current.MainWindow.IsLoaded)
+                {
+                    contentPresenter = Application.Current.MainWindow.FindDescendant<ContentPresenter>();
+                    _adornerDialog = new ContentDialogAdorner(contentPresenter);
+                }
+                else
+                {
+                    Application.Current.MainWindow.Loaded += (sender, args) =>
+                    {
+                        contentPresenter = Application.Current.MainWindow.FindDescendant<ContentPresenter>();
+                        _adornerDialog = new ContentDialogAdorner(contentPresenter);
+                    };
+                }
+
+                _container.Child = null;
+                _adornerDialog.Add(_layoutRoot);
+            }
 
             _isShowing = true;
 

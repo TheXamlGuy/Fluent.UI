@@ -8,10 +8,14 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Border Height="400" Width="400" Background="Red" HorizontalAlignment="Left">
+            <controls:ContentDialog x:Name="ContentDialogInPlace" PrimaryButtonText="Primary Button" />
+        </Border>
         <controls:ContentDialog x:Name="ContentDialogXAML" PrimaryButtonText="Primary Button" />
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button x:Name="Button1"  Content="Open from code behind"></Button>
             <Button x:Name="Button2"  Content="Open from XAML"></Button>
+            <Button x:Name="Button3"  Content="Show in place"></Button>
         </StackPanel>
     </Grid>
 </Window>
