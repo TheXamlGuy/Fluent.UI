@@ -1,4 +1,5 @@
 ﻿using Fluent.UI.Core;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
@@ -8,9 +9,9 @@ namespace Fluent.UI.Controls
     {
         protected override void DependencyPropertyChangedHandler(DependencyPropertyChangedHandler handler)
         {
-            handler.Add(AttachedControl, ButtonBase.IsEnabledProperty, () => ChangeVisualState(true));
+            handler.Add(AttachedControl, UIElement.IsEnabledProperty, () => ChangeVisualState(true));
             handler.Add(AttachedControl, ButtonBase.IsPressedProperty, () => ChangeVisualState(true));
-            handler.Add(AttachedControl, ButtonBase.IsMouseOverProperty, () => ChangeVisualState(true));
+            handler.Add(AttachedControl, UIElement.IsMouseOverProperty, () => ChangeVisualState(true));
 
             base.DependencyPropertyChangedHandler(handler);
         }
