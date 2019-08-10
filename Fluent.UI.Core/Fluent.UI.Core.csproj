@@ -48,6 +48,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ControlExtension.cs" />
     <Compile Include="GridLengthAnimation.cs" />
     <Compile Include="Extensions\FrameworkElementExtension.cs" />
     <Compile Include="Extensions\ItemsControlExtension.cs" />
@@ -67,6 +68,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="PropertyContext.cs" />
     <Compile Include="TypedEventHandler.cs" />
     <Compile Include="Win32\ABEdge.cs" />
     <Compile Include="Win32\ABMsg.cs" />
