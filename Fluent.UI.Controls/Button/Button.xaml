@@ -21,7 +21,6 @@
         <Setter Property="FontWeight" Value="Normal" />
         <Setter Property="FontSize" Value="{StaticResource ControlContentThemeFontSize}" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
-        <Setter Property="controls:ButtonExtension.IsAttached" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">

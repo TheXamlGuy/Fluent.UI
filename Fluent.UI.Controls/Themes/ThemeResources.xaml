@@ -255,23 +255,8 @@
     <Color x:Key="SystemChromeGrayColor">#FF767676</Color>
     <Color x:Key="SystemListLowColor">#19000000</Color>
     <Color x:Key="SystemListMediumColor">#33000000</Color>
-    <Color x:Key="SystemAccentColor">#FF83CC34</Color>
-    <Color x:Key="SystemAccentDarkColor1">#FF85B200</Color>
-    <Color x:Key="SystemAccentDarkColor2">#FF719602</Color>
-    <Color x:Key="SystemAccentDarkColor3">#FF567103</Color>
-    <Color x:Key="SystemAccentLightColor1">#FFACE500</Color>
-    <Color x:Key="SystemAccentLightColor2">#FFBFFF00</Color>
-    <Color x:Key="SystemAccentLightColor3">#FFC7FC25</Color>
-    <Color x:Key="SystemAccentHighColor">#FF1972B8</Color>
-    <Color x:Key="SystemAccentLowColor">#FF3382C0</Color>
+    <Color x:Key="SystemAccentColor">Blue</Color>
     <SolidColorBrush x:Key="SystemControlBackgroundAccentBrush" Color="{StaticResource SystemAccentColor}" />
-    <SolidColorBrush x:Key="SystemControlBackgroundDarkAccentBrush1" Color="{StaticResource SystemAccentDarkColor1}" />
-    <SolidColorBrush x:Key="SystemControlBackgroundDarkAccentBrush2" Color="{StaticResource SystemAccentDarkColor2}" />
-    <SolidColorBrush x:Key="SystemControlBackgroundDarkAccentBrush3" Color="{StaticResource SystemAccentDarkColor3}" />
-    <SolidColorBrush x:Key="SystemControlBackgroundLightAccentBrush1" Color="{StaticResource SystemAccentLightColor1}" />
-    <SolidColorBrush x:Key="SystemControlBackgroundLightAccentBrush2" Color="{StaticResource SystemAccentLightColor2}" />
-    <SolidColorBrush x:Key="SystemControlBackgroundLightAccentBrush3" Color="{StaticResource SystemAccentLightColor3}" />
-
     <SolidColorBrush x:Key="SystemControlBackgroundAccentHighBrush" Color="{StaticResource SystemAccentHighColor}" />
     <SolidColorBrush x:Key="SystemControlBackgroundAccentLowBrush" Color="{StaticResource SystemAccentLowColor}" />
     <SolidColorBrush x:Key="SystemControlBackgroundAltHighBrush" Color="{StaticResource SystemAltHighColor}" />
@@ -441,74 +426,5 @@
         <Setter Property="Foreground" Value="Red" />
         <Setter Property="FontWeight" Value="Normal" />
         <Setter Property="TextAlignment" Value="Right" />
-    </Style>
-    <Style x:Key="ButtonNavigationViewItemStyle" TargetType="Button">
-        <Setter Property="Foreground" Value="{StaticResource SystemControlForegroundBaseHighBrush}" />
-        <Setter Property="Background" Value="{StaticResource SystemControlTransparentBrush}" />
-        <Setter Property="BorderBrush" Value="{StaticResource SystemControlTransparentBrush}" />
-        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}" />
-        <Setter Property="FontSize" Value="{StaticResource ControlContentThemeFontSize}" />
-        <Setter Property="controls:ButtonExtension.IsAttached" Value="True" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Grid
-                        x:Name="LayoutRoot"
-                        Height="40"
-                        Background="{TemplateBinding Background}">
-                        <Grid HorizontalAlignment="Left" VerticalAlignment="Center">
-                            <Rectangle
-                                x:Name="SelectionIndicator"
-                                Width="6"
-                                Height="24"
-                                Fill="{StaticResource SystemControlForegroundAccentBrush}"
-                                Opacity="0.0" />
-                        </Grid>
-                        <Border
-                            x:Name="RevealBorder"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}" />
-                        <Grid Height="40" HorizontalAlignment="Left">
-                            <controls:ContentPresenterEx
-                                x:Name="ContentPresenter"
-                                Margin="{TemplateBinding Padding}"
-                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                Content="{TemplateBinding Content}"
-                                ContentTemplate="{TemplateBinding ContentTemplate}"
-                                Foreground="{TemplateBinding Foreground}"
-                                TextBlock.FontSize="{TemplateBinding FontSize}" />
-                        </Grid>
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="PointerOver">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SystemControlBackgroundListLowBrush}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SystemControlHighlightAltBaseHighBrush}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Pressed">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SystemControlBackgroundListMediumBrush}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SystemControlHighlightAltBaseHighBrush}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
     </Style>
 </ResourceDictionary>
