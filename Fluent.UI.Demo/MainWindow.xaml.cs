@@ -27,13 +27,11 @@ namespace Fluent.UI.Demo
         {
             InitializeComponent();
             d = new ContentDialog();
-
+            d.Content = "Hello you!";
             Button.Click += Button_Click;
             d.PrimaryButtonText = "Primary button";
             d.SecondaryButtonText = "Secondary button";
             d.CloseButtonText = "Close button";
-
-
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
