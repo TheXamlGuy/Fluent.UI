@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="clr-namespace:Fluent.UI.Controls"
     xmlns:system="clr-namespace:System;assembly=mscorlib">
     <FontFamily x:Key="ContentControlThemeFontFamily">Segoe UI</FontFamily>
     <FontFamily x:Key="MTCMediaFontFamily">Segoe UI</FontFamily>
@@ -89,7 +88,6 @@
     <system:Double x:Key="PivotTitleFontSize">15</system:Double>
     <system:Double x:Key="ProgressBarIndicatorPauseOpacity">0.6</system:Double>
     <system:Double x:Key="ProgressBarThemeMinHeight">4</system:Double>
-    <system:Double x:Key="RadioButtonBorderThemeThickness">2</system:Double>
     <system:Double x:Key="ScrollBarTrackBorderThemeThickness">0</system:Double>
     <system:Double x:Key="SearchBoxContentThemeFontSize">15</system:Double>
     <system:Double x:Key="SearchBoxResultSuggestionImageThemeWidth">32</system:Double>

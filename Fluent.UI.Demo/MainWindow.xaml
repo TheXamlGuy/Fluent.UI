@@ -12,7 +12,7 @@
         </Border>
         <ContentDialog x:Name="ContentDialogXAML" PrimaryButtonText="Primary Button" />
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button x:Name="Button1" Content="Open from code behind" ButtonExtension.IsAttached="True" />
+            <Button x:Name="Button1" Content="Open from code behind" />
             <Button x:Name="Button2" Content="Open from XAML" />
             <Button x:Name="Button3" Content="Show in place" />
         </StackPanel>
