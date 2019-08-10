@@ -68,7 +68,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="PropertyContext.cs" />
+    <Compile Include="DependencyPropertyChangedHandler.cs" />
     <Compile Include="TypedEventHandler.cs" />
     <Compile Include="Win32\ABEdge.cs" />
     <Compile Include="Win32\ABMsg.cs" />

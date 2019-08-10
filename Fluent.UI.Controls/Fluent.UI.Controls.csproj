@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Button\ButtonExtension.cs" />
+    <Compile Include="VisualStates.cs" />
     <Compile Include="ContentDialog\ContentDialogPlacement.cs" />
     <Compile Include="ContentDialog\ContentDialogAdorner.cs" />
     <Compile Include="ContentDialog\ContentDialog.cs" />

@@ -39,19 +39,10 @@ namespace Fluent.UI.Core
             extensionBase.SetAttachedControl(control);
         }
 
-        internal void GoToVisualState(string stateName, bool useTransitions = true) => VisualStateManager.GoToState(AttachedControl, stateName, useTransitions);
-
-        internal virtual void OnPointerOver(object sender, MouseEventArgs args)
-        {
-
-        }
-
-        internal virtual void OnPointerPressed(object sender, MouseButtonEventArgs args)
-        {
-
-        }
+        protected void GoToVisualState(string stateName, bool useTransitions = true) => VisualStateManager.GoToState(AttachedControl, stateName, useTransitions);
 
         private DependencyPropertyChangedHandler _dependencyPropertyChangedHandler;
+
         private void SetAttachedControl(TControl control)
         {
             AttachedControl = control;
@@ -78,16 +69,12 @@ namespace Fluent.UI.Core
         {
             AttachedControl.Unloaded -= OnUnloaded;
             AttachedControl.Loaded -= OnLoaded;
-            AttachedControl.MouseLeftButtonDown -= OnPointerPressed;
-            AttachedControl.MouseEnter -= OnPointerOver;
         }
 
         private void RegisterEvents()
         {
             AttachedControl.Unloaded += OnUnloaded;
             AttachedControl.Loaded += OnLoaded;
-            AttachedControl.MouseLeftButtonDown += OnPointerPressed;
-            AttachedControl.MouseEnter += OnPointerOver;
         }
 
         private void OnUnloaded(object sender, RoutedEventArgs args)

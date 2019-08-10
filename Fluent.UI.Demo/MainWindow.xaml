@@ -1,19 +1,18 @@
 ﻿<Window
     x:Class="Fluent.UI.Demo.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="clr-namespace:Fluent.UI.Controls;assembly=Fluent.UI.Controls">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Grid>
         <Border
             Width="400"
             Height="400"
             HorizontalAlignment="Left"
             Background="Red">
-            <controls:ContentDialog x:Name="ContentDialogInPlace" PrimaryButtonText="Primary Button" />
+            <ContentDialog x:Name="ContentDialogInPlace" PrimaryButtonText="Primary Button" />
         </Border>
-        <controls:ContentDialog x:Name="ContentDialogXAML" PrimaryButtonText="Primary Button" />
+        <ContentDialog x:Name="ContentDialogXAML" PrimaryButtonText="Primary Button" />
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button x:Name="Button1" Content="Open from code behind" />
+            <Button x:Name="Button1" Content="Open from code behind" ButtonExtension.IsAttached="True" />
             <Button x:Name="Button2" Content="Open from XAML" />
             <Button x:Name="Button3" Content="Show in place" />
         </StackPanel>
