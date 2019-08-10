@@ -103,14 +103,17 @@ namespace Fluent.UI.Controls
                 typeof(DataTemplate), typeof(ContentDialog),
                 new PropertyMetadata(null));
 
-        private TaskCompletionSource<object> _taskCompletionSource;
-
+        private ContentDialogAdorner _adornerDialog;
         private Button _closeButton;
+        private Border _container;
+        private bool _isOpen;
         private bool _isShowing;
+        private bool _isTemplateReady;
+        private Grid _layoutRoot;
+        private ContentDialogPlacement _placement;
         private Button _primaryButton;
         private Button _secondaryButton;
-        private ContentDialogAdorner _adornerDialog;
-
+        private TaskCompletionSource<object> _taskCompletionSource;
         public ContentDialog() => DefaultStyleKey = typeof(ContentDialog);
 
         public event TypedEventHandler<ContentDialog, ContentDialogButtonClickEventArgs> CloseButtonClick;
@@ -126,12 +129,6 @@ namespace Fluent.UI.Controls
         public event TypedEventHandler<ContentDialog, ContentDialogButtonClickEventArgs> PrimaryButtonClick;
 
         public event TypedEventHandler<ContentDialog, ContentDialogButtonClickEventArgs> SecondaryButtonClick;
-
-        public Brush PopupBackground
-        {
-            get => (Brush)GetValue(PopupBackgroundProperty);
-            set => SetValue(PopupBackgroundProperty, value);
-        }
 
         public ICommand CloseButtonCommand
         {
@@ -175,6 +172,11 @@ namespace Fluent.UI.Controls
             set => SetValue(IsSecondaryButtonEnabledProperty, value);
         }
 
+        public Brush PopupBackground
+        {
+            get => (Brush)GetValue(PopupBackgroundProperty);
+            set => SetValue(PopupBackgroundProperty, value);
+        }
         public ICommand PrimaryButtonCommand
         {
             get => (ICommand)GetValue(PrimaryButtonCommandProperty);
@@ -234,12 +236,6 @@ namespace Fluent.UI.Controls
             get => (DataTemplate)GetValue(TitleTemplateProperty);
             set => SetValue(TitleTemplateProperty, value);
         }
-
-        private bool _isTemplateReady;
-
-        private Border _container;
-        private Grid _layoutRoot;
-
         public override void OnApplyTemplate()
         {
             _isTemplateReady = true;
@@ -276,9 +272,6 @@ namespace Fluent.UI.Controls
                 UpdateShowingVisualStates();
             }
         }
-
-        private ContentDialogPlacement _placement;
-
         public async Task ShowAsync(ContentDialogPlacement placement)
         {
             _placement = placement;
@@ -337,8 +330,6 @@ namespace Fluent.UI.Controls
 
             _isOpen = false;
         }
-
-        private bool _isOpen;
         private void FinalizeOpening()
         {
             if (Opened != null)
