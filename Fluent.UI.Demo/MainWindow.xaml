@@ -8,6 +8,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button x:Name="Button" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Click me"></Button>
+        <controls:ContentDialog x:Name="ContentDialogXAML" PrimaryButtonText="Primary Button" />
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button x:Name="Button1"  Content="Open from code behind"></Button>
+            <Button x:Name="Button2"  Content="Open from XAML"></Button>
+        </StackPanel>
     </Grid>
 </Window>

@@ -22,21 +22,23 @@ namespace Fluent.UI.Demo
     /// </summary>
     public partial class MainWindow : Window
     {
-        ContentDialog d;
         public MainWindow()
         {
             InitializeComponent();
-            d = new ContentDialog();
-            d.Content = "Hello you!";
-            Button.Click += Button_Click;
-            d.PrimaryButtonText = "Primary button";
-            d.SecondaryButtonText = "Secondary button";
-            d.CloseButtonText = "Close button";
+
+            Button1.Click += Button_Click;
+            Button2.Click += Button2_Click;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            d.ShowAsync();
+            var contentDialog = new ContentDialog();
+            contentDialog.ShowAsync();
+        }
+
+        private void Button2_Click(object sender, RoutedEventArgs e)
+        {
+            ContentDialogXAML.ShowAsync();
         }
     }
 }

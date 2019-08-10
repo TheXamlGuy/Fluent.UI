@@ -119,14 +119,14 @@ namespace Fluent.UI.Controls
             if (Application.Current.MainWindow.IsLoaded)
             {
                 contentPresenter = Application.Current.MainWindow.FindDescendant<ContentPresenter>();
-                _adornerDialog = new ContentDialogAdorner(contentPresenter, this);
+                _adornerDialog = new ContentDialogAdorner(contentPresenter);
             }
             else
             {
                 Application.Current.MainWindow.Loaded += (sender, args) =>
                 {
                     contentPresenter = Application.Current.MainWindow.FindDescendant<ContentPresenter>();
-                    _adornerDialog = new ContentDialogAdorner(contentPresenter, this);
+                    _adornerDialog = new ContentDialogAdorner(contentPresenter);
                 };
             }
         }
@@ -254,23 +254,29 @@ namespace Fluent.UI.Controls
         }
 
         private bool _isTemplateReady;
+
+        private Border _container;
+        private Grid _layoutRoot;
+
         public override void OnApplyTemplate()
         {
             _isTemplateReady = true;
-            if (GetTemplateChild("Container") is Border container)
+
+            _layoutRoot = GetTemplateChild("LayoutRoot") as Grid;
+            _container  = GetTemplateChild("Container") as Border;
+
+            if (_container != null)
             {
-                var dialogShowingVisualTransition = container.GetVisualTransition("DialogShowing");
+                var dialogShowingVisualTransition = _container.GetVisualTransition("DialogShowing");
                 if (dialogShowingVisualTransition != null)
                 {
-                    dialogShowingVisualTransition.Storyboard.FillBehavior = System.Windows.Media.Animation.FillBehavior.HoldEnd;
                     dialogShowingVisualTransition.Storyboard.Completed -= OnDialogShowingCompleted;
                     dialogShowingVisualTransition.Storyboard.Completed += OnDialogShowingCompleted;
                 }
 
-                var dialogClosingVisualTransition = container.GetVisualTransition("DialogHidden");
+                var dialogClosingVisualTransition = _container.GetVisualTransition("DialogHidden");
                 if (dialogClosingVisualTransition != null)
                 {
-                    dialogClosingVisualTransition.Storyboard.FillBehavior = System.Windows.Media.Animation.FillBehavior.HoldEnd;
                     dialogClosingVisualTransition.Storyboard.Completed -= OnDialogClosingCompleted;
                     dialogClosingVisualTransition.Storyboard.Completed += OnDialogClosingCompleted;
                 }
@@ -331,9 +337,13 @@ namespace Fluent.UI.Controls
                 Closed.Invoke(this, contentDialogClosedEventArgs);
             }
 
-            _adornerDialog.Close();
+            _adornerDialog.Remove(_layoutRoot);
+            _container.Child = _layoutRoot;
+
+            _isOpen = false;
         }
 
+        bool _isOpen;
         private void FinalizeOpening()
         {
             if (Opened != null)
@@ -343,6 +353,7 @@ namespace Fluent.UI.Controls
             }
 
             _isShowing = false;
+            _isOpen = true;
         }
 
         private async void OnCloseButtonClick(object sender, RoutedEventArgs args)
@@ -376,7 +387,7 @@ namespace Fluent.UI.Controls
 
         private void OnDialogClosingCompleted(object sender, EventArgs args)
         {
-            if (!_isShowing)
+            if (!_isShowing && _isOpen)
             {
                 FinalizeClosing();
             }
@@ -565,9 +576,11 @@ namespace Fluent.UI.Controls
                 }
             }
 
-            _adornerDialog.Show();
+            _container.Child = null;
+            _adornerDialog.Add(_layoutRoot);
 
             _isShowing = true;
+
             UpdateShowingVisualStates();
         }
 
