@@ -103,12 +103,10 @@ namespace Fluent.UI.Controls
                 typeof(DataTemplate), typeof(ContentDialog),
                 new PropertyMetadata(null));
 
-        private readonly TaskCompletionSource<object> _taskCompletionSource = new TaskCompletionSource<object>();
+        private TaskCompletionSource<object> _taskCompletionSource;
 
         private Button _closeButton;
-        private bool _isClosing;
         private bool _isShowing;
-        private bool _isTemplateApplied;
         private Button _primaryButton;
         private Button _secondaryButton;
         private ContentDialogAdorner _adornerDialog;
@@ -117,8 +115,20 @@ namespace Fluent.UI.Controls
         {
             DefaultStyleKey = typeof(ContentDialog);
 
-            var contentPresenter = Application.Current.MainWindow.FindDescendant<ContentPresenter>();
-            _adornerDialog = new ContentDialogAdorner(contentPresenter, this);
+            ContentPresenter contentPresenter = null;
+            if (Application.Current.MainWindow.IsLoaded)
+            {
+                contentPresenter = Application.Current.MainWindow.FindDescendant<ContentPresenter>();
+                _adornerDialog = new ContentDialogAdorner(contentPresenter, this);
+            }
+            else
+            {
+                Application.Current.MainWindow.Loaded += (sender, args) =>
+                {
+                    contentPresenter = Application.Current.MainWindow.FindDescendant<ContentPresenter>();
+                    _adornerDialog = new ContentDialogAdorner(contentPresenter, this);
+                };
+            }
         }
 
         public event TypedEventHandler<ContentDialog, ContentDialogButtonClickEventArgs> CloseButtonClick;
@@ -243,18 +253,16 @@ namespace Fluent.UI.Controls
             set => SetValue(TitleTemplateProperty, value);
         }
 
+        private bool _isTemplateReady;
         public override void OnApplyTemplate()
         {
-            if (!_isShowing && !_isTemplateApplied)
-            {
-                _isTemplateApplied = true;
-            }
-
+            _isTemplateReady = true;
             if (GetTemplateChild("Container") is Border container)
             {
                 var dialogShowingVisualTransition = container.GetVisualTransition("DialogShowing");
                 if (dialogShowingVisualTransition != null)
                 {
+                    dialogShowingVisualTransition.Storyboard.FillBehavior = System.Windows.Media.Animation.FillBehavior.HoldEnd;
                     dialogShowingVisualTransition.Storyboard.Completed -= OnDialogShowingCompleted;
                     dialogShowingVisualTransition.Storyboard.Completed += OnDialogShowingCompleted;
                 }
@@ -262,6 +270,7 @@ namespace Fluent.UI.Controls
                 var dialogClosingVisualTransition = container.GetVisualTransition("DialogHidden");
                 if (dialogClosingVisualTransition != null)
                 {
+                    dialogClosingVisualTransition.Storyboard.FillBehavior = System.Windows.Media.Animation.FillBehavior.HoldEnd;
                     dialogClosingVisualTransition.Storyboard.Completed -= OnDialogClosingCompleted;
                     dialogClosingVisualTransition.Storyboard.Completed += OnDialogClosingCompleted;
                 }
@@ -273,12 +282,18 @@ namespace Fluent.UI.Controls
             PrepareDefaultButton();
 
             UpdateButtonVisualStates();
-            UpdateShowingVisualStates();
+
+            if (_isShowing)
+            {
+                UpdateShowingVisualStates();
+            }
         }
 
         public async Task ShowAsync()
         {
             PrepareOpening();
+
+            _taskCompletionSource = new TaskCompletionSource<object>();
             await _taskCompletionSource.Task.ConfigureAwait(false);
         }
 
@@ -309,13 +324,14 @@ namespace Fluent.UI.Controls
         private void FinalizeClosing()
         {
             _taskCompletionSource.SetResult(null);
-            _adornerDialog.Close();
 
             if (Closed != null)
             {
                 var contentDialogClosedEventArgs = new ContentDialogClosedEventArgs();
                 Closed.Invoke(this, contentDialogClosedEventArgs);
             }
+
+            _adornerDialog.Close();
         }
 
         private void FinalizeOpening()
@@ -358,9 +374,21 @@ namespace Fluent.UI.Controls
 
         private void OnDefaultButtonPropertyChange() => PrepareDefaultButton();
 
-        private void OnDialogClosingCompleted(object sender, EventArgs args) => FinalizeClosing();
+        private void OnDialogClosingCompleted(object sender, EventArgs args)
+        {
+            if (!_isShowing)
+            {
+                FinalizeClosing();
+            }
+        }
 
-        private void OnDialogShowingCompleted(object sender, EventArgs args) => FinalizeOpening();
+        private void OnDialogShowingCompleted(object sender, EventArgs args)
+        {
+            if (_isShowing)
+            {
+                FinalizeOpening();
+            }      
+        }
 
         private async void OnPrimaryButtonClick(object sender, RoutedEventArgs routedEventArgs)
         {
@@ -538,7 +566,9 @@ namespace Fluent.UI.Controls
             }
 
             _adornerDialog.Show();
+
             _isShowing = true;
+            UpdateShowingVisualStates();
         }
 
         private void PreparePrimaryButton()
@@ -635,7 +665,10 @@ namespace Fluent.UI.Controls
 
         private void UpdateShowingVisualStates()
         {
-            VisualStateManager.GoToState(this, _isShowing ? "DialogShowing" : "DialogHidden", true);
+            if (_isTemplateReady)
+            {
+                VisualStateManager.GoToState(this, _isShowing ? "DialogShowing" : "DialogHidden", true);
+            }
         }
     }
 }

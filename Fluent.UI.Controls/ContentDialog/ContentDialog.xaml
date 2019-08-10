@@ -333,7 +333,7 @@
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
-                            <VisualStateGroup x:Name="DefaultButtonStates">
+                            <!--<VisualStateGroup x:Name="DefaultButtonStates">
                                 <VisualState x:Name="NoDefaultButton" />
                                 <VisualState x:Name="PrimaryAsDefaultButton">
                                     <Storyboard>
@@ -356,7 +356,7 @@
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
-                            </VisualStateGroup>
+                            </VisualStateGroup>-->
                         </VisualStateManager.VisualStateGroups>
                     </Border>
                 </ControlTemplate>
