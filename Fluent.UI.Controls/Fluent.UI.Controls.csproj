@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Button\ButtonExtension.cs" />
+    <Compile Include="TextBox\TextBoxExtension.cs" />
     <Compile Include="VisualStates.cs" />
     <Compile Include="ContentDialog\ContentDialogPlacement.cs" />
     <Compile Include="ContentDialog\ContentDialogAdorner.cs" />
@@ -92,6 +93,10 @@
     <Page Include="ContentDialog\ContentDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TextBox\TextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\Controls.xaml">
       <SubType>Designer</SubType>

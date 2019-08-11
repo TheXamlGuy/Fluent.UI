@@ -2,19 +2,32 @@
     x:Class="Fluent.UI.Demo.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Grid>
+    <Grid Margin="12">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <ContentDialog x:Name="ContentDialogXAML" PrimaryButtonText="Primary Button" />
+        <StackPanel Grid.Column="0">
+            <Button
+                x:Name="Button1"
+                Margin="0,0,0,8"
+                Content="Open from code behind" />
+            <Button
+                x:Name="Button2"
+                Margin="0,0,0,8"
+                Content="Open from XAML" />
+            <Button x:Name="Button3" Content="Show in place" />
+            <TextBox />
+        </StackPanel>
         <Border
+            Grid.Column="1"
             Width="400"
             Height="400"
-            HorizontalAlignment="Left"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
             Background="Red">
             <ContentDialog x:Name="ContentDialogInPlace" PrimaryButtonText="Primary Button" />
         </Border>
-        <ContentDialog x:Name="ContentDialogXAML" PrimaryButtonText="Primary Button" />
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button x:Name="Button1" Content="Open from code behind" />
-            <Button x:Name="Button2" Content="Open from XAML" />
-            <Button x:Name="Button3" Content="Show in place" />
-        </StackPanel>
     </Grid>
 </Window>

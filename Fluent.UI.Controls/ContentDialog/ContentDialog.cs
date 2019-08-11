@@ -31,7 +31,7 @@ namespace Fluent.UI.Controls
         public static DependencyProperty CloseButtonStyleProperty =
             DependencyProperty.Register(nameof(CloseButtonStyle),
                 typeof(Style), typeof(ContentDialog),
-                new PropertyMetadata(null));
+                new PropertyMetadata(new Style(typeof(Button), (Style)Application.Current.FindResource(typeof(Button)))));
 
         public static DependencyProperty CloseButtonTextProperty =
             DependencyProperty.Register(nameof(CloseButtonText),
@@ -66,7 +66,7 @@ namespace Fluent.UI.Controls
         public static DependencyProperty PrimaryButtonStyleProperty =
             DependencyProperty.Register(nameof(PrimaryButtonStyle),
                 typeof(Style), typeof(ContentDialog),
-                new PropertyMetadata(null));
+                new PropertyMetadata(new Style(typeof(Button), (Style)Application.Current.FindResource(typeof(Button)))));
 
         public static DependencyProperty PrimaryButtonTextProperty =
             DependencyProperty.Register(nameof(PrimaryButtonText),
@@ -86,7 +86,7 @@ namespace Fluent.UI.Controls
         public static DependencyProperty SecondaryButtonStyleProperty =
             DependencyProperty.Register(nameof(SecondaryButtonStyle),
                 typeof(Style), typeof(ContentDialog),
-                new PropertyMetadata(null));
+                new PropertyMetadata(new Style(typeof(Button), (Style)Application.Current.FindResource(typeof(Button)))));
 
         public static DependencyProperty SecondaryButtonTextProperty =
             DependencyProperty.Register(nameof(SecondaryButtonText),
