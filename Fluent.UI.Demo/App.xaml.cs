@@ -13,5 +13,6 @@ namespace Fluent.UI.Demo
     /// </summary>
     public partial class App : Application
     {
+      
     }
 }

@@ -1,12 +1,9 @@
-﻿using System;
-using System.ComponentModel;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace Fluent.UI.Core
 {
-    public class ControlExtension<TControl, TControlExtension> : DependencyObject where TControl : Control where TControlExtension : ControlExtension<TControl, TControlExtension>, new()
+    public abstract class ControlExtension<TControl, TControlExtension> : DependencyObject where TControl : Control where TControlExtension : ControlExtension<TControl, TControlExtension>, new()
     {
         public static readonly DependencyProperty IsAttachedProperty =
            DependencyProperty.RegisterAttached("IsAttached",
@@ -46,7 +43,7 @@ namespace Fluent.UI.Core
         private void SetAttachedControl(TControl control)
         {
             AttachedControl = control;
-
+            
             UnregisterEvents();
             RegisterEvents();
 

@@ -110,6 +110,10 @@
       <Project>{72146259-77ad-47a7-b5cf-f82c8cb00948}</Project>
       <Name>Fluent.UI.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fluent.UI\Fluent.UI.csproj">
+      <Project>{92fc6450-3201-442b-9b7b-dea9c98d8f2a}</Project>
+      <Name>Fluent.UI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
