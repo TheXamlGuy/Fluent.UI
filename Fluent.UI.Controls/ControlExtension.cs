@@ -158,6 +158,24 @@ namespace Fluent.UI.Controls
                         return;
                     }
 
+                    var properties = AttachedControl.GetType().GetProperties();
+                    foreach (var property in properties)
+                    {
+                        if (property.PropertyType == typeof(Brush))
+                        {
+                            var propertyValue = property.GetValue(AttachedControl, null);
+                            if (propertyValue == null)
+                            {
+                                return;
+                            }
+
+                            var from = fromKeys[propertyValue.ToString()];
+                            var to = toKeys[from];
+
+                            property.SetValue(AttachedControl, to, null);
+                        }
+                    }
+
                     var keyFrames = FindKeyFrames(visualStateGroups);
                     foreach (var keyFrame in keyFrames)
                     {
