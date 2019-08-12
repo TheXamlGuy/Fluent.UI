@@ -158,6 +158,17 @@ namespace Fluent.UI.Controls
                         return;
                     }
 
+                    var keyFrames = FindKeyFrames(visualStateGroups);
+                    foreach (var keyFrame in keyFrames)
+                    {
+                        if (keyFrame is DiscreteObjectKeyFrame objectKeyFrame)
+                        {
+                            var from = fromKeys.FirstOrDefault(x => x.Value.ToString() == objectKeyFrame.Value.ToString());
+                            var to = toKeys[from.Key];
+                            objectKeyFrame.Value = to;
+                        }
+                    }
+
                     var properties = AttachedControl.GetType().GetProperties();
                     foreach (var property in properties)
                     {
@@ -169,21 +180,10 @@ namespace Fluent.UI.Controls
                                 return;
                             }
 
-                            var from = fromKeys[propertyValue.ToString()];
-                            var to = toKeys[from];
+                            var from = fromKeys.FirstOrDefault(x => x.Value.ToString() == propertyValue.ToString());
+                            var to = toKeys[from.Key];
 
                             property.SetValue(AttachedControl, to, null);
-                        }
-                    }
-
-                    var keyFrames = FindKeyFrames(visualStateGroups);
-                    foreach (var keyFrame in keyFrames)
-                    {
-                        if (keyFrame is DiscreteObjectKeyFrame objectKeyFrame)
-                        {
-                            var from = fromKeys[objectKeyFrame.Value.ToString()];
-                            var to = toKeys[from];
-                            objectKeyFrame.Value = to;
                         }
                     }
                 }
@@ -225,9 +225,8 @@ namespace Fluent.UI.Controls
             fromKeys = new Dictionary<object, object>();
             toKeys = new Dictionary<object, object>();
 
-            ResourceDictionary lightThemeResource = null;
-            ResourceDictionary defaultThemeResource = null;
-
+            ResourceDictionary lightThemeResource;
+            ResourceDictionary defaultThemeResource;
             try
             {
                 lightThemeResource = Application.LoadComponent(lightTheme) as ResourceDictionary;
@@ -238,12 +237,12 @@ namespace Fluent.UI.Controls
                 return false;
             }
 
-            foreach (DictionaryEntry item in lightThemeResource.Cast<DictionaryEntry>().Where(x => x.Value.GetType().BaseType == typeof(Brush)))
+            foreach (DictionaryEntry item in lightThemeResource.Cast<DictionaryEntry>())
             {
-                fromKeys[item.Value.ToString()] = item.Key;
+                fromKeys[item.Key] = item.Value;
             }
 
-            foreach (DictionaryEntry item in defaultThemeResource)
+            foreach (DictionaryEntry item in defaultThemeResource.Cast<DictionaryEntry>())
             {
                 toKeys[item.Key] = item.Value;
             }
