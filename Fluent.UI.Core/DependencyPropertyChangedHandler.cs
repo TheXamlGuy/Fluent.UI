@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 
 namespace Fluent.UI.Core
@@ -31,7 +32,7 @@ namespace Fluent.UI.Core
 
         public void Clear()
         {
-            foreach(var subscription in _subscriptions)
+            foreach(var subscription in _subscriptions.ToList())
             {
                 var key = subscription.Key;
                 var handler = subscription.Value;

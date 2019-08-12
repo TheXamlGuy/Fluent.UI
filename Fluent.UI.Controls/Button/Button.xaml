@@ -44,6 +44,9 @@
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Background">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ButtonPointerOverBackgroundThemeBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderBrush">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ButtonPointerOverBorderThemeBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(TextBlock.Foreground)">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ButtonPointerOverForegroundThemeBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
@@ -53,6 +56,9 @@
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Background">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ButtonPressedBackgroundThemeBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderBrush">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ButtonPressedBorderThemeBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(TextBlock.Foreground)">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ButtonPressedForegroundThemeBrush}" />

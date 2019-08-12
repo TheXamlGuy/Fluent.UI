@@ -53,13 +53,13 @@ namespace Fluent.UI.Core
 
         private void RemoveAttachedControl()
         {
-            AttachedControl = null;
-
             UnregisterEvents();
             RegisterEvents();
 
             _dependencyPropertyChangedHandler.Clear();
             _dependencyPropertyChangedHandler = null;
+
+            AttachedControl = null;
         }
 
         private void UnregisterEvents()
