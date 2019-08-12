@@ -113,6 +113,20 @@ namespace Fluent.UI.Controls
             extensionBase.SetAttachedControl(control);
         }
 
+        private IEnumerable<object> FindKeyFrames(Collection<VisualStateGroup> visualStateGroups)
+        {
+            foreach (var timeline in visualStateGroups.Select(vsg => vsg.States.Cast<VisualState>().Where(x => x.Storyboard != null)).SelectMany(visualStates => visualStates.SelectMany(sb => sb.Storyboard.Children)))
+            {
+                if (timeline is IKeyFrameAnimation keyFrameAnimation)
+                {
+                    foreach (var keyFrame in keyFrameAnimation.KeyFrames)
+                    {
+                        yield return keyFrame;
+                    }
+                }
+            }
+        }
+
         private void OnUnloaded(object sender, RoutedEventArgs args)
         {
             UnregisterEvents();
@@ -139,29 +153,24 @@ namespace Fluent.UI.Controls
                     }
 
                     var visualStateGroups = (Collection<VisualStateGroup>)VisualStateManager.GetVisualStateGroups(root);
-
-                    foreach (var visualStates in visualStateGroups.Select(vsg => vsg.States.Cast<VisualState>().Where(x => x.Storyboard != null)))
+                    if (visualStateGroups == null)
                     {
-                        foreach (var timeline in visualStates.SelectMany(sb => sb.Storyboard.Children))
+                        return;
+                    }
+
+                    var keyFrames = FindKeyFrames(visualStateGroups);
+                    foreach (var keyFrame in keyFrames)
+                    {
+                        if (keyFrame is DiscreteObjectKeyFrame objectKeyFrame)
                         {
-                            if (timeline is IKeyFrameAnimation keyFrameAnimation)
-                            {
-                                foreach (var kryFrame in keyFrameAnimation.KeyFrames)
-                                {
-                                    if (kryFrame is DiscreteObjectKeyFrame objectKeyFrame)
-                                    {
-                                        var from = fromKeys[objectKeyFrame.Value.ToString()];
-                                        var to = toKeys[from];
-                                        objectKeyFrame.Value = to;
-                                    }
-                                }
-                            }
+                            var from = fromKeys[objectKeyFrame.Value.ToString()];
+                            var to = toKeys[from];
+                            objectKeyFrame.Value = to;
                         }
                     }
                 }
             }
         }
-
         private void RegisterEvents()
         {
             AttachedControl.Unloaded += OnUnloaded;
