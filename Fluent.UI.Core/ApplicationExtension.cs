@@ -1,11 +1,9 @@
-﻿using Fluent.UI.Controls;
-using Fluent.UI.Core;
-using System;
+﻿using System;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
 
-namespace Fluent.UI
+namespace Fluent.UI.Core
 {
     public class ApplicationExtension
     {
@@ -18,10 +16,12 @@ namespace Fluent.UI
         {
             application.Startup += (sender, args) =>
             {
+                var objectType = Type.GetType("Fluent.UI.Controls.ControlExtension`2, Fluent.UI.Controls");
+
                 var themeResource = new Uri($@"Fluent.UI.Controls;component/Themes/ThemeResources.xaml", UriKind.Relative);
                 application.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = themeResource });
 
-                foreach (var type in Assembly.GetAssembly(typeof(ButtonExtension)).GetTypes().Where(x => x.BaseType.IsGenericType && x.BaseType.GetGenericTypeDefinition() == typeof(ControlExtension<,>)))
+                foreach (var type in Assembly.GetAssembly(objectType).GetTypes().Where(x => x.BaseType.IsGenericType && x.BaseType.GetGenericTypeDefinition() == objectType))
                 {
                     var typeName = type.BaseType.GetGenericArguments()[0].Name;
                     var typeNamespace = type.Namespace;

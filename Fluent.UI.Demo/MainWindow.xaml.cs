@@ -59,19 +59,19 @@ namespace Fluent.UI.Demo
 
             var root = Button3.FindDescendant<Panel>();
             var visualStateGroups = (Collection<VisualStateGroup>)VisualStateManager.GetVisualStateGroups(root);
-            foreach (var vsg in visualStateGroups.Select(vsg => vsg.States.Cast<VisualState>().Where(x => x.Storyboard != null)))
+            foreach (var visualStates in visualStateGroups.Select(vsg => vsg.States.Cast<VisualState>().Where(x => x.Storyboard != null)))
             {
-                foreach (Timeline timeline in vsg.SelectMany(vst => vst.Storyboard.Children))
+                foreach (var timeline in visualStates.SelectMany(sb => sb.Storyboard.Children))
                 {
                     if (timeline is IKeyFrameAnimation keyFrameAnimation)
                     {
-                        foreach (var dd in keyFrameAnimation.KeyFrames)
+                        foreach (var kryFrame in keyFrameAnimation.KeyFrames)
                         {
-                            if (dd is DiscreteObjectKeyFrame f)
+                            if (kryFrame is DiscreteObjectKeyFrame objectKeyFrame)
                             {
-                                var from = fromKeys[f.Value.ToString()];
+                                var from = fromKeys[objectKeyFrame.Value.ToString()];
                                 var to = toKeys[from];
-                                f.Value = to;
+                                objectKeyFrame.Value = to;
                             }
                         }
                     }

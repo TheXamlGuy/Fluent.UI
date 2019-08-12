@@ -49,6 +49,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Button\ButtonExtension.cs" />
+    <Compile Include="ElementTheme.cs" />
+    <Compile Include="ControlExtension.cs" />
     <Compile Include="TextBox\TextBoxExtension.cs" />
     <Compile Include="VisualStates.cs" />
     <Compile Include="ContentDialog\ContentDialogPlacement.cs" />

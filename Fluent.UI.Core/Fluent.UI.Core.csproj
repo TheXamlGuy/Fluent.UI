@@ -48,7 +48,8 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ControlExtension.cs" />
+    <Compile Include="ApplicationExtension.cs" />
+    <Compile Include="ApplicationTheme.cs" />
     <Compile Include="GridLengthAnimation.cs" />
     <Compile Include="Extensions\FrameworkElementExtension.cs" />
     <Compile Include="Extensions\ItemsControlExtension.cs" />
