@@ -1,6 +1,14 @@
 ﻿using Fluent.UI.Core;
+using Fluent.UI.Core.Extensions;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 namespace Fluent.UI.Controls
 {
@@ -11,14 +19,18 @@ namespace Fluent.UI.Controls
                typeof(bool), typeof(ControlExtension<TControl, TControlExtension>),
                new PropertyMetadata(false, OnIsExtendedPropertyChanged));
 
-        internal static DependencyProperty AttachedControlProperty =
-          DependencyProperty.RegisterAttached("AttachedControl",
-              typeof(ControlExtension<TControl, TControlExtension>), typeof(ControlExtension<TControl, TControlExtension>));
-
         public static readonly DependencyProperty RequestedThemeProperty =
             DependencyProperty.RegisterAttached("RequestedTheme",
                 typeof(ElementTheme), typeof(ControlExtension<TControl, TControlExtension>),
-                new PropertyMetadata(ElementTheme.Dark, OnRequestedThemePropertyChanged));
+                new PropertyMetadata((ElementTheme)(int)ApplicationExtension.RequestedTheme, OnRequestedThemePropertyChanged));
+
+        internal static DependencyProperty AttachedControlProperty =
+            DependencyProperty.RegisterAttached("AttachedControl",
+              typeof(ControlExtension<TControl, TControlExtension>), typeof(ControlExtension<TControl, TControlExtension>));
+
+        internal static DependencyProperty IsRequestedThemeProperty =
+            DependencyProperty.RegisterAttached("IsRequestedTheme",
+                typeof(bool), typeof(ControlExtension<TControl, TControlExtension>));
 
         protected TControl AttachedControl;
 
@@ -26,7 +38,26 @@ namespace Fluent.UI.Controls
 
         public static bool GetIsAttached(DependencyObject dependencyObject) => (bool)dependencyObject.GetValue(IsAttachedProperty);
 
+        public static bool GetIsRequestedTheme(DependencyObject dependencyObject) => (bool)dependencyObject.GetValue(IsRequestedThemeProperty);
+
+        public static ElementTheme GetRequestedTheme(TControl control) => (ElementTheme)control.GetValue(RequestedThemeProperty);
+
         public static void SetIsAttached(DependencyObject dependencyObject, bool value) => dependencyObject.SetValue(IsAttachedProperty, value);
+
+        public static void SetIsRequestedTheme(DependencyObject dependencyObject, bool value) => dependencyObject.SetValue(IsRequestedThemeProperty, value);
+        public static void SetRequestedTheme(TControl control, ElementTheme value)
+        {
+            var attachedControl = GetAttachedControl(control);
+            if (attachedControl != null)
+            {
+
+            }
+
+            control.SetValue(IsRequestedThemeProperty, true);
+            control.SetValue(RequestedThemeProperty, value);
+        }
+
+        internal static ControlExtension<TControl, TControlExtension> GetAttachedControl(TControl control) => (ControlExtension<TControl, TControlExtension>)control.GetValue(AttachedControlProperty);
 
         protected virtual void ChangeVisualState(bool useTransitions = true)
         {
@@ -45,36 +76,12 @@ namespace Fluent.UI.Controls
             PrepareRequestedTheme();
         }
 
-        private void PrepareRequestedTheme()
-        {
-
-        }
-
         private static void ClearAttachedControl(TControl control)
         {
             var extensionBase = control.GetValue(AttachedControlProperty) as ControlExtension<TControl, TControlExtension>;
             extensionBase?.RemoveAttachedControl();
 
             control.ClearValue(AttachedControlProperty);
-        }
-
-        private static void OnRequestedThemePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
-        {
-            if ((ElementTheme)args.NewValue != (ElementTheme)args.OldValue)
-            {
-                SetRequestedTheme((TControl)dependencyObject, (ElementTheme)args.NewValue);
-            }
-        }
-
-        public static void SetRequestedTheme(TControl control, ElementTheme value)
-        {
-            var attachedControl = GetAttachedControl(control);
-            if (attachedControl != null)
-            {
-
-            }
-
-            control.SetValue(RequestedThemeProperty, value);
         }
 
         private static void OnIsExtendedPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
@@ -92,7 +99,13 @@ namespace Fluent.UI.Controls
             }
         }
 
-        internal static ControlExtension<TControl, TControlExtension> GetAttachedControl(TControl control) => (ControlExtension<TControl, TControlExtension>)control.GetValue(AttachedControlProperty);
+        private static void OnRequestedThemePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        {
+            if ((ElementTheme)args.NewValue != (ElementTheme)args.OldValue)
+            {
+                SetRequestedTheme((TControl)dependencyObject, (ElementTheme)args.NewValue);
+            }
+        }
 
         private static void SetAttachedControl(TControl control, ControlExtension<TControl, TControlExtension> extensionBase)
         {
@@ -103,6 +116,50 @@ namespace Fluent.UI.Controls
         private void OnUnloaded(object sender, RoutedEventArgs args)
         {
             UnregisterEvents();
+        }
+
+        private void PrepareRequestedTheme()
+        {
+            var requestedApplicationTheme = ApplicationExtension.RequestedTheme;
+            var requestedTheme = GetRequestedTheme(AttachedControl);
+            if ((int)requestedTheme == (int)requestedApplicationTheme)
+            {
+                return;
+            }
+
+            var isRequestedTheme = GetIsRequestedTheme(AttachedControl);
+            if (isRequestedTheme)
+            {
+                if (TryFindThemeResources(out Dictionary<object, object> fromKeys, out Dictionary<object, object> toKeys))
+                {
+                    var root = AttachedControl.FindDescendant<Panel>();
+                    if (root == null)
+                    {
+                        return;
+                    }
+
+                    var visualStateGroups = (Collection<VisualStateGroup>)VisualStateManager.GetVisualStateGroups(root);
+
+                    foreach (var visualStates in visualStateGroups.Select(vsg => vsg.States.Cast<VisualState>().Where(x => x.Storyboard != null)))
+                    {
+                        foreach (var timeline in visualStates.SelectMany(sb => sb.Storyboard.Children))
+                        {
+                            if (timeline is IKeyFrameAnimation keyFrameAnimation)
+                            {
+                                foreach (var kryFrame in keyFrameAnimation.KeyFrames)
+                                {
+                                    if (kryFrame is DiscreteObjectKeyFrame objectKeyFrame)
+                                    {
+                                        var from = fromKeys[objectKeyFrame.Value.ToString()];
+                                        var to = toKeys[from];
+                                        objectKeyFrame.Value = to;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         private void RegisterEvents()
@@ -125,7 +182,7 @@ namespace Fluent.UI.Controls
         private void SetAttachedControl(TControl control)
         {
             AttachedControl = control;
-            
+
             UnregisterEvents();
             RegisterEvents();
 
@@ -133,6 +190,39 @@ namespace Fluent.UI.Controls
             DependencyPropertyChangedHandler(_dependencyPropertyChangedHandler);
         }
 
+        private bool TryFindThemeResources(out Dictionary<object, object> fromKeys, out Dictionary<object, object> toKeys)
+        {
+            var lightTheme = new Uri($@"Fluent.UI.Controls;component/Button/Button.Light.xaml", UriKind.Relative);
+            var defaultTheme = new Uri($@"Fluent.UI.Controls;component/Button/Button.Default.xaml", UriKind.Relative);
+
+            fromKeys = new Dictionary<object, object>();
+            toKeys = new Dictionary<object, object>();
+
+            ResourceDictionary lightThemeResource = null;
+            ResourceDictionary defaultThemeResource = null;
+
+            try
+            {
+                lightThemeResource = Application.LoadComponent(lightTheme) as ResourceDictionary;
+                defaultThemeResource = Application.LoadComponent(defaultTheme) as ResourceDictionary;
+            }
+            catch
+            {
+                return false;
+            }
+
+            foreach (DictionaryEntry item in lightThemeResource.Cast<DictionaryEntry>().Where(x => x.Value.GetType().BaseType == typeof(Brush)))
+            {
+                fromKeys[item.Value.ToString()] = item.Key;
+            }
+
+            foreach (DictionaryEntry item in defaultThemeResource)
+            {
+                toKeys[item.Key] = item.Value;
+            }
+
+            return true;
+        }
         private void UnregisterEvents()
         {
             AttachedControl.Unloaded -= OnUnloaded;

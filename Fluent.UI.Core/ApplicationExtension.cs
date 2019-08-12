@@ -12,8 +12,12 @@ namespace Fluent.UI.Core
                 typeof(ApplicationTheme), typeof(ApplicationExtension),
                 new PropertyMetadata(ApplicationTheme.Dark));
 
+        public static ApplicationTheme RequestedTheme { get; private set; }
+
         public static void SetRequestedTheme(Application application, ApplicationTheme requestedTheme)
         {
+            RequestedTheme = requestedTheme;
+
             application.Startup += (sender, args) =>
             {
                 var objectType = Type.GetType("Fluent.UI.Controls.ControlExtension`2, Fluent.UI.Controls");
