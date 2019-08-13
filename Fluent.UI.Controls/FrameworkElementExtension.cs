@@ -12,39 +12,39 @@ using System.Windows.Media.Animation;
 
 namespace Fluent.UI.Controls
 {
-    public abstract class ControlExtension<TControl, TControlExtension> : DependencyObject where TControl : Control where TControlExtension : ControlExtension<TControl, TControlExtension>, new()
+    public abstract class FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension> : DependencyObject where TFrameworkElement : FrameworkElement where TFrameworkElementExtension : FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension>, new()
     {
         public static readonly DependencyProperty IsAttachedProperty =
            DependencyProperty.RegisterAttached("IsAttached",
-               typeof(bool), typeof(ControlExtension<TControl, TControlExtension>),
+               typeof(bool), typeof(FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension>),
                new PropertyMetadata(false, OnIsExtendedPropertyChanged));
 
         public static readonly DependencyProperty RequestedThemeProperty =
             DependencyProperty.RegisterAttached("RequestedTheme",
-                typeof(ElementTheme), typeof(ControlExtension<TControl, TControlExtension>),
+                typeof(ElementTheme), typeof(FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension>),
                 new PropertyMetadata((ElementTheme)(int)ApplicationExtension.RequestedTheme, OnRequestedThemePropertyChanged));
 
         internal static DependencyProperty AttachedControlProperty =
             DependencyProperty.RegisterAttached("AttachedControl",
-              typeof(ControlExtension<TControl, TControlExtension>), typeof(ControlExtension<TControl, TControlExtension>));
+              typeof(FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension>), typeof(FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension>));
 
         internal static DependencyProperty IsRequestedThemeProperty =
             DependencyProperty.RegisterAttached("IsRequestedTheme",
-                typeof(bool), typeof(ControlExtension<TControl, TControlExtension>));
+                typeof(bool), typeof(FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension>));
 
-        protected TControl AttachedControl;
+        protected TFrameworkElement AttachedFrameworkElement;
 
         private DependencyPropertyChangedHandler _dependencyPropertyChangedHandler;
 
-        public static ElementTheme GetRequestedTheme(TControl control) => (ElementTheme)control.GetValue(RequestedThemeProperty);
+        public static ElementTheme GetRequestedTheme(TFrameworkElement control) => (ElementTheme)control.GetValue(RequestedThemeProperty);
 
-        public static void SetRequestedTheme(TControl control, ElementTheme value)
+        public static void SetRequestedTheme(TFrameworkElement control, ElementTheme value)
         {
             control.SetValue(IsRequestedThemeProperty, true);
             control.SetValue(RequestedThemeProperty, value);
         }
 
-        internal static ControlExtension<TControl, TControlExtension> GetAttachedControl(TControl control) => (ControlExtension<TControl, TControlExtension>)control.GetValue(AttachedControlProperty);
+        internal static FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension> GetAttachedControl(TFrameworkElement control) => (FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension>)control.GetValue(AttachedControlProperty);
 
         internal static bool GetIsAttached(DependencyObject dependencyObject) => (bool)dependencyObject.GetValue(IsAttachedProperty);
 
@@ -63,7 +63,7 @@ namespace Fluent.UI.Controls
 
         }
 
-        protected void GoToVisualState(string stateName, bool useTransitions = true) => VisualStateManager.GoToState(AttachedControl, stateName, useTransitions);
+        protected void GoToVisualState(string stateName, bool useTransitions = true) => VisualStateManager.GoToState(AttachedFrameworkElement, stateName, useTransitions);
 
         protected virtual void OnLoaded(object sender, RoutedEventArgs args)
         {
@@ -76,14 +76,14 @@ namespace Fluent.UI.Controls
             {
                 if ((bool)args.NewValue)
                 {
-                    var extension = new TControlExtension();
-                    SetAttachedControl(dependencyObject as TControl, extension);
+                    var extension = new TFrameworkElementExtension();
+                    SetAttachedControl(dependencyObject as TFrameworkElement, extension);
 
-                    extension.PrepareAttachedControl(dependencyObject as TControl);
+                    extension.PrepareAttachedControl(dependencyObject as TFrameworkElement);
                 }
                 else
                 {
-                    var extension = dependencyObject.GetValue(AttachedControlProperty) as ControlExtension<TControl, TControlExtension>;
+                    var extension = dependencyObject.GetValue(AttachedControlProperty) as FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension>;
                     extension.RemoveAttachedControl();
 
                     dependencyObject.ClearValue(AttachedControlProperty);
@@ -95,12 +95,12 @@ namespace Fluent.UI.Controls
         {
             if ((ElementTheme)args.NewValue != (ElementTheme)args.OldValue)
             {
-                var attachedControl = GetAttachedControl(dependencyObject as TControl);
+                var attachedControl = GetAttachedControl(dependencyObject as TFrameworkElement);
                 attachedControl?.PrepareRequestedTheme();
             }
         }
 
-        private static void SetAttachedControl(TControl control, ControlExtension<TControl, TControlExtension> extension) => control.SetValue(AttachedControlProperty, extension);
+        private static void SetAttachedControl(TFrameworkElement control, FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension> extension) => control.SetValue(AttachedControlProperty, extension);
 
         private IEnumerable<object> FindKeyFrames(Collection<VisualStateGroup> visualStateGroups)
         {
@@ -121,9 +121,9 @@ namespace Fluent.UI.Controls
             UnregisterEvents();
         }
 
-        private void PrepareAttachedControl(TControl control)
+        private void PrepareAttachedControl(TFrameworkElement control)
         {
-            AttachedControl = control;
+            AttachedFrameworkElement = control;
 
             UnregisterEvents();
             RegisterEvents();
@@ -135,9 +135,9 @@ namespace Fluent.UI.Controls
         private void PrepareRequestedTheme()
         {
             var requestedApplicationTheme = ApplicationExtension.RequestedTheme;
-            var requestedTheme = GetRequestedTheme(AttachedControl);
+            var requestedTheme = GetRequestedTheme(AttachedFrameworkElement);
 
-            var isRequestedTheme = GetIsRequestedTheme(AttachedControl);
+            var isRequestedTheme = GetIsRequestedTheme(AttachedFrameworkElement);
             if (!isRequestedTheme && (int)requestedTheme == (int)requestedApplicationTheme)
             {
                 return;
@@ -145,7 +145,7 @@ namespace Fluent.UI.Controls
 
             if (TryFindThemeResources(requestedTheme, out Dictionary<object, object> fromKeys, out Dictionary<object, object> toKeys))
             {
-                var root = AttachedControl.FindDescendant<Panel>();
+                var root = AttachedFrameworkElement.FindDescendant<Panel>();
                 if (root == null)
                 {
                     return;
@@ -168,12 +168,12 @@ namespace Fluent.UI.Controls
                     }
                 }
 
-                var properties = AttachedControl.GetType().GetProperties();
+                var properties = AttachedFrameworkElement.GetType().GetProperties();
                 foreach (var property in properties)
                 {
                     if (property.PropertyType == typeof(Brush))
                     {
-                        var propertyValue = property.GetValue(AttachedControl, null);
+                        var propertyValue = property.GetValue(AttachedFrameworkElement, null);
                         if (propertyValue == null)
                         {
                             return;
@@ -182,7 +182,7 @@ namespace Fluent.UI.Controls
                         var from = fromKeys.FirstOrDefault(x => x.Value.ToString() == propertyValue.ToString());
                         var to = toKeys[from.Key];
 
-                        property.SetValue(AttachedControl, to, null);
+                        property.SetValue(AttachedFrameworkElement, to, null);
                     }
                 }
             }
@@ -191,8 +191,8 @@ namespace Fluent.UI.Controls
 
         private void RegisterEvents()
         {
-            AttachedControl.Unloaded += OnUnloaded;
-            AttachedControl.Loaded += OnLoaded;
+            AttachedFrameworkElement.Unloaded += OnUnloaded;
+            AttachedFrameworkElement.Loaded += OnLoaded;
         }
 
         private void RemoveAttachedControl()
@@ -203,11 +203,11 @@ namespace Fluent.UI.Controls
             _dependencyPropertyChangedHandler.Clear();
             _dependencyPropertyChangedHandler = null;
 
-            AttachedControl = null;
+            AttachedFrameworkElement = null;
         }
         private bool TryFindThemeResources(ElementTheme requestedTheme, out Dictionary<object, object> fromKeys, out Dictionary<object, object> toKeys)
         {
-            var typeName = AttachedControl.GetType().Name;
+            var typeName = AttachedFrameworkElement.GetType().Name;
 
             var lightTheme = new Uri($@"Fluent.UI.Controls;component/{typeName}/{typeName}.Light.xaml", UriKind.Relative);
             var defaultTheme = new Uri($@"Fluent.UI.Controls;component/{typeName}/{typeName}.Default.xaml", UriKind.Relative);
@@ -242,8 +242,8 @@ namespace Fluent.UI.Controls
 
         private void UnregisterEvents()
         {
-            AttachedControl.Unloaded -= OnUnloaded;
-            AttachedControl.Loaded -= OnLoaded;
+            AttachedFrameworkElement.Unloaded -= OnUnloaded;
+            AttachedFrameworkElement.Loaded -= OnLoaded;
         }
     }
 }

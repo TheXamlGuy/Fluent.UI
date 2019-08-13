@@ -5,13 +5,13 @@ using System.Windows.Controls.Primitives;
 
 namespace Fluent.UI.Controls
 {
-    public class ButtonExtension : ControlExtension<Button, ButtonExtension>
+    public class ButtonExtension : FrameworkElementExtension<Button, ButtonExtension>
     {
         protected override void DependencyPropertyChangedHandler(DependencyPropertyChangedHandler handler)
         {
-            handler.Add(AttachedControl, UIElement.IsEnabledProperty, () => ChangeVisualState(true));
-            handler.Add(AttachedControl, ButtonBase.IsPressedProperty, () => ChangeVisualState(true));
-            handler.Add(AttachedControl, UIElement.IsMouseOverProperty, () => ChangeVisualState(true));
+            handler.Add(AttachedFrameworkElement, UIElement.IsEnabledProperty, () => ChangeVisualState(true));
+            handler.Add(AttachedFrameworkElement, ButtonBase.IsPressedProperty, () => ChangeVisualState(true));
+            handler.Add(AttachedFrameworkElement, UIElement.IsMouseOverProperty, () => ChangeVisualState(true));
 
             base.DependencyPropertyChangedHandler(handler);
         }
@@ -19,15 +19,15 @@ namespace Fluent.UI.Controls
         protected override void ChangeVisualState(bool useTransitions = true)
         {
             string visualState;
-            if (!AttachedControl.IsEnabled)
+            if (!AttachedFrameworkElement.IsEnabled)
             {
                 visualState = VisualStates.StateDisabled;
             }
-            else if (AttachedControl.IsPressed)
+            else if (AttachedFrameworkElement.IsPressed)
             {
                 visualState = VisualStates.StatePressed;
             }
-            else if (AttachedControl.IsMouseOver)
+            else if (AttachedFrameworkElement.IsMouseOver)
             {
                 visualState = VisualStates.StatePointerOver;
             }

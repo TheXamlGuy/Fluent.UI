@@ -20,12 +20,12 @@ namespace Fluent.UI.Core
 
             application.Startup += (sender, args) =>
             {
-                var objectType = Type.GetType("Fluent.UI.Controls.ControlExtension`2, Fluent.UI.Controls");
+                var objectType = Type.GetType("Fluent.UI.Controls.FrameworkElementExtension`2, Fluent.UI.Controls");
 
                 var themeResource = new Uri($@"/Fluent.UI.Controls;component/Themes/ThemeResources.xaml", UriKind.Relative);
                 application.Resources.MergedDictionaries.Insert(0, new SharedResourceDictionary { Source = themeResource });
 
-                foreach (var type in Assembly.GetAssembly(objectType).GetTypes().Where(x => x.BaseType.IsGenericType && x.BaseType.GetGenericTypeDefinition() == objectType))
+                foreach (var type in Assembly.GetAssembly(objectType).GetTypes().Where(x => !x.IsAbstract && x.BaseType.IsGenericType && x.BaseType.GetGenericTypeDefinition() == objectType))
                 {
                     var typeName = type.BaseType.GetGenericArguments()[0].Name;
                     var typeNamespace = type.Namespace;
@@ -33,7 +33,6 @@ namespace Fluent.UI.Core
 
                     var controlResource = new Uri($@"/{typeNamespace};component/{typeName}/{typeName}.xaml", UriKind.Relative);
                     var controlThemeResource = new Uri($@"/{typeNamespace};component/{typeName}/{typeName}.{requestedThemeName}.xaml", UriKind.Relative);
-
 
                     application.Resources.MergedDictionaries.Add(new SharedResourceDictionary { Source = controlThemeResource });
                     application.Resources.MergedDictionaries.Add(new SharedResourceDictionary { Source = controlResource });
