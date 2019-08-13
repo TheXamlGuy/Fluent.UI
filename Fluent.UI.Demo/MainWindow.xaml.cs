@@ -35,5 +35,11 @@ namespace Fluent.UI.Demo
         {
             ContentDialogXAML.ShowAsync();
         }
+
+        private void D_Checked(object sender, RoutedEventArgs e)
+        {
+            ButtonExtension.SetRequestedTheme(Button1, ElementTheme.Dark);
+            ThemeBackground.Background = Brushes.Black;
+        }
     }
 }
