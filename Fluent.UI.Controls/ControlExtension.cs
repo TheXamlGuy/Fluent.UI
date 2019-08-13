@@ -238,6 +238,7 @@ namespace Fluent.UI.Controls
 
             return true;
         }
+
         private void UnregisterEvents()
         {
             AttachedControl.Unloaded -= OnUnloaded;
