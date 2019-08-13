@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    xmlns:system="clr-namespace:System;assembly=System.Runtime">
     <FontFamily x:Key="ContentControlThemeFontFamily">Segoe UI</FontFamily>
     <FontFamily x:Key="MTCMediaFontFamily">Segoe UI</FontFamily>
     <FontFamily x:Key="PhoneFontFamilyNormal">Segoe WP</FontFamily>
@@ -255,8 +255,8 @@
     <Color x:Key="SystemListMediumColor">#33000000</Color>
     <Color x:Key="SystemAccentColor">Blue</Color>
     <SolidColorBrush x:Key="SystemControlBackgroundAccentBrush" Color="{StaticResource SystemAccentColor}" />
-    <SolidColorBrush x:Key="SystemControlBackgroundAccentHighBrush" Color="{StaticResource SystemAccentHighColor}" />
-    <SolidColorBrush x:Key="SystemControlBackgroundAccentLowBrush" Color="{StaticResource SystemAccentLowColor}" />
+    <!--<SolidColorBrush x:Key="SystemControlBackgroundAccentHighBrush" Color="{StaticResource SystemAccentHighColor}" />
+    <SolidColorBrush x:Key="SystemControlBackgroundAccentLowBrush" Color="{StaticResource SystemAccentLowColor}" />-->
     <SolidColorBrush x:Key="SystemControlBackgroundAltHighBrush" Color="{StaticResource SystemAltHighColor}" />
     <SolidColorBrush x:Key="SystemControlBackgroundAltMediumHighBrush" Color="{StaticResource SystemAltMediumHighColor}" />
     <SolidColorBrush x:Key="SystemControlBackgroundAltMediumBrush" Color="{StaticResource SystemAltMediumColor}" />

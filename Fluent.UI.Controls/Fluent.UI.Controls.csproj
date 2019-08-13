@@ -31,9 +31,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Page Remove="Themes\ThemeResources.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Themes\ThemeResources.xaml">
+      <Generator></Generator>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Fluent.UI.Core\Fluent.UI.Core.csproj">
       <Project>{72146259-77AD-47A7-B5CF-F82C8CB00948}</Project>
       <Name>Fluent.UI.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="ContentDialog\ContentDialog.Light.xaml">
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 </Project>

@@ -3,14 +3,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:Fluent.UI.Controls">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/Fluent.UI.Controls;component/Themes/ThemeResources.xaml" />
+        <SharedResourceDictionary Source="/Fluent.UI.Controls;component/ContentDialog/ContentDialog.Default.xaml" />
+        <SharedResourceDictionary Source="/Fluent.UI.Controls;component/Themes/ThemeResources.xaml" />
     </ResourceDictionary.MergedDictionaries>
     <Style TargetType="controls:ContentDialog">
         <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}" />
         <Setter Property="FontSize" Value="{StaticResource ControlContentThemeFontSize}" />
         <Setter Property="Foreground" Value="{StaticResource SystemControlPageTextBaseHighBrush}" />
         <Setter Property="Background" Value="{StaticResource SystemControlBackgroundAltHighBrush}" />
-        <Setter Property="BorderBrush" Value="{StaticResource SystemControlForegroundAccentBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ContentDialogBorderThemeBrush}" />
         <Setter Property="PopupBackground" Value="{StaticResource SystemControlPageBackgroundMediumAltMediumBrush}" />
         <Setter Property="KeyboardNavigation.ControlTabNavigation" Value="Cycle" />
         <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Cycle" />

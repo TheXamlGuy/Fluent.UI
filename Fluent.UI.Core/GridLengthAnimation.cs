@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Media.Animation;
 
-namespace Fluent.UI.Controls.Animation
+namespace Fluent.UI.Core
 {
     public class GridLengthAnimation : AnimationTimeline
     {

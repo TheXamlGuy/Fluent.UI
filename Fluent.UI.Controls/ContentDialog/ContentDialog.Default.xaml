@@ -1,0 +1,29 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+    <system:Double x:Key="ContentDialogMinWidth">320</system:Double>
+    <system:Double x:Key="ContentDialogMaxWidth">548</system:Double>
+    <system:Double x:Key="ContentDialogMinHeight">184</system:Double>
+    <system:Double x:Key="ContentDialogMaxHeight">756</system:Double>
+    <system:Double x:Key="ContentDialogButtonMinWidth">130</system:Double>
+    <system:Double x:Key="ContentDialogButtonMaxWidth">202</system:Double>
+    <system:Double x:Key="ContentDialogButtonMinHeight">32</system:Double>
+    <system:Double x:Key="ContentDialogButtonHeight">32</system:Double>
+    <system:Double x:Key="ContentDialogTitleMaxHeight">56</system:Double>
+    <Thickness x:Key="ContentDialogBorderWidth">1</Thickness>
+    <Thickness x:Key="ContentDialogButton1HostMargin">0,0,4,0</Thickness>
+    <Thickness x:Key="ContentDialogButton2HostMargin">0,0,0,0</Thickness>
+    <Thickness x:Key="ContentDialogContentMargin">0,0,0,0</Thickness>
+    <Thickness x:Key="ContentDialogContentScrollViewerMargin">0,0,0,0</Thickness>
+    <Thickness x:Key="ContentDialogTitleMargin">0,0,0,12</Thickness>
+    <Thickness x:Key="ContentDialogPadding">24,18,24,24</Thickness>
+    <SolidColorBrush x:Key="ContentDialogForeground" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ContentDialogBackground" Color="#FF000000" />
+    <SolidColorBrush x:Key="ContentDialogBorderBrush" Color="#33FFFFFF" />
+    <SolidColorBrush x:Key="ContentDialogLightDismissOverlayBackground" Color="#99000000" />
+    <SolidColorBrush x:Key="ContentDialogBackgroundThemeBrush" Color="LightGray" />
+    <SolidColorBrush x:Key="ContentDialogBorderThemeBrush" Color="Blue" />
+    <SolidColorBrush x:Key="ContentDialogContentForegroundBrush" Color="Black" />
+    <SolidColorBrush x:Key="ContentDialogDimmingThemeBrush" Color="#99FFFFFF" />
+    <Thickness x:Key="ContentDialogCommandSpaceMargin">0,24,0,0</Thickness>
+</ResourceDictionary>
