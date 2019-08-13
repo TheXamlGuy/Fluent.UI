@@ -10,7 +10,7 @@
         </Grid.ColumnDefinitions>
         <ContentDialog x:Name="ContentDialogXAML" PrimaryButtonText="Primary Button" />
         <StackPanel Grid.Column="0">
-            <CheckBox x:Name="d" Checked="D_Checked" />
+            <CheckBox x:Name="d" Checked="D_Checked" Content="Switch to dark theme" Unchecked="D_Unchecked" />
             <Border
                 x:Name="ThemeBackground"
                 Padding="50">
@@ -23,7 +23,6 @@
             <Button
                 x:Name="Button2"
                 Margin="0,0,0,8"
-                ButtonExtension.RequestedTheme="Dark"
                 Content="Open from XAML" />
             <Button x:Name="Button3" Content="Show in place" />
             <TextBox />

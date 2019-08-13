@@ -136,58 +136,57 @@ namespace Fluent.UI.Controls
         {
             var requestedApplicationTheme = ApplicationExtension.RequestedTheme;
             var requestedTheme = GetRequestedTheme(AttachedControl);
-            if ((int)requestedTheme == (int)requestedApplicationTheme)
+
+            var isRequestedTheme = GetIsRequestedTheme(AttachedControl);
+            if (!isRequestedTheme && (int)requestedTheme == (int)requestedApplicationTheme)
             {
                 return;
             }
 
-            var isRequestedTheme = GetIsRequestedTheme(AttachedControl);
-            if (isRequestedTheme)
+            if (TryFindThemeResources(requestedTheme, out Dictionary<object, object> fromKeys, out Dictionary<object, object> toKeys))
             {
-                if (TryFindThemeResources(out Dictionary<object, object> fromKeys, out Dictionary<object, object> toKeys))
+                var root = AttachedControl.FindDescendant<Panel>();
+                if (root == null)
                 {
-                    var root = AttachedControl.FindDescendant<Panel>();
-                    if (root == null)
-                    {
-                        return;
-                    }
+                    return;
+                }
 
-                    var visualStateGroups = (Collection<VisualStateGroup>)VisualStateManager.GetVisualStateGroups(root);
-                    if (visualStateGroups == null)
-                    {
-                        return;
-                    }
+                var visualStateGroups = (Collection<VisualStateGroup>)VisualStateManager.GetVisualStateGroups(root);
+                if (visualStateGroups == null)
+                {
+                    return;
+                }
 
-                    var keyFrames = FindKeyFrames(visualStateGroups);
-                    foreach (var keyFrame in keyFrames)
+                var keyFrames = FindKeyFrames(visualStateGroups);
+                foreach (var keyFrame in keyFrames)
+                {
+                    if (keyFrame is DiscreteObjectKeyFrame objectKeyFrame)
                     {
-                        if (keyFrame is DiscreteObjectKeyFrame objectKeyFrame)
+                        var from = fromKeys.FirstOrDefault(x => x.Value.ToString() == objectKeyFrame.Value.ToString());
+                        var to = toKeys[from.Key];
+                        objectKeyFrame.Value = to;
+                    }
+                }
+
+                var properties = AttachedControl.GetType().GetProperties();
+                foreach (var property in properties)
+                {
+                    if (property.PropertyType == typeof(Brush))
+                    {
+                        var propertyValue = property.GetValue(AttachedControl, null);
+                        if (propertyValue == null)
                         {
-                            var from = fromKeys.FirstOrDefault(x => x.Value.ToString() == objectKeyFrame.Value.ToString());
-                            var to = toKeys[from.Key];
-                            objectKeyFrame.Value = to;
+                            return;
                         }
-                    }
 
-                    var properties = AttachedControl.GetType().GetProperties();
-                    foreach (var property in properties)
-                    {
-                        if (property.PropertyType == typeof(Brush))
-                        {
-                            var propertyValue = property.GetValue(AttachedControl, null);
-                            if (propertyValue == null)
-                            {
-                                return;
-                            }
+                        var from = fromKeys.FirstOrDefault(x => x.Value.ToString() == propertyValue.ToString());
+                        var to = toKeys[from.Key];
 
-                            var from = fromKeys.FirstOrDefault(x => x.Value.ToString() == propertyValue.ToString());
-                            var to = toKeys[from.Key];
-
-                            property.SetValue(AttachedControl, to, null);
-                        }
+                        property.SetValue(AttachedControl, to, null);
                     }
                 }
             }
+
         }
 
         private void RegisterEvents()
@@ -206,10 +205,12 @@ namespace Fluent.UI.Controls
 
             AttachedControl = null;
         }
-        private bool TryFindThemeResources(out Dictionary<object, object> fromKeys, out Dictionary<object, object> toKeys)
+        private bool TryFindThemeResources(ElementTheme requestedTheme, out Dictionary<object, object> fromKeys, out Dictionary<object, object> toKeys)
         {
-            var lightTheme = new Uri($@"Fluent.UI.Controls;component/Button/Button.Light.xaml", UriKind.Relative);
-            var defaultTheme = new Uri($@"Fluent.UI.Controls;component/Button/Button.Default.xaml", UriKind.Relative);
+            var typeName = AttachedControl.GetType().Name;
+
+            var lightTheme = new Uri($@"Fluent.UI.Controls;component/{typeName}/{typeName}.Light.xaml", UriKind.Relative);
+            var defaultTheme = new Uri($@"Fluent.UI.Controls;component/{typeName}/{typeName}.Default.xaml", UriKind.Relative);
 
             fromKeys = new Dictionary<object, object>();
             toKeys = new Dictionary<object, object>();
@@ -226,12 +227,12 @@ namespace Fluent.UI.Controls
                 return false;
             }
 
-            foreach (DictionaryEntry item in lightThemeResource.Cast<DictionaryEntry>())
+            foreach (DictionaryEntry item in requestedTheme == ElementTheme.Light ? defaultThemeResource.Cast<DictionaryEntry>() : lightThemeResource.Cast<DictionaryEntry>())
             {
                 fromKeys[item.Key] = item.Value;
             }
 
-            foreach (DictionaryEntry item in defaultThemeResource.Cast<DictionaryEntry>())
+            foreach (DictionaryEntry item in requestedTheme == ElementTheme.Light ? lightThemeResource.Cast<DictionaryEntry>() : defaultThemeResource.Cast<DictionaryEntry>())
             {
                 toKeys[item.Key] = item.Value;
             }

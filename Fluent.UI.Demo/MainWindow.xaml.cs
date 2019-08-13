@@ -38,8 +38,17 @@ namespace Fluent.UI.Demo
 
         private void D_Checked(object sender, RoutedEventArgs e)
         {
+            d.Content = "Switch to dark theme";
+
             ButtonExtension.SetRequestedTheme(Button1, ElementTheme.Dark);
             ThemeBackground.Background = Brushes.Black;
+        }
+
+        private void D_Unchecked(object sender, RoutedEventArgs e)
+        {
+            d.Content = "Switch to light theme";
+            ButtonExtension.SetRequestedTheme(Button1, ElementTheme.Light);
+            ThemeBackground.Background = Brushes.Transparent;
         }
     }
 }
