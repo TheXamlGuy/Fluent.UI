@@ -20,7 +20,6 @@ namespace Fluent.UI.Demo
         {
             InitializeComponent();
 
-            Button1.Click += Button_Click;
             Button2.Click += Button2_Click;
         }
 
@@ -40,14 +39,21 @@ namespace Fluent.UI.Demo
         {
             d.Content = "Switch to dark theme";
 
-            ButtonExtension.SetRequestedTheme(Button1, ElementTheme.Dark);
+            foreach (var d in ThemeBackground.Children)
+            {
+                ButtonExtension.SetRequestedTheme(d as Button, ElementTheme.Dark);
+            }
             ThemeBackground.Background = Brushes.Black;
+
         }
 
         private void D_Unchecked(object sender, RoutedEventArgs e)
         {
             d.Content = "Switch to light theme";
-            ButtonExtension.SetRequestedTheme(Button1, ElementTheme.Light);
+            foreach (var d in ThemeBackground.Children)
+            {
+                ButtonExtension.SetRequestedTheme(d as Button, ElementTheme.Light);
+            }
             ThemeBackground.Background = Brushes.Transparent;
         }
     }

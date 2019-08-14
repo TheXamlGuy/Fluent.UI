@@ -1,5 +1,5 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/Fluent.UI.Controls;component/ContentDialog/ContentDialog.xaml" />
+        <!--<ResourceDictionary Source="/Fluent.UI.Controls;component/ContentDialog/ContentDialog.xaml" />-->
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
