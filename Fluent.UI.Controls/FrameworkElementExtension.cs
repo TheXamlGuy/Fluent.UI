@@ -3,7 +3,6 @@ using Fluent.UI.Core.Extensions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,47 +11,11 @@ using System.Windows.Media.Animation;
 
 namespace Fluent.UI.Controls
 {
-    public abstract class FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension> : DependencyObject where TFrameworkElement : FrameworkElement where TFrameworkElementExtension : FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension>, new()
+    public abstract partial class FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension> : DependencyObject where TFrameworkElement : FrameworkElement where TFrameworkElementExtension : FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension>, new()
     {
-        public static readonly DependencyProperty IsAttachedProperty =
-           DependencyProperty.RegisterAttached("IsAttached",
-               typeof(bool), typeof(FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension>),
-               new PropertyMetadata(false, OnIsAttachedPropertyChanged));
-
-        public static readonly DependencyProperty RequestedThemeProperty =
-            DependencyProperty.RegisterAttached("RequestedTheme",
-                typeof(ElementTheme), typeof(FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension>),
-                new PropertyMetadata((ElementTheme)(int)ApplicationExtension.RequestedTheme, OnRequestedThemePropertyChanged));
-
-        internal static DependencyProperty AttachedFrameworkElementProperty =
-            DependencyProperty.RegisterAttached("AttachedFrameworkElement",
-              typeof(FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension>), typeof(FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension>));
-
-        internal static DependencyProperty IsRequestedThemeProperty =
-            DependencyProperty.RegisterAttached("IsRequestedTheme",
-                typeof(bool), typeof(FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension>));
-
         protected TFrameworkElement AttachedFrameworkElement;
 
         private DependencyPropertyChangedHandler _dependencyPropertyChangedHandler;
-
-        public static ElementTheme GetRequestedTheme(TFrameworkElement control) => (ElementTheme)control.GetValue(RequestedThemeProperty);
-
-        public static void SetRequestedTheme(TFrameworkElement control, ElementTheme value)
-        {
-            control.SetValue(IsRequestedThemeProperty, true);
-            control.SetValue(RequestedThemeProperty, value);
-        }
-
-        internal static FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension> GetAttachedFrameworkElement(TFrameworkElement control) => (FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension>)control.GetValue(AttachedFrameworkElementProperty);
-
-        internal static bool GetIsAttached(DependencyObject dependencyObject) => (bool)dependencyObject.GetValue(IsAttachedProperty);
-
-        internal static bool GetIsRequestedTheme(DependencyObject dependencyObject) => (bool)dependencyObject.GetValue(IsRequestedThemeProperty);
-        
-        internal static void SetIsAttached(DependencyObject dependencyObject, bool value) => dependencyObject.SetValue(IsAttachedProperty, value);
-
-        internal static void SetIsRequestedTheme(DependencyObject dependencyObject, bool value) => dependencyObject.SetValue(IsRequestedThemeProperty, value);
 
         protected virtual void ChangeVisualState(bool useTransitions = true)
         {
@@ -118,14 +81,12 @@ namespace Fluent.UI.Controls
 
         private static TFrameworkElementExtension AttachFrameworkElement(TFrameworkElement frameworkElement)     
         {
-            var extension = GetAttachedFrameworkElement(frameworkElement) as TFrameworkElementExtension;
-            if (extension != null)
+            if (GetAttachedFrameworkElement(frameworkElement) is TFrameworkElementExtension extension)
             {
                 return extension;
             }
 
-            var attachedType = frameworkElement.GetType();
-            if (!(typeof(Panel).IsAssignableFrom(attachedType) || typeof(Control).IsAssignableFrom(attachedType)))
+            if (!frameworkElement.IsThemeRequestSupported())
             {
                 return null;
             }
@@ -139,9 +100,6 @@ namespace Fluent.UI.Controls
 
             return extension;
         }
-
-        private static void SetAttachedFrameworkElement(TFrameworkElement control, FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension> extension) => control.SetValue(AttachedFrameworkElementProperty, extension);
-
 
         private void OnUnloaded(object sender, RoutedEventArgs args)
         {
@@ -187,8 +145,11 @@ namespace Fluent.UI.Controls
                     if (keyFrame is DiscreteObjectKeyFrame objectKeyFrame)
                     {
                         var from = fromKeys.FirstOrDefault(x => x.Value.ToString() == objectKeyFrame.Value.ToString());
-                        var to = toKeys[from.Key];
-                        objectKeyFrame.Value = to;
+                        if (from.Key != null)
+                        {
+                            var to = toKeys[from.Key];
+                            objectKeyFrame.Value = to;
+                        }
                     }
                 }
 
@@ -204,9 +165,12 @@ namespace Fluent.UI.Controls
                         }
 
                         var from = fromKeys.FirstOrDefault(x => x.Value.ToString() == propertyValue.ToString());
-                        var to = toKeys[from.Key];
 
-                        property.SetValue(AttachedFrameworkElement, to, null);
+                        if (from.Key != null)
+                        {
+                            var to = toKeys[from.Key];
+                            property.SetValue(AttachedFrameworkElement, to, null);
+                        }
                     }
                 }
             }

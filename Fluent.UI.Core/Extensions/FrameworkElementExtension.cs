@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Fluent.UI.Core.Extensions
 {
@@ -22,6 +24,35 @@ namespace Fluent.UI.Core.Extensions
         {
             var visualStateGroups = (Collection<VisualStateGroup>)VisualStateManager.GetVisualStateGroups(parent);
             return visualStateGroups?.SelectMany(visualStateGroup => visualStateGroup.Transitions.Cast<VisualTransition>()).FirstOrDefault(visualTransition => visualTransition.To == name);
+        }
+
+        public static bool TryIsThemeRequestSupported(this FrameworkElement frameworkElement, out Type supportedType)
+        {
+            supportedType = frameworkElement.GetType();
+            if (typeof(Panel).IsAssignableFrom(supportedType))
+            {
+                return true;
+            }
+            else if (typeof(Control).IsAssignableFrom(supportedType))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public static bool IsThemeRequestSupported(this FrameworkElement frameworkElement)
+        {
+            var supportedType = frameworkElement.GetType();
+            if (typeof(Panel).IsAssignableFrom(supportedType))
+            {
+                return true;
+            }
+            else if (typeof(Control).IsAssignableFrom(supportedType))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
