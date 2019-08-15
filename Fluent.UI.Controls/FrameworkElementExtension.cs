@@ -184,10 +184,7 @@ namespace Fluent.UI.Controls
                                     }
                                 }
                             }
-                        }
-
-                        lock (_themeRequestLock)
-                        {
+                   
                             var properties = AttachedFrameworkElement.GetType().GetProperties();
                             foreach (var property in properties)
                             {
