@@ -13,6 +13,8 @@ namespace Fluent.UI.Controls
 {
     public abstract partial class FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension> : DependencyObject where TFrameworkElement : FrameworkElement where TFrameworkElementExtension : FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension>, new()
     {
+        private static readonly object _themeRequestLock = new object();
+
         protected TFrameworkElement AttachedFrameworkElement;
 
         private DependencyPropertyChangedHandler _dependencyPropertyChangedHandler;
@@ -138,38 +140,44 @@ namespace Fluent.UI.Controls
                     return;
                 }
 
-                var visualStateCollection = root.FindVisualStateGroups();
-                var keyFrames = visualStateCollection.FindKeyFrames();
-                foreach (var keyFrame in keyFrames)
+                lock (_themeRequestLock)
                 {
-                    if (keyFrame is DiscreteObjectKeyFrame objectKeyFrame)
+                    var visualStateCollection = root.FindVisualStateGroups();
+                    var keyFrames = visualStateCollection.FindKeyFrames();
+                    foreach (var keyFrame in keyFrames)
                     {
-                        var from = fromKeys.FirstOrDefault(x => x.Value.ToString() == objectKeyFrame.Value.ToString());
-                        if (from.Key != null)
+                        if (keyFrame is DiscreteObjectKeyFrame objectKeyFrame)
                         {
-                            var to = toKeys[from.Key];
-                            objectKeyFrame.Value = to;
+                            var from = fromKeys.FirstOrDefault(x => x.Value.ToString() == objectKeyFrame.Value.ToString());
+                            if (from.Key != null)
+                            {
+                                var to = toKeys[from.Key];
+                                objectKeyFrame.Value = to;
+                            }
                         }
                     }
                 }
 
-                var properties = AttachedFrameworkElement.GetType().GetProperties();
-                foreach (var property in properties)
+                lock (_themeRequestLock)
                 {
-                    if (property.PropertyType == typeof(Brush))
+                    var properties = AttachedFrameworkElement.GetType().GetProperties();
+                    foreach (var property in properties)
                     {
-                        var propertyValue = property.GetValue(AttachedFrameworkElement, null);
-                        if (propertyValue == null)
+                        if (property.PropertyType == typeof(Brush))
                         {
-                            return;
-                        }
+                            var propertyValue = property.GetValue(AttachedFrameworkElement, null);
+                            if (propertyValue == null)
+                            {
+                                return;
+                            }
 
-                        var from = fromKeys.FirstOrDefault(x => x.Value.ToString() == propertyValue.ToString());
+                            var from = fromKeys.FirstOrDefault(x => x.Value.ToString() == propertyValue.ToString());
 
-                        if (from.Key != null)
-                        {
-                            var to = toKeys[from.Key];
-                            property.SetValue(AttachedFrameworkElement, to, null);
+                            if (from.Key != null)
+                            {
+                                var to = toKeys[from.Key];
+                                property.SetValue(AttachedFrameworkElement, to, null);
+                            }
                         }
                     }
                 }
