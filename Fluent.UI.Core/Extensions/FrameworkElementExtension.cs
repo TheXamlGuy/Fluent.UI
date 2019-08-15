@@ -28,16 +28,18 @@ namespace Fluent.UI.Core.Extensions
 
         public static bool TryIsThemeRequestSupported(this FrameworkElement frameworkElement, out Type supportedType)
         {
-            supportedType = frameworkElement.GetType();
-            if (typeof(Panel).IsAssignableFrom(supportedType))
+            supportedType = null;
+            var dependencyObjectType = frameworkElement.GetType();
+            if (typeof(Panel).IsAssignableFrom(dependencyObjectType))
             {
+                supportedType = typeof(Panel);
                 return true;
             }
-            else if (typeof(Control).IsAssignableFrom(supportedType))
+            else if (typeof(Control).IsAssignableFrom(dependencyObjectType))
             {
+                supportedType = typeof(Control);
                 return true;
             }
-
             return false;
         }
 
