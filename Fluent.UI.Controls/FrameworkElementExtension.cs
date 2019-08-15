@@ -172,8 +172,6 @@ namespace Fluent.UI.Controls
 
             var frameworkElementType = AttachedFrameworkElement.GetType();
 
-
-
             if (TryFindThemeResources(requestedTheme, out Dictionary<object, object> fromKeys, out Dictionary<object, object> toKeys))
             {
                 var root = AttachedFrameworkElement.FindDescendant<Panel>();
@@ -182,13 +180,8 @@ namespace Fluent.UI.Controls
                     return;
                 }
 
-                var visualStateGroups = (Collection<VisualStateGroup>)VisualStateManager.GetVisualStateGroups(root);
-                if (visualStateGroups == null)
-                {
-                    return;
-                }
-
-                var keyFrames = visualStateGroups.FindKeyFrames();
+                var visualStateCollection = root.FindVisualStateGroups();
+                var keyFrames = visualStateCollection.FindKeyFrames();
                 foreach (var keyFrame in keyFrames)
                 {
                     if (keyFrame is DiscreteObjectKeyFrame objectKeyFrame)

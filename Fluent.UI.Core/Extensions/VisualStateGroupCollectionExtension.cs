@@ -8,7 +8,7 @@ namespace Fluent.UI.Core.Extensions
 {
     public static class VisualStateGroupCollectionExtension
     {
-        public static IEnumerable<object> FindKeyFrames(this Collection<VisualStateGroup> visualStateGroups)
+        public static IEnumerable<object> FindKeyFrames(this IEnumerable<VisualStateGroup> visualStateGroups)
         {
             foreach (var timeline in visualStateGroups.Select(vsg => vsg.States.Cast<VisualState>().Where(x => x.Storyboard != null)).SelectMany(visualStates => visualStates.SelectMany(sb => sb.Storyboard.Children)))
             {

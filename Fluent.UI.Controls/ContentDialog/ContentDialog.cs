@@ -245,14 +245,14 @@ namespace Fluent.UI.Controls
 
             if (_container != null)
             {
-                var dialogShowingVisualTransition = _container.GetVisualTransition("DialogShowing");
+                var dialogShowingVisualTransition = _container.FindVisualTransition("DialogShowing");
                 if (dialogShowingVisualTransition != null)
                 {
                     dialogShowingVisualTransition.Storyboard.Completed -= OnDialogShowingCompleted;
                     dialogShowingVisualTransition.Storyboard.Completed += OnDialogShowingCompleted;
                 }
 
-                var dialogClosingVisualTransition = _container.GetVisualTransition("DialogHidden");
+                var dialogClosingVisualTransition = _container.FindVisualTransition("DialogHidden");
                 if (dialogClosingVisualTransition != null)
                 {
                     dialogClosingVisualTransition.Storyboard.Completed -= OnDialogClosingCompleted;
