@@ -142,19 +142,6 @@ namespace Fluent.UI.Controls
 
         private static void SetAttachedFrameworkElement(TFrameworkElement control, FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension> extension) => control.SetValue(AttachedFrameworkElementProperty, extension);
 
-        private IEnumerable<object> FindKeyFrames(Collection<VisualStateGroup> visualStateGroups)
-        {
-            foreach (var timeline in visualStateGroups.Select(vsg => vsg.States.Cast<VisualState>().Where(x => x.Storyboard != null)).SelectMany(visualStates => visualStates.SelectMany(sb => sb.Storyboard.Children)))
-            {
-                if (timeline is IKeyFrameAnimation keyFrameAnimation)
-                {
-                    foreach (var keyFrame in keyFrameAnimation.KeyFrames)
-                    {
-                        yield return keyFrame;
-                    }
-                }
-            }
-        }
 
         private void OnUnloaded(object sender, RoutedEventArgs args)
         {
@@ -201,7 +188,7 @@ namespace Fluent.UI.Controls
                     return;
                 }
 
-                var keyFrames = FindKeyFrames(visualStateGroups);
+                var keyFrames = visualStateGroups.FindKeyFrames();
                 foreach (var keyFrame in keyFrames)
                 {
                     if (keyFrame is DiscreteObjectKeyFrame objectKeyFrame)
