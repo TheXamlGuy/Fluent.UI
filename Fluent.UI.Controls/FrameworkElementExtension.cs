@@ -159,11 +159,11 @@ namespace Fluent.UI.Controls
                         {
                             if (keyFrame is DiscreteObjectKeyFrame objectKeyFrame)
                             {
-                                var from = fromKeys.FirstOrDefault(x => x.Value.ToString() == objectKeyFrame.Value.ToString());
-                                if (from.Key != null)
-                                {
-                                    objectKeyFrame.Value = toKeys[from.Key];
-                                }
+                                //var from = fromKeys.FirstOrDefault(x => x.Value.ToString() == objectKeyFrame.Value.ToString());
+                                //if (from.Key != null)
+                                //{
+                                //    objectKeyFrame.Value = toKeys[from.Key];
+                                //}
                             }
                         }
 

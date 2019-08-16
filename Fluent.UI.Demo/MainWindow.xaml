@@ -34,13 +34,13 @@
                         BorderBrush="Red"
                         Padding="10">
                             <Grid Margin="20">
-                                <StackPanel>
+                                <WrapPanel>
                                     <Button Content="Button" Margin="0 0 0 10" />
                                     <Button Content="Button" Margin="0 0 0 10" />
                                     <Button Content="Button" Margin="0 0 0 10" />
                                     <Button Content="Button" Margin="0 0 0 10" />
                                     <Button Content="Button" Margin="0 0 0 10" />
-                                </StackPanel>
+                                </WrapPanel>
                             </Grid>
                         </Border>
       
