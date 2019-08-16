@@ -178,7 +178,6 @@ namespace Fluent.UI.Controls
                                 }
 
                                 var from = fromKeys.FirstOrDefault(x => x.Value.ToString() == propertyValue.ToString());
-
                                 if (from.Key != null)
                                 {
                                     var to = toKeys[from.Key];
