@@ -11,6 +11,11 @@ using System.Windows.Media.Animation;
 
 namespace Fluent.UI.Controls
 {
+    public class FrameworkElementExtension : FrameworkElementExtension<FrameworkElement, FrameworkElementExtension>
+    {
+
+    }
+
     public abstract partial class FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension> : DependencyObject where TFrameworkElement : FrameworkElement where TFrameworkElementExtension : FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension>, new()
     {
         protected TFrameworkElement AttachedFrameworkElement;
@@ -39,7 +44,7 @@ namespace Fluent.UI.Controls
             PrepareRequestedTheme();
         }
 
-        private static TFrameworkElementExtension AttachFrameworkElement(TFrameworkElement frameworkElement)
+        private static TFrameworkElementExtension AttachFrameworkElement(FrameworkElement frameworkElement)
         {
             var extension = GetAttachedFrameworkElement(frameworkElement);
             if (extension != null)
@@ -95,10 +100,31 @@ namespace Fluent.UI.Controls
             }
         }
 
-        private static bool TryAttachFrameworkElement(TFrameworkElement frameworkElement, out TFrameworkElementExtension extension)
+        private static void OnRequestedThemePropagatedPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        {
+            if ((ElementTheme)args.NewValue != (ElementTheme)args.OldValue)
+            {
+                if (TryAttachFrameworkElement(dependencyObject as FrameworkElement, out TFrameworkElementExtension extension))
+                {
+                    extension?.PrepareRequestedTheme();
+                }
+            }
+        }
+
+        private static bool TryAttachFrameworkElement(FrameworkElement frameworkElement, out TFrameworkElementExtension extension)
         {
             extension = AttachFrameworkElement(frameworkElement);
             return extension != null;
+        }
+
+        private void SetChildThemeRequest(UIElement frameworkElement, ElementTheme requestedTheme)
+        {
+            if (!GetIsAttached(frameworkElement))
+            {
+                FrameworkElementExtension.SetIsAttached(frameworkElement, true);
+            }
+
+            FrameworkElementExtension.SetRequestedThemePropagated(frameworkElement, requestedTheme);
         }
 
         private void ApplyRequestedTheme(ElementTheme requestedTheme)
@@ -109,17 +135,13 @@ namespace Fluent.UI.Controls
                 {
                     foreach (FrameworkElement child in panel.Children)
                     {
-                        if (!child.IsLoaded)
-                        {
-                            SetIsRequestedThemePropagated(child, true);
-                        }
+                        SetChildThemeRequest(child, requestedTheme);
                     }
                 }
 
                 if (supportedType == typeof(Decorator) && AttachedFrameworkElement is Decorator decorator)
                 {
-                    var child = decorator.Child;
-                    SetIsRequestedThemePropagated(child, true);
+                    SetChildThemeRequest(decorator.Child, requestedTheme);
                 }
 
                 if (supportedType == typeof(Control) && TryFindThemeResources(requestedTheme, out Dictionary<object, object> fromKeys, out Dictionary<object, object> toKeys))
@@ -189,13 +211,27 @@ namespace Fluent.UI.Controls
                 return;
             }
 
-            var requestedApplicationTheme = ApplicationExtension.RequestedTheme;
-            var requestedTheme = GetRequestedTheme(AttachedFrameworkElement);
+            ElementTheme requestedTheme;
 
-            var isRequestedTheme = GetIsRequestedTheme(AttachedFrameworkElement);
-            if (!isRequestedTheme || ((int)requestedTheme == (int)requestedApplicationTheme))
+            var isRequestedThemePropagated = GetIsRequestedThemePropagated(AttachedFrameworkElement);
+            if (isRequestedThemePropagated)
             {
-                return;
+                requestedTheme = GetRequestedThemePropagated(AttachedFrameworkElement);
+            }
+            else
+            {
+                var isRequestedTheme = GetIsRequestedTheme(AttachedFrameworkElement);
+                if (!isRequestedTheme)
+                {
+                    return;
+                }
+
+                var requestedApplicationTheme = ApplicationExtension.RequestedTheme;
+                requestedTheme = GetRequestedTheme(AttachedFrameworkElement);
+                if (!isRequestedTheme && ((int)requestedTheme == (int)requestedApplicationTheme))
+                {
+                    return;
+                }
             }
 
             ApplyRequestedTheme(requestedTheme);

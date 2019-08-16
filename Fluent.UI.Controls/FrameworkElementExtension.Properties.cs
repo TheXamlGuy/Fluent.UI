@@ -17,12 +17,12 @@ namespace Fluent.UI.Controls
         public static readonly DependencyProperty RequestedThemeProperty =
             DependencyProperty.RegisterAttached("RequestedTheme",
                 typeof(ElementTheme), typeof(FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension>),
-                new PropertyMetadata((ElementTheme)(int)ApplicationExtension.RequestedTheme, OnRequestedThemePropertyChanged));
+                new PropertyMetadata(ElementTheme.Light, OnRequestedThemePropertyChanged));
 
         internal static readonly DependencyProperty RequestedThemePropagatedProperty =
             DependencyProperty.RegisterAttached("RequestedThemePropagated",
                 typeof(ElementTheme), typeof(FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension>),
-                new PropertyMetadata(ElementTheme.Default, OnRequestedThemePropertyChanged));
+                new PropertyMetadata(ElementTheme.Default, OnRequestedThemePropagatedPropertyChanged));
 
         internal static DependencyProperty AttachedFrameworkElementProperty =
             DependencyProperty.RegisterAttached("AttachedFrameworkElement",
@@ -34,10 +34,18 @@ namespace Fluent.UI.Controls
 
         public static ElementTheme GetRequestedTheme(DependencyObject dependencyObject) => (ElementTheme)dependencyObject.GetValue(RequestedThemeProperty);
 
+        public static ElementTheme GetRequestedThemePropagated(DependencyObject dependencyObject) => (ElementTheme)dependencyObject.GetValue(RequestedThemePropagatedProperty);
+
         public static void SetRequestedTheme(DependencyObject dependencyObject, ElementTheme value)
         {
             dependencyObject.SetValue(IsRequestedThemeProperty, true);
             dependencyObject.SetValue(RequestedThemeProperty, value);
+        }
+
+        public static void SetRequestedThemePropagated(DependencyObject dependencyObject, ElementTheme value)
+        {
+            dependencyObject.SetValue(IsRequestedThemePropagatedProperty, true);
+            dependencyObject.SetValue(RequestedThemePropagatedProperty, value);
         }
 
         internal static FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension> GetAttachedFrameworkElement(DependencyObject dependencyObject) => (FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension>)dependencyObject.GetValue(AttachedFrameworkElementProperty);

@@ -14,11 +14,39 @@
             Content="Switch to dark theme"
             Unchecked="CheckBox1_Unchecked" />
         <Border
-            x:Name="Border"
+            x:Name="Border1"
             Grid.Row="1"
-            Padding="12">
+            BorderThickness="5"
+            BorderBrush="Red"
+            Padding="10">
             <StackPanel>
-                <Button x:Name="Button" Content="Button" />
+                <Button x:Name="Button" Content="Button" Margin="0 0 0 10" />
+                <Border BorderThickness="5"
+                        BorderBrush="Red"
+                        Padding="10">
+                    <StackPanel Margin="10">
+                        <Button Content="Button" Margin="0 0 0 10" />
+                        <Button Content="Button" Margin="0 0 0 10" />
+                        <Button Content="Button" Margin="0 0 0 10" />
+                        <Button Content="Button" Margin="0 0 0 10" />
+                        <Button Content="Button" Margin="0 0 0 10" />
+                        <Border BorderThickness="5"
+                        BorderBrush="Red"
+                        Padding="10">
+                            <Grid Margin="20">
+                                <StackPanel>
+                                    <Button Content="Button" Margin="0 0 0 10" />
+                                    <Button Content="Button" Margin="0 0 0 10" />
+                                    <Button Content="Button" Margin="0 0 0 10" />
+                                    <Button Content="Button" Margin="0 0 0 10" />
+                                    <Button Content="Button" Margin="0 0 0 10" />
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+      
+                    </StackPanel>
+                </Border>
+
             </StackPanel>
         </Border>
     </Grid>
