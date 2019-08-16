@@ -193,7 +193,7 @@ namespace Fluent.UI.Controls
             var requestedTheme = GetRequestedTheme(AttachedFrameworkElement);
 
             var isRequestedTheme = GetIsRequestedTheme(AttachedFrameworkElement);
-            if (!isRequestedTheme && (int)requestedTheme == (int)requestedApplicationTheme)
+            if (!isRequestedTheme || ((int)requestedTheme == (int)requestedApplicationTheme))
             {
                 return;
             }

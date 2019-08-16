@@ -10,14 +10,13 @@ namespace Fluent.UI.Core
         public static readonly DependencyProperty RequestedThemeProperty =
             DependencyProperty.RegisterAttached("RequestedTheme",
                 typeof(ApplicationTheme), typeof(ApplicationExtension),
-                new PropertyMetadata(ApplicationTheme.Dark));
+                new PropertyMetadata(ApplicationTheme.Default));
 
         public static ApplicationTheme RequestedTheme { get; private set; }
 
         public static void SetRequestedTheme(Application application, ApplicationTheme requestedTheme)
         {
             RequestedTheme = requestedTheme;
-
             application.Startup += (sender, args) =>
             {
                 var objectType = Type.GetType("Fluent.UI.Controls.FrameworkElementExtension`2, Fluent.UI.Controls");
@@ -36,7 +35,7 @@ namespace Fluent.UI.Core
         {
             var typeName = type.BaseType.GetGenericArguments()[0].Name;
             var typeNamespace = type.Namespace;
-            var requestedThemeName = requestedTheme == ApplicationTheme.Dark ? "Default" : "Light";
+            var requestedThemeName = (requestedTheme == ApplicationTheme.Default || requestedTheme == ApplicationTheme.Dark) ? "Default" : "Light";
 
             var controlResource = new Uri($@"/{typeNamespace};component/{typeName}/{typeName}.xaml", UriKind.Relative);
             var controlThemeResource = new Uri($@"/{typeNamespace};component/{typeName}/{typeName}.{requestedThemeName}.xaml", UriKind.Relative);

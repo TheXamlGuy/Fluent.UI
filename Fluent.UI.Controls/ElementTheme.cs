@@ -2,6 +2,7 @@
 {
     public enum ElementTheme
     {
+        Default,
         Dark,
         Light
     }
