@@ -83,6 +83,7 @@ namespace Fluent.UI.Controls
                 }
             }
         }
+
         private static void OnRequestedThemePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
             if ((ElementTheme)args.NewValue != (ElementTheme)args.OldValue)
@@ -104,6 +105,7 @@ namespace Fluent.UI.Controls
 
             return true;
         }
+
         private void ApplyRequestedTheme(ElementTheme requestedTheme)
         {
             if (AttachedFrameworkElement.TryIsThemeRequestSupported(out Type supportedType))
@@ -114,10 +116,10 @@ namespace Fluent.UI.Controls
                     {
                         foreach (FrameworkElement child in panel.Children)
                         {
-                            //if (TryAttachFrameworkElement(child, out TFrameworkElementExtension extension))
-                            //{
-                            //    extension.PropagateRequestedTheme(requestedTheme);
-                            //}
+                            if (!child.IsLoaded)
+                            {
+                                SetIsRequestedThemePropagated(child, true);
+                            }
                         }
                     }
                 }

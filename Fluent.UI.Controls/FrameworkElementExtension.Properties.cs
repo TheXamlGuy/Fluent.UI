@@ -10,6 +10,10 @@ namespace Fluent.UI.Controls
                 typeof(bool), typeof(FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension>),
                 new PropertyMetadata(false, OnIsAttachedPropertyChanged));
 
+        public static readonly DependencyProperty IsRequestedThemePropagatedProperty =
+            DependencyProperty.RegisterAttached("IsRequestedThemePropagated",
+                typeof(bool), typeof(FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension>));
+
         public static readonly DependencyProperty RequestedThemeProperty =
             DependencyProperty.RegisterAttached("RequestedTheme",
                 typeof(ElementTheme), typeof(FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension>),
@@ -37,10 +41,14 @@ namespace Fluent.UI.Controls
 
         internal static bool GetIsRequestedTheme(DependencyObject dependencyObject) => (bool)dependencyObject.GetValue(IsRequestedThemeProperty);
 
+        internal static bool GetIsRequestedThemePropagated(DependencyObject dependencyObject) => (bool)dependencyObject.GetValue(IsRequestedThemePropagatedProperty);
+
+        internal static void SetAttachedFrameworkElement(DependencyObject dependencyObject, FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension> extension) => dependencyObject.SetValue(AttachedFrameworkElementProperty, extension);
+
         internal static void SetIsAttached(DependencyObject dependencyObject, bool value) => dependencyObject.SetValue(IsAttachedProperty, value);
 
         internal static void SetIsRequestedTheme(DependencyObject dependencyObject, bool value) => dependencyObject.SetValue(IsRequestedThemeProperty, value);
 
-        private static void SetAttachedFrameworkElement(DependencyObject dependencyObject, FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension> extension) => dependencyObject.SetValue(AttachedFrameworkElementProperty, extension);
+        internal static void SetIsRequestedThemePropagated(DependencyObject dependencyObject, bool value) => dependencyObject.SetValue(IsRequestedThemePropagatedProperty, value);
     }
 }
