@@ -13,11 +13,14 @@ namespace Fluent.UI.Controls
 {
     public abstract partial class FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension> : DependencyObject where TFrameworkElement : FrameworkElement where TFrameworkElementExtension : FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension>, new()
     {
-        private static readonly object _themeRequestLock = new object();
-
         protected TFrameworkElement AttachedFrameworkElement;
-
+        private static readonly object _themeRequestLock = new object();
         private DependencyPropertyChangedHandler _dependencyPropertyChangedHandler;
+
+        internal void PropagateRequestedTheme(ElementTheme requestedTheme)
+        {
+            ApplyRequestedTheme(requestedTheme);
+        }
 
         protected virtual void ChangeVisualState(bool useTransitions = true)
         {
@@ -36,52 +39,7 @@ namespace Fluent.UI.Controls
             PrepareRequestedTheme();
         }
 
-        private static void OnIsAttachedPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
-        {
-            if ((bool)args.NewValue != (bool)args.OldValue)
-            {
-                if ((bool)args.NewValue)
-                {
-                    AttachFrameworkElement(dependencyObject as TFrameworkElement);
-                }
-                else
-                {
-                    DetachFrameworkElement(dependencyObject as TFrameworkElement);
-                }
-            }
-        }
-
-        private static void DetachFrameworkElement(TFrameworkElement frameworkElement)
-        {
-            var extension = GetAttachedFrameworkElement(frameworkElement);
-            extension.RemoveAttachedControl();
-
-            frameworkElement.ClearValue(AttachedFrameworkElementProperty);
-        }
-
-        private static void OnRequestedThemePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
-        {
-            if ((ElementTheme)args.NewValue != (ElementTheme)args.OldValue)
-            {
-                if (TryAttachFrameworkElement(dependencyObject as TFrameworkElement, out TFrameworkElementExtension extension))
-                {
-                    extension?.PrepareRequestedTheme();
-                }
-            }
-        }
-
-        private static bool TryAttachFrameworkElement(TFrameworkElement frameworkElement, out TFrameworkElementExtension extension)
-        {
-            extension = AttachFrameworkElement(frameworkElement);
-            if (extension == null)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        private static TFrameworkElementExtension AttachFrameworkElement(TFrameworkElement frameworkElement)     
+        private static TFrameworkElementExtension AttachFrameworkElement(TFrameworkElement frameworkElement)
         {
             var extension = GetAttachedFrameworkElement(frameworkElement);
             if (extension != null)
@@ -103,43 +61,49 @@ namespace Fluent.UI.Controls
             return extension as TFrameworkElementExtension;
         }
 
-        private void OnUnloaded(object sender, RoutedEventArgs args) => UnregisterEvents();
-
-        private void PrepareAttachedControl(FrameworkElement frameworkElement)
+        private static void DetachFrameworkElement(TFrameworkElement frameworkElement)
         {
-            AttachedFrameworkElement = frameworkElement as TFrameworkElement;
+            var extension = GetAttachedFrameworkElement(frameworkElement);
+            extension.RemoveAttachedControl();
 
-            UnregisterEvents();
-            RegisterEvents();
-
-            _dependencyPropertyChangedHandler = new DependencyPropertyChangedHandler();
-            DependencyPropertyChangedHandler(_dependencyPropertyChangedHandler);
+            frameworkElement.ClearValue(AttachedFrameworkElementProperty);
         }
 
-        internal void PropagateRequestedTheme(ElementTheme requestedTheme)
+        private static void OnIsAttachedPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
-            ApplyRequestedTheme(requestedTheme);
-        }
-
-        private void PrepareRequestedTheme()
-        {
-            if (!AttachedFrameworkElement.IsLoaded)
+            if ((bool)args.NewValue != (bool)args.OldValue)
             {
-                return;
+                if ((bool)args.NewValue)
+                {
+                    AttachFrameworkElement(dependencyObject as TFrameworkElement);
+                }
+                else
+                {
+                    DetachFrameworkElement(dependencyObject as TFrameworkElement);
+                }
+            }
+        }
+        private static void OnRequestedThemePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        {
+            if ((ElementTheme)args.NewValue != (ElementTheme)args.OldValue)
+            {
+                if (TryAttachFrameworkElement(dependencyObject as TFrameworkElement, out TFrameworkElementExtension extension))
+                {
+                    extension?.PrepareRequestedTheme();
+                }
+            }
+        }
+
+        private static bool TryAttachFrameworkElement(TFrameworkElement frameworkElement, out TFrameworkElementExtension extension)
+        {
+            extension = AttachFrameworkElement(frameworkElement);
+            if (extension == null)
+            {
+                return false;
             }
 
-            var requestedApplicationTheme = ApplicationExtension.RequestedTheme;
-            var requestedTheme = GetRequestedTheme(AttachedFrameworkElement);
-
-            var isRequestedTheme = GetIsRequestedTheme(AttachedFrameworkElement);
-            if (!isRequestedTheme && (int)requestedTheme == (int)requestedApplicationTheme)
-            {
-                return;
-            }
-
-            ApplyRequestedTheme(requestedTheme);
+            return true;
         }
-
         private void ApplyRequestedTheme(ElementTheme requestedTheme)
         {
             if (AttachedFrameworkElement.TryIsThemeRequestSupported(out Type supportedType))
@@ -184,7 +148,7 @@ namespace Fluent.UI.Controls
                                     }
                                 }
                             }
-                   
+
                             var properties = AttachedFrameworkElement.GetType().GetProperties();
                             foreach (var property in properties)
                             {
@@ -211,6 +175,36 @@ namespace Fluent.UI.Controls
             }
         }
 
+        private void OnUnloaded(object sender, RoutedEventArgs args) => UnregisterEvents();
+
+        private void PrepareAttachedControl(FrameworkElement frameworkElement)
+        {
+            AttachedFrameworkElement = frameworkElement as TFrameworkElement;
+
+            UnregisterEvents();
+            RegisterEvents();
+
+            _dependencyPropertyChangedHandler = new DependencyPropertyChangedHandler();
+            DependencyPropertyChangedHandler(_dependencyPropertyChangedHandler);
+        }
+        private void PrepareRequestedTheme()
+        {
+            if (!AttachedFrameworkElement.IsLoaded)
+            {
+                return;
+            }
+
+            var requestedApplicationTheme = ApplicationExtension.RequestedTheme;
+            var requestedTheme = GetRequestedTheme(AttachedFrameworkElement);
+
+            var isRequestedTheme = GetIsRequestedTheme(AttachedFrameworkElement);
+            if (!isRequestedTheme && (int)requestedTheme == (int)requestedApplicationTheme)
+            {
+                return;
+            }
+
+            ApplyRequestedTheme(requestedTheme);
+        }
         private void RegisterEvents()
         {
             AttachedFrameworkElement.Unloaded += OnUnloaded;
