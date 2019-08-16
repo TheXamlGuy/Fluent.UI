@@ -54,8 +54,8 @@ namespace Fluent.UI.Controls
 
             extension = new TFrameworkElementExtension();
 
-            SetIsAttached(frameworkElement, true);
             SetAttachedFrameworkElement(frameworkElement, extension);
+            SetIsAttached(frameworkElement, true);
 
             extension.PrepareAttachedControl(frameworkElement);
             return extension as TFrameworkElementExtension;
@@ -98,77 +98,69 @@ namespace Fluent.UI.Controls
         private static bool TryAttachFrameworkElement(TFrameworkElement frameworkElement, out TFrameworkElementExtension extension)
         {
             extension = AttachFrameworkElement(frameworkElement);
-            if (extension == null)
-            {
-                return false;
-            }
-
-            return true;
+            return extension != null;
         }
 
         private void ApplyRequestedTheme(ElementTheme requestedTheme)
         {
             if (AttachedFrameworkElement.TryIsThemeRequestSupported(out Type supportedType))
             {
-                if (supportedType == typeof(Panel))
+                if (supportedType == typeof(Panel) && AttachedFrameworkElement is Panel panel)
                 {
-                    if (AttachedFrameworkElement is Panel panel)
+                    foreach (FrameworkElement child in panel.Children)
                     {
-                        foreach (FrameworkElement child in panel.Children)
+                        if (!child.IsLoaded)
                         {
-                            if (!child.IsLoaded)
-                            {
-                                SetIsRequestedThemePropagated(child, true);
-                            }
+                            SetIsRequestedThemePropagated(child, true);
                         }
                     }
                 }
 
-                if (supportedType == typeof(Control))
+                if (supportedType == typeof(Decorator) && AttachedFrameworkElement is Decorator decorator)
                 {
-                    if (TryFindThemeResources(requestedTheme, out Dictionary<object, object> fromKeys, out Dictionary<object, object> toKeys))
-                    {
-                        var root = AttachedFrameworkElement.FindDescendant<Panel>();
-                        if (root == null)
-                        {
-                            return;
-                        }
+                    var child = decorator.Child;
+                    SetIsRequestedThemePropagated(child, true);
+                }
 
-                        lock (_themeRequestLock)
+                if (supportedType == typeof(Control) && TryFindThemeResources(requestedTheme, out Dictionary<object, object> fromKeys, out Dictionary<object, object> toKeys))
+                {
+                    var root = AttachedFrameworkElement.FindDescendant<Panel>();
+                    if (root == null)
+                    {
+                        return;
+                    }
+
+                    lock (_themeRequestLock)
+                    {
+                        var visualStateCollection = root.FindVisualStateGroups();
+                        foreach (var keyFrame in visualStateCollection.FindKeyFrames())
                         {
-                            var visualStateCollection = root.FindVisualStateGroups();
-                            var keyFrames = visualStateCollection.FindKeyFrames();
-                            foreach (var keyFrame in keyFrames)
+                            if (keyFrame is DiscreteObjectKeyFrame objectKeyFrame)
                             {
-                                if (keyFrame is DiscreteObjectKeyFrame objectKeyFrame)
+                                var from = fromKeys.FirstOrDefault(x => x.Value.ToString() == objectKeyFrame.Value.ToString());
+                                if (from.Key != null)
                                 {
-                                    var from = fromKeys.FirstOrDefault(x => x.Value.ToString() == objectKeyFrame.Value.ToString());
-                                    if (from.Key != null)
-                                    {
-                                        var to = toKeys[from.Key];
-                                        objectKeyFrame.Value = to;
-                                    }
+                                    objectKeyFrame.Value = toKeys[from.Key];
                                 }
                             }
+                        }
 
-                            var properties = AttachedFrameworkElement.GetType().GetProperties();
-                            foreach (var property in properties)
+                        foreach (var property in AttachedFrameworkElement.GetType().GetProperties())
+                        {
+                            if (property.PropertyType == typeof(Brush))
                             {
-                                if (property.PropertyType == typeof(Brush))
+                                var propertyValue = property.GetValue(AttachedFrameworkElement, null);
+                                if (propertyValue == null)
                                 {
-                                    var propertyValue = property.GetValue(AttachedFrameworkElement, null);
-                                    if (propertyValue == null)
-                                    {
-                                        return;
-                                    }
+                                    return;
+                                }
 
-                                    var from = fromKeys.FirstOrDefault(x => x.Value.ToString() == propertyValue.ToString());
+                                var from = fromKeys.FirstOrDefault(x => x.Value.ToString() == propertyValue.ToString());
 
-                                    if (from.Key != null)
-                                    {
-                                        var to = toKeys[from.Key];
-                                        property.SetValue(AttachedFrameworkElement, to, null);
-                                    }
+                                if (from.Key != null)
+                                {
+                                    var to = toKeys[from.Key];
+                                    property.SetValue(AttachedFrameworkElement, to, null);
                                 }
                             }
                         }
@@ -189,6 +181,7 @@ namespace Fluent.UI.Controls
             _dependencyPropertyChangedHandler = new DependencyPropertyChangedHandler();
             DependencyPropertyChangedHandler(_dependencyPropertyChangedHandler);
         }
+
         private void PrepareRequestedTheme()
         {
             if (!AttachedFrameworkElement.IsLoaded)
@@ -207,6 +200,7 @@ namespace Fluent.UI.Controls
 
             ApplyRequestedTheme(requestedTheme);
         }
+
         private void RegisterEvents()
         {
             AttachedFrameworkElement.Unloaded += OnUnloaded;
@@ -236,6 +230,7 @@ namespace Fluent.UI.Controls
 
             ResourceDictionary lightThemeResource;
             ResourceDictionary defaultThemeResource;
+
             try
             {
                 lightThemeResource = Application.LoadComponent(lightTheme) as ResourceDictionary;

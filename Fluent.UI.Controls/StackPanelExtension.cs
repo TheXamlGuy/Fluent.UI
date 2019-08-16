@@ -5,4 +5,8 @@ namespace Fluent.UI.Controls
     public class StackPanelExtension : FrameworkElementExtension<StackPanel, StackPanelExtension>
     {
     }
+
+    public class BorderExtension : FrameworkElementExtension<Border, BorderExtension>
+    {
+    }
 }

@@ -35,6 +35,10 @@ namespace Fluent.UI.Core.Extensions
                 supportedType = typeof(Panel);
                 return true;
             }
+            else if (typeof(Decorator).IsAssignableFrom(supportedType))
+            {
+                return true;
+            }
             else if (typeof(Control).IsAssignableFrom(dependencyObjectType))
             {
                 supportedType = typeof(Control);
@@ -47,6 +51,10 @@ namespace Fluent.UI.Core.Extensions
         {
             var supportedType = frameworkElement.GetType();
             if (typeof(Panel).IsAssignableFrom(supportedType))
+            {
+                return true;
+            }
+            else if (typeof(Decorator).IsAssignableFrom(supportedType))
             {
                 return true;
             }
