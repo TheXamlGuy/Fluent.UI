@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29123.88
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fluent.UI.Controls", "Fluent.UI.Controls\Fluent.UI.Controls.csproj", "{A8754F81-B8A8-4DCF-8C20-E4F7CE3B7325}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluent.UI.Controls", "Fluent.UI.Controls\Fluent.UI.Controls.csproj", "{A8754F81-B8A8-4DCF-8C20-E4F7CE3B7325}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fluent.UI.Core", "Fluent.UI.Core\Fluent.UI.Core.csproj", "{72146259-77AD-47A7-B5CF-F82C8CB00948}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluent.UI.Core", "Fluent.UI.Core\Fluent.UI.Core.csproj", "{72146259-77AD-47A7-B5CF-F82C8CB00948}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fluent.UI.Demo", "Fluent.UI.Demo\Fluent.UI.Demo.csproj", "{C75511A7-7413-458D-8B94-D0007E1E912E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluent.UI.Demo", "Fluent.UI.Demo\Fluent.UI.Demo.csproj", "{C75511A7-7413-458D-8B94-D0007E1E912E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

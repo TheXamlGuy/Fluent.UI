@@ -177,12 +177,12 @@ namespace Fluent.UI.Controls
                                     return;
                                 }
 
-                                var from = fromKeys.FirstOrDefault(x => x.Value.ToString() == propertyValue.ToString());
-                                if (from.Key != null)
-                                {
-                                    var to = toKeys[from.Key];
-                                    property.SetValue(AttachedFrameworkElement, to, null);
-                                }
+                                //var from = fromKeys.FirstOrDefault(x => x.Value.ToString() == propertyValue.ToString());
+                                //if (from.Key != null)
+                                //{
+                                //    var to = toKeys[from.Key];
+                                //    property.SetValue(AttachedFrameworkElement, to, null);
+                                //}
                             }
                         }
                     }
