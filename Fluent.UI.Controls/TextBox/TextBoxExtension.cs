@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 namespace Fluent.UI.Controls
 {
-    public class TextBoxExtension : FrameworkElementExtension<TextBox, TextBoxExtension>
+    public partial class TextBoxExtension : FrameworkElementExtension<TextBox, TextBoxExtension>
     {
         protected override void DependencyPropertyChangedHandler(DependencyPropertyChangedHandler handler)
         {

@@ -10,15 +10,14 @@ namespace Fluent.UI.Controls
                 typeof(bool), typeof(FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension>),
                 new PropertyMetadata(false, OnIsAttachedPropertyChanged));
 
-        internal static readonly DependencyProperty IsRequestedThemePropagatedProperty =
-            DependencyProperty.RegisterAttached("IsRequestedThemePropagated",
-                typeof(bool), typeof(FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension>));
-
         public static readonly DependencyProperty RequestedThemeProperty =
             DependencyProperty.RegisterAttached("RequestedTheme",
                 typeof(ElementTheme), typeof(FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension>),
                 new PropertyMetadata(ElementTheme.Light, OnRequestedThemePropertyChanged));
 
+        internal static readonly DependencyProperty IsRequestedThemePropagatedProperty =
+                    DependencyProperty.RegisterAttached("IsRequestedThemePropagated",
+                typeof(bool), typeof(FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension>));
         internal static readonly DependencyProperty RequestedThemePropagatedProperty =
             DependencyProperty.RegisterAttached("RequestedThemePropagated",
                 typeof(ElementTheme), typeof(FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension>),
