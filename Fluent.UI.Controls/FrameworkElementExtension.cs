@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
@@ -146,46 +147,17 @@ namespace Fluent.UI.Controls
 
                 if (supportedType == typeof(Control) && TryFindThemeResources(requestedTheme, out Dictionary<object, object> fromKeys, out Dictionary<object, object> toKeys))
                 {
-                    var root = AttachedFrameworkElement.FindDescendant<Panel>();
-                    if (root == null)
-                    {
-                        return;
-                    }
+                    var elementType = AttachedFrameworkElement.GetType();
+                    var extensionType = this.GetType();
+                    var elementTypeName = elementType.Name;
+                    var extensionTypeNamespace = extensionType.Namespace;
+                    var requestedThemeName = (requestedTheme == ElementTheme.Default || requestedTheme == ElementTheme.Dark) ? "Default" : "Light";
 
-                    lock (_themeRequestLock)
-                    {
-                        var visualStateCollection = root.FindVisualStateGroups();
-                        foreach (var keyFrame in visualStateCollection.FindKeyFrames())
-                        {
-                            if (keyFrame is DiscreteObjectKeyFrame objectKeyFrame)
-                            {
-                                //var from = fromKeys.FirstOrDefault(x => x.Value.ToString() == objectKeyFrame.Value.ToString());
-                                //if (from.Key != null)
-                                //{
-                                //    objectKeyFrame.Value = toKeys[from.Key];
-                                //}
-                            }
-                        }
+                    var themeResource = new Uri($@"pack://application:,,,/{extensionTypeNamespace};component/{elementTypeName}/{elementTypeName}.{requestedThemeName}.xaml", UriKind.Absolute);
+                    var resourceDictionary = new SharedResourceDictionary { Source = themeResource };
 
-                        foreach (var property in AttachedFrameworkElement.GetType().GetProperties())
-                        {
-                            if (property.PropertyType == typeof(Brush))
-                            {
-                                var propertyValue = property.GetValue(AttachedFrameworkElement, null);
-                                if (propertyValue == null)
-                                {
-                                    return;
-                                }
-
-                                //var from = fromKeys.FirstOrDefault(x => x.Value.ToString() == propertyValue.ToString());
-                                //if (from.Key != null)
-                                //{
-                                //    var to = toKeys[from.Key];
-                                //    property.SetValue(AttachedFrameworkElement, to, null);
-                                //}
-                            }
-                        }
-                    }
+                    var style = resourceDictionary[typeof(Button)] as Style;
+                    AttachedFrameworkElement.SetValue(FrameworkElement.StyleProperty, style);
                 }
             }
         }

@@ -272,6 +272,7 @@ namespace Fluent.UI.Controls
                 UpdateShowingVisualStates();
             }
         }
+
         public async Task ShowAsync(ContentDialogPlacement placement)
         {
             _placement = placement;
