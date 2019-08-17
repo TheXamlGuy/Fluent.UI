@@ -6,9 +6,11 @@
     <ResourceDictionary.MergedDictionaries>
         <SharedResourceDictionary Source="pack://application:,,,/Fluent.UI.Controls;component/Themes/ThemeResources.Light.xaml" />
         <SharedResourceDictionary>
+            <StaticResource x:Key="TextBoxPlaceholderDisabledForegroundThemeBrush" ResourceKey="SystemControlDisabledChromeDisabledLowBrush" />
             <StaticResource x:Key="TextBoxPlaceholderPointerOverForegroundThemeBrush" ResourceKey="SystemControlPageTextBaseMediumBrush" />
             <StaticResource x:Key="TextBoxPlaceholderFocusedForegroundThemeBrush" ResourceKey="SystemControlPageTextChromeBlackMediumLowBrush" />
-            <StaticResource x:Key="TextBoxForegroundHeaderThemeBrush" ResourceKey="SystemControlForegroundBaseHighBrush" />
+            <StaticResource x:Key="TextBoxHeaderForegroundThemeBrush" ResourceKey="SystemControlForegroundBaseHighBrush" />
+            <StaticResource x:Key="TextBoxHeaderDisabledForegroundThemeBrush" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
             <StaticResource x:Key="TextBoxPlaceholderForegroundThemeBrush" ResourceKey="SystemControlPageTextBaseMediumBrush" />
             <StaticResource x:Key="TextBoxBackgroundThemeBrush" ResourceKey="SystemControlBackgroundAltMediumLowBrush" />
             <StaticResource x:Key="TextBoxBorderThemeBrush" ResourceKey="SystemControlForegroundBaseMediumLowBrush" />
@@ -76,7 +78,7 @@
                             Content="{Binding Path=(controls:TextBoxExtension.Header), RelativeSource={RelativeSource TemplatedParent}}"
                             ContentTemplate="{Binding Path=(controls:TextBoxExtension.HeaderTemplate), RelativeSource={RelativeSource TemplatedParent}}"
                             TextBlock.FontWeight="Normal"
-                            TextBlock.Foreground="{StaticResource TextBoxForegroundHeaderThemeBrush}"
+                            TextBlock.Foreground="{StaticResource TextBoxHeaderForegroundThemeBrush}"
                             Visibility="Collapsed" />
                         <Border
                             x:Name="BorderElement"
@@ -124,15 +126,13 @@
                             FontSize="{TemplateBinding FontSize}"
                             MinWidth="34"
                             VerticalAlignment="Stretch" />-->
-                        <!--<contract7Present:ContentPresenter x:Name="DescriptionPresenter"
+                        <ContentPresenter
+                            x:Name="DescriptionPresenter"
                             Grid.Row="2"
                             Grid.Column="0"
                             Grid.ColumnSpan="2"
-                            Content="{TemplateBinding Description}"
-                            Foreground="{StaticResource SystemControlDescriptionTextForegroundBrush}"
-                            AutomationProperties.AccessibilityView="Raw"
-                            x:Load="False"/>-->
-
+                            Content="{Binding Path=(controls:TextBoxExtension.Description), RelativeSource={RelativeSource TemplatedParent}}"
+                            TextBlock.Foreground="{StaticResource SystemControlDescriptionTextForegroundBrush}" />
                         <!--<Grid.Resources>
                             <Style x:Name="DeleteButtonStyle" TargetType="Button">
                                 <Setter Property="Template">
@@ -203,30 +203,25 @@
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal" />
-                                <!--<VisualState x:Name="Disabled">
+                                <VisualState x:Name="Disabled">
                                     <Storyboard>
-                                -->
-                                <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="HeaderContentPresenter" Storyboard.TargetProperty="Foreground">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextControlHeaderForegroundDisabled}" />
-                                        </ObjectAnimationUsingKeyFrames>-->
-                                <!--
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HeaderContentPresenter" Storyboard.TargetProperty="(TextBlock.Foreground)">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxHeaderDisabledForegroundThemeBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextControlBackgroundDisabled}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxDisabledBackgroundThemeBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="BorderBrush">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextControlBorderBrushDisabled}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxDisabledBorderThemeBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
-                                -->
-                                <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentElement" Storyboard.TargetProperty="Foreground">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextControlForegroundDisabled}" />
-                                        </ObjectAnimationUsingKeyFrames>-->
-                                <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlaceholderTextContentPresenter" Storyboard.TargetProperty="Foreground">
-                                            <contract5NotPresent:DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextControlPlaceholderForegroundDisabled}" />
-                                            <contract5Present:DiscreteObjectKeyFrame KeyTime="0" Value="{Binding PlaceholderForeground, RelativeSource={RelativeSource TemplatedParent}, TargetNullValue={StaticResource TextControlPlaceholderForegroundDisabled}}" />
-                                        </ObjectAnimationUsingKeyFrames>-->
-                                <!--
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_ContentHost" Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxDisabledForegroundThemeBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlaceholderTextContentPresenter" Storyboard.TargetProperty="(TextBlock.Foreground)">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxPlaceholderDisabledForegroundThemeBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
-                                </VisualState>-->
+                                </VisualState>
                                 <VisualState x:Name="PointerOver">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="BorderBrush">
