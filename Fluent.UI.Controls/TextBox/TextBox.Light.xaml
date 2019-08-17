@@ -6,8 +6,10 @@
     <ResourceDictionary.MergedDictionaries>
         <SharedResourceDictionary Source="pack://application:,,,/Fluent.UI.Controls;component/Themes/ThemeResources.Light.xaml" />
         <SharedResourceDictionary>
-            <!--<StaticResource x:Key="TextBoxForegroundHeaderThemeBrush" ResourceKey="#FFFFFFFF" />
-        <StaticResource x:Key="TextBoxPlaceholderTextThemeBrush" ResourceKey="#AB000000" />-->
+            <StaticResource x:Key="TextBoxPlaceholderPointerOverForegroundThemeBrush" ResourceKey="SystemControlPageTextBaseMediumBrush" />
+            <StaticResource x:Key="TextBoxPlaceholderFocusedForegroundThemeBrush" ResourceKey="SystemControlPageTextChromeBlackMediumLowBrush" />
+            <StaticResource x:Key="TextBoxForegroundHeaderThemeBrush" ResourceKey="SystemControlForegroundBaseHighBrush" />
+            <StaticResource x:Key="TextBoxPlaceholderForegroundThemeBrush" ResourceKey="SystemControlPageTextBaseMediumBrush" />
             <StaticResource x:Key="TextBoxBackgroundThemeBrush" ResourceKey="SystemControlBackgroundAltMediumLowBrush" />
             <StaticResource x:Key="TextBoxBorderThemeBrush" ResourceKey="SystemControlForegroundBaseMediumLowBrush" />
             <StaticResource x:Key="TextBoxButtonBackgroundThemeBrush" ResourceKey="SystemControlTransparentBrush" />
@@ -74,6 +76,7 @@
                             Content="{Binding Path=(controls:TextBoxExtension.Header), RelativeSource={RelativeSource TemplatedParent}}"
                             ContentTemplate="{Binding Path=(controls:TextBoxExtension.HeaderTemplate), RelativeSource={RelativeSource TemplatedParent}}"
                             TextBlock.FontWeight="Normal"
+                            TextBlock.Foreground="{StaticResource TextBoxForegroundHeaderThemeBrush}"
                             Visibility="Collapsed" />
                         <Border
                             x:Name="BorderElement"
@@ -96,17 +99,19 @@
                             IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
                             IsTabStop="False"
                             VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" />
-                        <!--<TextBlock x:Name="PlaceholderTextContentPresenter"
+                        <TextBlock
+                            x:Name="PlaceholderTextContentPresenter"
                             Grid.Row="1"
                             Grid.Column="0"
                             Grid.ColumnSpan="2"
-         		            TextBlock.Foreground="{StaticResource TextBoxPlaceholderForegroundThemeBrush}"
                             Margin="{TemplateBinding BorderThickness}"
                             Padding="{TemplateBinding Padding}"
-                            Text="{TemplateBinding PlaceholderText}"
+                            IsHitTestVisible="False"
+                            Text="{Binding Path=(controls:TextBoxExtension.PlaceholderText), RelativeSource={RelativeSource TemplatedParent}}"
                             TextAlignment="{TemplateBinding TextAlignment}"
+                            TextBlock.Foreground="{StaticResource TextBoxPlaceholderForegroundThemeBrush}"
                             TextWrapping="{TemplateBinding TextWrapping}"
-                            IsHitTestVisible="False" />-->
+                            Visibility="Visible" />
                         <!--<Button x:Name="DeleteButton"
                             Grid.Row="1"
                             Grid.Column="1"
@@ -230,10 +235,9 @@
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="Background">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxPointerOverBackgroundThemeBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
-                                        <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlaceholderTextContentPresenter" Storyboard.TargetProperty="Foreground">
-                                            <contract5NotPresent:DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextControlPlaceholderForegroundPointerOver}" />
-                                            <contract5Present:DiscreteObjectKeyFrame KeyTime="0" Value="{Binding PlaceholderForeground, RelativeSource={RelativeSource TemplatedParent}, TargetNullValue={StaticResource TextControlPlaceholderForegroundPointerOver}}" />
-                                        </ObjectAnimationUsingKeyFrames>-->
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlaceholderTextContentPresenter" Storyboard.TargetProperty="(TextBlock.Foreground)">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxPlaceholderPointerOverForegroundThemeBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_ContentHost" Storyboard.TargetProperty="(TextBlock.Foreground)">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxPointerOverForegroundThemeBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
@@ -241,10 +245,9 @@
                                 </VisualState>
                                 <VisualState x:Name="Focused">
                                     <Storyboard>
-                                        <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlaceholderTextContentPresenter" Storyboard.TargetProperty="Foreground">
-                                            <contract5NotPresent:DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextControlPlaceholderForegroundFocused}" />
-                                            <contract5Present:DiscreteObjectKeyFrame KeyTime="0" Value="{Binding PlaceholderForeground, RelativeSource={RelativeSource TemplatedParent}, TargetNullValue={StaticResource TextControlPlaceholderForegroundFocused}}" />
-                                        </ObjectAnimationUsingKeyFrames>-->
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlaceholderTextContentPresenter" Storyboard.TargetProperty="(TextBlock.Foreground)">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxPlaceholderFocusedForegroundThemeBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="Background">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxFocusedBackgroundThemeBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
@@ -286,6 +289,16 @@
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="HeaderCollapsed" />
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="PlaceholderStates">
+                                <VisualState x:Name="PlaceholderCollapsed">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlaceholderTextContentPresenter" Storyboard.TargetProperty="(UIElement.Visibility)">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Collapsed}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="PlaceholderVisible" />
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                     </Grid>

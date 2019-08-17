@@ -33,6 +33,7 @@ namespace Fluent.UI.Controls
         {
             handler.Add(AttachedFrameworkElement, UIElement.IsMouseOverProperty, () => ChangeVisualState(true));
             handler.Add(AttachedFrameworkElement, UIElement.IsFocusedProperty, () => ChangeVisualState(true));
+            handler.Add(AttachedFrameworkElement, TextBox.TextProperty, () => ChangePlaceholderVisualState());
 
             base.DependencyPropertyChangedHandler(handler);
         }
@@ -56,6 +57,7 @@ namespace Fluent.UI.Controls
         }
 
         private static void OnHeaderTemplatePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => OnHeaderPropertyChanged(dependencyObject as TextBox);
+
         private void ChangeHeaderVisualState()
         {
             var header = GetHeader(AttachedFrameworkElement);
@@ -63,5 +65,7 @@ namespace Fluent.UI.Controls
 
             VisualStateManager.GoToState(AttachedFrameworkElement, headerTemplate == null && header == null ? CommonVisualState.HeaderCollapsed : CommonVisualState.HeaderVisible, true);
         }
+
+        private void ChangePlaceholderVisualState() => VisualStateManager.GoToState(AttachedFrameworkElement, AttachedFrameworkElement.Text.Length > 0 ? CommonVisualState.PlaceholderCollapsed : CommonVisualState.PlaceholderVisible, true);
     }
 }

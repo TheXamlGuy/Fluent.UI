@@ -9,5 +9,7 @@
         internal const string Focused = "Focused";
         internal const string HeaderVisible = "HeaderVisible";
         internal const string HeaderCollapsed = "HeaderCollapsed";
+        internal const string PlaceholderVisible = "PlaceholderVisible";
+        internal const string PlaceholderCollapsed = "PlaceholderCollapsed";
     }
 }

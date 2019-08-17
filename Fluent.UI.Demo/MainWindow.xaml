@@ -30,7 +30,7 @@
                     BorderThickness="5">
                     <StackPanel Margin="10">
                         <TextBox Margin="0,0,0,10" TextBoxExtension.Header="Header text" />
-                        <TextBox Margin="0,0,0,10">
+                        <TextBox Margin="0,0,0,10" TextBoxExtension.PlaceholderText="Hello world">
                             <TextBoxExtension.HeaderTemplate>
                                 <DataTemplate>
                                     <Button Content="Header template" />
