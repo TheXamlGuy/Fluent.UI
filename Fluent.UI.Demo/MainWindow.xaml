@@ -37,7 +37,7 @@
                                 <WrapPanel>
                                     <Button Content="Button" Margin="0 0 0 10" />
                                     <Button Content="Button" Margin="0 0 0 10" />
-                                    <Button Content="Button" Margin="0 0 0 10" />
+                                    <Button Content="Button111" ButtonExtension.RequestedTheme="Light"  Margin="0 0 0 10" />
                                     <Button Content="Button" Margin="0 0 0 10" />
                                     <Button Content="Button" Margin="0 0 0 10" />
                                 </WrapPanel>

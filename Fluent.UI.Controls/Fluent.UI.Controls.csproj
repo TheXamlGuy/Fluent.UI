@@ -31,10 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Page Remove="Themes\ThemeResources.xaml" />
+    <Page Remove="Themes\ThemeResources.Default.xaml" />
+    <Page Remove="Themes\ThemeResources.Light.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Themes\ThemeResources.xaml">
+    <Resource Include="Themes\ThemeResources.Default.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Resource Include="Themes\ThemeResources.Light.xaml">
       <Generator></Generator>
     </Resource>
   </ItemGroup>

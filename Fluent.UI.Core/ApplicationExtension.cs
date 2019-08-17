@@ -21,7 +21,7 @@ namespace Fluent.UI.Core
             {
                 var objectType = Type.GetType("Fluent.UI.Controls.FrameworkElementExtension`2, Fluent.UI.Controls");
 
-                var themeResource = new Uri($@"pack://application:,,,/Fluent.UI.Controls;component/Themes/ThemeResources.xaml", UriKind.Absolute);
+                var themeResource = new Uri($@"pack://application:,,,/Fluent.UI.Controls;component/Themes/ThemeResources.Light.xaml", UriKind.Absolute);
                 application.Resources.MergedDictionaries.Insert(0, new SharedResourceDictionary { Source = themeResource });
 
                 foreach (var type in Assembly.GetAssembly(objectType).GetTypes().Where(x => !x.IsAbstract && x.BaseType.IsGenericType && x.BaseType.GetGenericTypeDefinition() == objectType))
