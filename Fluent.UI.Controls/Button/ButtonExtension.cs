@@ -9,7 +9,6 @@ namespace Fluent.UI.Controls
     {
         protected override void DependencyPropertyChangedHandler(DependencyPropertyChangedHandler handler)
         {
-            AttachedFrameworkElement.UpdateDefaultStyle();
             handler.Add(AttachedFrameworkElement, UIElement.IsEnabledProperty, () => ChangeVisualState(true));
             handler.Add(AttachedFrameworkElement, ButtonBase.IsPressedProperty, () => ChangeVisualState(true));
             handler.Add(AttachedFrameworkElement, UIElement.IsMouseOverProperty, () => ChangeVisualState(true));
@@ -22,19 +21,19 @@ namespace Fluent.UI.Controls
             string visualState;
             if (!AttachedFrameworkElement.IsEnabled)
             {
-                visualState = VisualStates.StateDisabled;
+                visualState = Core.CommonVisualState.Disabled;
             }
             else if (AttachedFrameworkElement.IsPressed)
             {
-                visualState = VisualStates.StatePressed;
+                visualState = Core.CommonVisualState.Pressed;
             }
             else if (AttachedFrameworkElement.IsMouseOver)
             {
-                visualState = VisualStates.StatePointerOver;
+                visualState = Core.CommonVisualState.PointerOver;
             }
             else
             {
-                visualState = VisualStates.StateNormal;
+                visualState = Core.CommonVisualState.Normal;
             }
 
             GoToVisualState(visualState, useTransitions);

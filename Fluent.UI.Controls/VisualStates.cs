@@ -1,10 +1,11 @@
 ﻿namespace Fluent.UI.Core
 {
-    internal class VisualStates
+    internal class CommonVisualState
     {
-        internal const string StateDisabled = "Disabled";
-        internal const string StatePressed = "Pressed";
-        internal const string StatePointerOver = "PointerOver";
-        internal const string StateNormal = "Normal";
+        internal const string Disabled = "Disabled";
+        internal const string Pressed = "Pressed";
+        internal const string PointerOver = "PointerOver";
+        internal const string Normal = "Normal";
+        internal const string Focused = "Focused";
     }
 }
