@@ -59,11 +59,25 @@
                                     </DataTemplate>
                                 </TextBoxExtension.HeaderTemplate>
                             </TextBox>
-                            <Button Margin="0,0,0,10" Content="Button" />
-                            <Button Margin="0,0,0,10" Content="Button" />
-                            <Button Margin="0,0,0,10" Content="Button" />
-                            <Button Margin="0,0,0,10" Content="Button" />
-                            <Button Margin="0,0,0,10" Content="Button" />
+                            <CheckBox Margin="0,0,0,10" Content="CheckBox" />
+                            <CheckBox
+                                Margin="0,0,0,10"
+                                Content="CheckBox"
+                                IsEnabled="False" />
+                            <CheckBox
+                                Margin="0,0,0,10"
+                                Content="CheckBox"
+                                IsChecked="{x:Null}"
+                                IsEnabled="False" />
+                            <CheckBox
+                                Margin="0,0,0,10"
+                                Content="CheckBox"
+                                IsChecked="True"
+                                IsEnabled="False" />
+                            <CheckBox
+                                Margin="0,0,0,10"
+                                Content="CheckBox"
+                                IsThreeState="True" />
                             <Border
                                 Padding="10"
                                 BorderBrush="Red"

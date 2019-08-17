@@ -40,7 +40,7 @@ namespace Fluent.UI.Controls
         protected virtual void OnLoaded(object sender, RoutedEventArgs args)
         {
             OnApplyTemplate();
-
+            ChangeVisualState(false);
             PrepareRequestedTheme();
             IsLoaded = true;
         }
@@ -140,7 +140,7 @@ namespace Fluent.UI.Controls
                 if (supportedType == typeof(Control))
                 {
                     var elementType = AttachedFrameworkElement.GetType();
-                    var extensionType = this.GetType();
+                    var extensionType = GetType();
                     var elementTypeName = elementType.Name;
                     var extensionTypeNamespace = extensionType.Namespace;
                     var requestedThemeName = (requestedTheme == ElementTheme.Default || requestedTheme == ElementTheme.Dark) ? "Default" : "Light";
@@ -150,6 +150,9 @@ namespace Fluent.UI.Controls
 
                     var style = resourceDictionary[elementType] as Style;
                     AttachedFrameworkElement.SetValue(FrameworkElement.StyleProperty, style);
+
+                    var extension = GetAttachedFrameworkElement(AttachedFrameworkElement);
+                    extension.ChangeVisualState(true);
                 }
             }
         }
