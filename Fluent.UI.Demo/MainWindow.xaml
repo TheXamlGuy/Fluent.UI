@@ -25,6 +25,7 @@
                         BorderBrush="Red"
                         Padding="10">
                     <StackPanel Margin="10">
+                        <TextBox  Margin="0 0 0 10"/>
                         <Button Content="Button" Margin="0 0 0 10" />
                         <Button Content="Button" Margin="0 0 0 10" />
                         <Button Content="Button" Margin="0 0 0 10" />
