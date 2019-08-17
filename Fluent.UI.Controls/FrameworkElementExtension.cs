@@ -145,7 +145,7 @@ namespace Fluent.UI.Controls
                     SetChildThemeRequest(decorator.Child, requestedTheme);
                 }
 
-                if (supportedType == typeof(Control) && TryFindThemeResources(requestedTheme, out Dictionary<object, object> fromKeys, out Dictionary<object, object> toKeys))
+                if (supportedType == typeof(Control))
                 {
                     var elementType = AttachedFrameworkElement.GetType();
                     var extensionType = this.GetType();
@@ -223,42 +223,6 @@ namespace Fluent.UI.Controls
             _dependencyPropertyChangedHandler = null;
 
             AttachedFrameworkElement = null;
-        }
-
-        private bool TryFindThemeResources(ElementTheme requestedTheme, out Dictionary<object, object> fromKeys, out Dictionary<object, object> toKeys)
-        {
-            var typeName = AttachedFrameworkElement.GetType().Name;
-
-            var lightTheme = new Uri($@"Fluent.UI.Controls;component/{typeName}/{typeName}.Light.xaml", UriKind.Relative);
-            var defaultTheme = new Uri($@"Fluent.UI.Controls;component/{typeName}/{typeName}.Default.xaml", UriKind.Relative);
-
-            fromKeys = new Dictionary<object, object>();
-            toKeys = new Dictionary<object, object>();
-
-            ResourceDictionary lightThemeResource;
-            ResourceDictionary defaultThemeResource;
-
-            try
-            {
-                lightThemeResource = Application.LoadComponent(lightTheme) as ResourceDictionary;
-                defaultThemeResource = Application.LoadComponent(defaultTheme) as ResourceDictionary;
-            }
-            catch
-            {
-                return false;
-            }
-
-            foreach (DictionaryEntry item in requestedTheme == ElementTheme.Light ? defaultThemeResource.Cast<DictionaryEntry>() : lightThemeResource.Cast<DictionaryEntry>())
-            {
-                fromKeys[item.Key] = item.Value;
-            }
-
-            foreach (DictionaryEntry item in requestedTheme == ElementTheme.Light ? lightThemeResource.Cast<DictionaryEntry>() : defaultThemeResource.Cast<DictionaryEntry>())
-            {
-                toKeys[item.Key] = item.Value;
-            }
-
-            return true;
         }
 
         private void UnregisterEvents()
