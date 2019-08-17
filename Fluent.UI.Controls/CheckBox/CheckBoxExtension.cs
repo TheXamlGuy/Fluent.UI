@@ -65,7 +65,7 @@ namespace Fluent.UI.Controls
             {
                 if (!AttachedFrameworkElement.IsEnabled)
                 {
-                    visualState = "UncheckedDisabled2";
+                    visualState = "UncheckedDisabled";
                 }
                 else if (AttachedFrameworkElement.IsPressed)
                 {
