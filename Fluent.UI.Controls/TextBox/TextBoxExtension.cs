@@ -6,14 +6,6 @@ namespace Fluent.UI.Controls
 {
     public partial class TextBoxExtension : FrameworkElementExtension<TextBox, TextBoxExtension>
     {
-        protected override void DependencyPropertyChangedHandler(DependencyPropertyChangedHandler handler)
-        {
-            handler.Add(AttachedFrameworkElement, UIElement.IsMouseOverProperty, () => ChangeVisualState(true));
-            handler.Add(AttachedFrameworkElement, UIElement.IsFocusedProperty, () => ChangeVisualState(true));
-
-            base.DependencyPropertyChangedHandler(handler);
-        }
-
         protected override void ChangeVisualState(bool useTransitions = true)
         {
             string visualState;
@@ -35,6 +27,41 @@ namespace Fluent.UI.Controls
             }
 
             GoToVisualState(visualState, useTransitions);
+        }
+
+        protected override void DependencyPropertyChangedHandler(DependencyPropertyChangedHandler handler)
+        {
+            handler.Add(AttachedFrameworkElement, UIElement.IsMouseOverProperty, () => ChangeVisualState(true));
+            handler.Add(AttachedFrameworkElement, UIElement.IsFocusedProperty, () => ChangeVisualState(true));
+
+            base.DependencyPropertyChangedHandler(handler);
+        }
+
+        protected override void OnApplyTemplate()
+        {
+            ChangeHeaderVisualState();
+        }
+
+        private static void OnHeaderPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => OnHeaderPropertyChanged(dependencyObject as TextBox);
+
+        private static void OnHeaderPropertyChanged(TextBox text)
+        {
+            if (!text.IsLoaded)
+            {
+                return;
+            }
+
+            var extension = GetAttachedFrameworkElement(text) as TextBoxExtension;
+            extension.ChangeHeaderVisualState();
+        }
+
+        private static void OnHeaderTemplatePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => OnHeaderPropertyChanged(dependencyObject as TextBox);
+        private void ChangeHeaderVisualState()
+        {
+            var header = GetHeader(AttachedFrameworkElement);
+            var headerTemplate = GetHeaderTemplate(AttachedFrameworkElement);
+
+            VisualStateManager.GoToState(AttachedFrameworkElement, headerTemplate == null && header == null ? CommonVisualState.HeaderCollapsed : CommonVisualState.HeaderVisible, true);
         }
     }
 }

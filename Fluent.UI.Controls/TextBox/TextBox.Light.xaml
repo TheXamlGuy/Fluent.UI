@@ -37,6 +37,7 @@
     <system:Double x:Key="TextBoxThemeMinWidth">64</system:Double>
     <Thickness x:Key="TextBoxBorderThemeThickness">1</Thickness>
     <Thickness x:Key="TextBoxBorderThemeThicknessFocused">2</Thickness>
+    <Thickness x:Key="TextBoxTopHeaderMargin">0,0,0,4</Thickness>
     <Style TargetType="TextBox">
         <Setter Property="Foreground" Value="{StaticResource TextBoxForegroundThemeBrush}" />
         <Setter Property="Background" Value="{StaticResource TextBoxBackgroundThemeBrush}" />
@@ -63,16 +64,17 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <!--<ContentPresenter x:Name="HeaderContentPresenter"
+                        <ContentPresenter
+                            x:Name="HeaderContentPresenter"
                             Grid.Row="0"
                             Grid.Column="0"
                             Grid.ColumnSpan="2"
-                            Content="{TemplateBinding Header}"
-                            ContentTemplate="{TemplateBinding HeaderTemplate}"
-                            TextBlock.FontWeight="Normal"
                             Margin="{StaticResource TextBoxTopHeaderMargin}"
                             VerticalAlignment="Top"
-                            Visibility="Collapsed" />-->
+                            Content="{Binding Path=(controls:TextBoxExtension.Header), RelativeSource={RelativeSource TemplatedParent}}"
+                            ContentTemplate="{Binding Path=(controls:TextBoxExtension.HeaderTemplate), RelativeSource={RelativeSource TemplatedParent}}"
+                            TextBlock.FontWeight="Normal"
+                            Visibility="Collapsed" />
                         <Border
                             x:Name="BorderElement"
                             Grid.Row="1"
@@ -263,7 +265,6 @@
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="ButtonStates">
                                 <VisualState x:Name="ButtonVisible">
-
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DeleteButton" Storyboard.TargetProperty="Visibility">
                                             <DiscreteObjectKeyFrame KeyTime="0">
@@ -276,9 +277,18 @@
                                 </VisualState>
                                 <VisualState x:Name="ButtonCollapsed" />
                             </VisualStateGroup>
+                            <VisualStateGroup x:Name="HeaderStates">
+                                <VisualState x:Name="HeaderVisible">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HeaderContentPresenter" Storyboard.TargetProperty="(UIElement.Visibility)">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="HeaderCollapsed" />
+                            </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                     </Grid>
-
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

@@ -8,8 +8,10 @@ namespace Fluent.UI.Controls
 {
     public abstract partial class FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension> : DependencyObject where TFrameworkElement : FrameworkElement where TFrameworkElementExtension : FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension>, new()
     {
-        protected TFrameworkElement AttachedFrameworkElement;
         private DependencyPropertyChangedHandler _dependencyPropertyChangedHandler;
+
+        protected TFrameworkElement AttachedFrameworkElement { get; private set; }
+        protected bool IsLoaded { get; private set; }
 
         internal void PropagateRequestedTheme(ElementTheme requestedTheme)
         {
@@ -30,7 +32,15 @@ namespace Fluent.UI.Controls
 
         protected virtual void OnLoaded(object sender, RoutedEventArgs args)
         {
+            OnApplyTemplate();
+
             PrepareRequestedTheme();
+            IsLoaded = true;
+        }
+
+        protected virtual void OnApplyTemplate()
+        {
+
         }
 
         private static TFrameworkElementExtension AttachFrameworkElement(FrameworkElement frameworkElement)

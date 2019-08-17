@@ -16,35 +16,53 @@
         <Border
             x:Name="Border1"
             Grid.Row="1"
-            BorderThickness="5"
+            Padding="10"
             BorderBrush="Red"
-            Padding="10">
+            BorderThickness="5">
             <StackPanel>
-                <Button x:Name="Button" Content="Button" Margin="0 0 0 10" />
-                <Border BorderThickness="5"
-                        BorderBrush="Red"
-                        Padding="10">
+                <Button
+                    x:Name="Button"
+                    Margin="0,0,0,10"
+                    Content="Button" />
+                <Border
+                    Padding="10"
+                    BorderBrush="Red"
+                    BorderThickness="5">
                     <StackPanel Margin="10">
-                        <TextBox  Margin="0 0 0 10"/>
-                        <Button Content="Button" Margin="0 0 0 10" />
-                        <Button Content="Button" Margin="0 0 0 10" />
-                        <Button Content="Button" Margin="0 0 0 10" />
-                        <Button Content="Button" Margin="0 0 0 10" />
-                        <Button Content="Button" Margin="0 0 0 10" />
-                        <Border BorderThickness="5"
-                        BorderBrush="Red"
-                        Padding="10">
+                        <TextBox Margin="0,0,0,10" TextBoxExtension.Header="Header text" />
+                        <TextBox Margin="0,0,0,10">
+                            <TextBoxExtension.HeaderTemplate>
+                                <DataTemplate>
+                                    <Button Content="Header template" />
+                                </DataTemplate>
+                            </TextBoxExtension.HeaderTemplate>
+                        </TextBox>
+                        <Button Margin="0,0,0,10" Content="Button" />
+                        <Button Margin="0,0,0,10" Content="Button" />
+                        <Button Margin="0,0,0,10" Content="Button" />
+                        <Button Margin="0,0,0,10" Content="Button" />
+                        <Button Margin="0,0,0,10" Content="Button" />
+                        <Border
+                            Padding="10"
+                            BorderBrush="Red"
+                            BorderThickness="5">
                             <Grid Margin="20">
                                 <WrapPanel>
-                                    <Button Content="Disabled" Margin="0 0 0 10" IsEnabled="False" />
-                                    <Button Content="Button" Margin="0 0 0 10" />
-                                    <Button Content="Button111" ButtonExtension.RequestedTheme="Light"  Margin="0 0 0 10" />
-                                    <Button Content="Button" Margin="0 0 0 10" />
-                                    <Button Content="Button" Margin="0 0 0 10" />
+                                    <Button
+                                        Margin="0,0,0,10"
+                                        Content="Disabled"
+                                        IsEnabled="False" />
+                                    <Button Margin="0,0,0,10" Content="Button" />
+                                    <Button
+                                        Margin="0,0,0,10"
+                                        ButtonExtension.RequestedTheme="Light"
+                                        Content="Button111" />
+                                    <Button Margin="0,0,0,10" Content="Button" />
+                                    <Button Margin="0,0,0,10" Content="Button" />
                                 </WrapPanel>
                             </Grid>
                         </Border>
-      
+
                     </StackPanel>
                 </Border>
 

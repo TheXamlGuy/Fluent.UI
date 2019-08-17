@@ -7,5 +7,7 @@
         internal const string PointerOver = "PointerOver";
         internal const string Normal = "Normal";
         internal const string Focused = "Focused";
+        internal const string HeaderVisible = "HeaderVisible";
+        internal const string HeaderCollapsed = "HeaderCollapsed";
     }
 }
