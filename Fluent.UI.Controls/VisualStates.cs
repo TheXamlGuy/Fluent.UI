@@ -11,5 +11,7 @@
         internal const string HeaderCollapsed = "HeaderCollapsed";
         internal const string PlaceholderVisible = "PlaceholderVisible";
         internal const string PlaceholderCollapsed = "PlaceholderCollapsed";
+        internal const string ButtonVisible = "ButtonVisible";
+        internal const string ButtonCollapsed = "ButtonCollapsed";
     }
 }

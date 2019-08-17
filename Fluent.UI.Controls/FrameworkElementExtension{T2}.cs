@@ -28,7 +28,14 @@ namespace Fluent.UI.Controls
 
         }
 
+        protected TTemplateChild GetTemplateChild<TTemplateChild>(string name) where TTemplateChild : FrameworkElement => AttachedFrameworkElement.FindDescendantByName(name) as TTemplateChild;
+
         protected void GoToVisualState(string stateName, bool useTransitions = true) => VisualStateManager.GoToState(AttachedFrameworkElement, stateName, useTransitions);
+
+        protected virtual void OnApplyTemplate()
+        {
+
+        }
 
         protected virtual void OnLoaded(object sender, RoutedEventArgs args)
         {
@@ -37,12 +44,10 @@ namespace Fluent.UI.Controls
             PrepareRequestedTheme();
             IsLoaded = true;
         }
-
-        protected virtual void OnApplyTemplate()
+        protected virtual void OnUnloaded()
         {
 
         }
-
         private static TFrameworkElementExtension AttachFrameworkElement(FrameworkElement frameworkElement)
         {
             var extension = GetAttachedFrameworkElement(frameworkElement);
@@ -149,7 +154,11 @@ namespace Fluent.UI.Controls
             }
         }
 
-        private void OnUnloaded(object sender, RoutedEventArgs args) => UnregisterEvents();
+        private void OnUnloaded(object sender, RoutedEventArgs args)
+        {
+            UnregisterEvents();
+            OnUnloaded();
+        }
 
         private void PrepareAttachedControl(FrameworkElement frameworkElement)
         {
@@ -204,7 +213,7 @@ namespace Fluent.UI.Controls
         private void RemoveAttachedControl()
         {
             UnregisterEvents();
-            RegisterEvents();
+            OnUnloaded();
 
             _dependencyPropertyChangedHandler.Clear();
             _dependencyPropertyChangedHandler = null;
@@ -221,6 +230,7 @@ namespace Fluent.UI.Controls
 
             FrameworkElementExtension.SetRequestedThemePropagated(frameworkElement, requestedTheme);
         }
+
         private void UnregisterEvents()
         {
             AttachedFrameworkElement.Unloaded -= OnUnloaded;
