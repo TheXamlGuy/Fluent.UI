@@ -57,6 +57,7 @@
         <Setter Property="Padding" Value="{StaticResource TextBoxThemePadding}" />
         <Setter Property="controls:TextBoxExtension.IsAttached" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TextBox">

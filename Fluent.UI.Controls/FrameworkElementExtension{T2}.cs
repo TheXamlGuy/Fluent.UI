@@ -148,7 +148,7 @@ namespace Fluent.UI.Controls
                     var themeResource = new Uri($@"pack://application:,,,/{extensionTypeNamespace};component/{elementTypeName}/{elementTypeName}.{requestedThemeName}.xaml", UriKind.Absolute);
                     var resourceDictionary = new SharedResourceDictionary { Source = themeResource };
 
-                    var style = resourceDictionary[typeof(Button)] as Style;
+                    var style = resourceDictionary[elementType] as Style;
                     AttachedFrameworkElement.SetValue(FrameworkElement.StyleProperty, style);
                 }
             }
