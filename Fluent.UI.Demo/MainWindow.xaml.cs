@@ -16,6 +16,9 @@ namespace Fluent.UI.Demo
             CheckBox1.Content = "Switch to dark theme";
             FrameworkElementExtension.SetRequestedTheme(Border1, ElementTheme.Dark);
             Border1.Background = Brushes.Black;
+
+            FrameworkElementExtension.SetRequestedTheme(Border2, ElementTheme.Dark);
+            Border2.Background = Brushes.Black;
         }
 
         private void CheckBox1_Unchecked(object sender, RoutedEventArgs e)
@@ -23,6 +26,8 @@ namespace Fluent.UI.Demo
             CheckBox1.Content = "Switch to light theme";
             FrameworkElementExtension.SetRequestedTheme(Border1, ElementTheme.Light);
             Border1.Background = Brushes.Transparent;
+            FrameworkElementExtension.SetRequestedTheme(Border2, ElementTheme.Light);
+            Border2.Background = Brushes.Transparent;
         }
     }
 }

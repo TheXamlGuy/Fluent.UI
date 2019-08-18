@@ -5,19 +5,20 @@ namespace Fluent.UI.Controls
 {
     public partial class TextBoxExtension : FrameworkElementExtension<TextBox>
     {
-        private static void OnHeaderPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => OnHeaderPropertyChanged(dependencyObject as TextBox);
-
-        private static void OnHeaderPropertyChanged(TextBox text)
+        private static void OnHeaderPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
-            //if (!text.IsLoaded)
-            //{
-            //    return;
-            //}
-
-            //var extension = GetAttachedFrameworkElement(text) as TextBoxExtension;
-            //extension.ChangeHeaderVisualState();
+            if (TryAttachHandler(dependencyObject as TextBox, out TextBoxExtensionHandler handler))
+            {
+                handler?.SetHeader((object)args.NewValue);
+            }
         }
 
-        private static void OnHeaderTemplatePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => OnHeaderPropertyChanged(dependencyObject as TextBox);
+        private static void OnHeaderTemplatePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        {
+            if (TryAttachHandler(dependencyObject as TextBox, out TextBoxExtensionHandler handler))
+            {
+                handler?.SetHeaderTemplate((DataTemplate)args.NewValue);
+            }
+        }
     }
 }

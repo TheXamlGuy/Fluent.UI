@@ -68,7 +68,7 @@ namespace Fluent.UI.Controls
 
         internal static void SetIsRequestedThemePropagated(DependencyObject dependencyObject, bool value) => dependencyObject.SetValue(IsRequestedThemePropagatedProperty, value);
 
-        private static IFrameworkExtensionHandler AttachHandler(FrameworkElement frameworkElement)
+        internal static IFrameworkExtensionHandler AttachHandler(FrameworkElement frameworkElement)
         {
             var handler = GetAttachedHandler(frameworkElement);
             if (handler != null)
@@ -95,7 +95,19 @@ namespace Fluent.UI.Controls
             return handler;
         }
 
-        private static void DetachFrameworkElement(TFrameworkElement frameworkElement)
+        internal static bool TryAttachHandler(FrameworkElement frameworkElement, out IFrameworkExtensionHandler extension)
+        {
+            extension = AttachHandler(frameworkElement);
+            return extension != null;
+        }
+
+        internal static bool TryAttachHandler<THandler>(FrameworkElement frameworkElement, out THandler extension) where THandler : IFrameworkExtensionHandler
+        {
+            extension = (THandler)AttachHandler(frameworkElement);
+            return extension != null;
+        }
+
+        internal static void DetachFrameworkElement(TFrameworkElement frameworkElement)
         {
             //var extension = GetAttachedFrameworkElement(frameworkElement);
             //extension.RemoveAttachedControl();
@@ -138,12 +150,6 @@ namespace Fluent.UI.Controls
                     handler?.SetRequestedTheme((ElementTheme)args.NewValue);
                 }
             }
-        }
-
-        private static bool TryAttachHandler(FrameworkElement frameworkElement, out IFrameworkExtensionHandler extension)
-        {
-            extension = AttachHandler(frameworkElement);
-            return extension != null;
         }
     }
 }

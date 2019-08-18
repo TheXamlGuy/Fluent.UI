@@ -94,6 +94,7 @@ namespace Fluent.UI.Controls
 
             IsLoaded = true;
         }
+
         protected virtual void OnUnloaded()
         {
 

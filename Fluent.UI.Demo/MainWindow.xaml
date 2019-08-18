@@ -8,9 +8,14 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
             <CheckBox
                 x:Name="CheckBox1"
                 Grid.Row="0"
+                VerticalAlignment="Top"
                 Checked="CheckBox1_Checked"
                 Content="Switch to dark theme"
                 Unchecked="CheckBox1_Unchecked" />
@@ -18,6 +23,7 @@
                 x:Name="Border1"
                 Grid.Row="1"
                 Padding="10"
+                VerticalAlignment="Top"
                 BorderBrush="Red"
                 BorderThickness="5">
                 <StackPanel>
@@ -98,6 +104,23 @@
                         </StackPanel>
                     </Border>
                 </StackPanel>
+            </Border>
+            <Border
+                x:Name="Border2"
+                Grid.Row="1"
+                Grid.Column="1"
+                VerticalAlignment="Top"
+                BorderBrush="Green"
+                BorderThickness="10">
+                <ListBox Margin="10">
+                    <ListBoxItem Content="hello" />
+                    <ListBoxItem Content="hello" />
+                    <ListBoxItem Content="hello" />
+                    <ListBoxItem Content="hello" />
+                    <ListBoxItem Content="hello" />
+                    <ListBoxItem Content="hello" />
+
+                </ListBox>
             </Border>
         </Grid>
     </ScrollViewer>

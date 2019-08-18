@@ -8,6 +8,22 @@ namespace Fluent.UI.Controls
     {
         private Button _deleteButton;
 
+        private object _header;
+
+        private DataTemplate _headerTemplate;
+
+        public void SetHeader(object header = null)
+        {
+            _header = header;
+            ChangeHeaderVisualState();
+        }
+
+        public void SetHeaderTemplate(DataTemplate headertemplate = null)
+        {
+            _headerTemplate = headertemplate;
+            ChangeHeaderVisualState();
+        }
+
         protected override void ChangeVisualState(bool useTransitions = true)
         {
             string visualState;
@@ -59,16 +75,9 @@ namespace Fluent.UI.Controls
                 _deleteButton.Click -= OnDeleteButtonClick;
             }
         }
-
         private void ChangeDeleteButtonVisualState() => VisualStateManager.GoToState(AttachedFrameworkElement, AttachedFrameworkElement.Text.Length > 0 ? CommonVisualState.ButtonVisible : CommonVisualState.ButtonCollapsed, true);
 
-        private void ChangeHeaderVisualState()
-        {
-            //var header = GetHeader(AttachedFrameworkElement);
-            //var headerTemplate = GetHeaderTemplate(AttachedFrameworkElement);
-
-            //VisualStateManager.GoToState(AttachedFrameworkElement, headerTemplate == null && header == null ? CommonVisualState.HeaderCollapsed : CommonVisualState.HeaderVisible, true);
-        }
+        private void ChangeHeaderVisualState() => VisualStateManager.GoToState(AttachedFrameworkElement, _headerTemplate == null && _header == null ? CommonVisualState.HeaderCollapsed : CommonVisualState.HeaderVisible, true);
 
         private void ChangePlaceholderVisualState() => VisualStateManager.GoToState(AttachedFrameworkElement, AttachedFrameworkElement.Text.Length > 0 ? CommonVisualState.PlaceholderCollapsed : CommonVisualState.PlaceholderVisible, true);
 
