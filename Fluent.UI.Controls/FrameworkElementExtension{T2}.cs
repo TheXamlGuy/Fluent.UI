@@ -225,13 +225,16 @@ namespace Fluent.UI.Controls
         }
 
         private void SetChildThemeRequest(UIElement frameworkElement, ElementTheme requestedTheme)
-        {
-            if (!GetIsAttached(frameworkElement))
+        {       
+            if (!(bool)frameworkElement.GetValue(IsAttachedProperty))
             {
                 FrameworkElementExtension.SetIsAttached(frameworkElement, true);
+                FrameworkElementExtension.SetRequestedThemePropagated(frameworkElement, requestedTheme);
             }
-
-            FrameworkElementExtension.SetRequestedThemePropagated(frameworkElement, requestedTheme);
+            else
+            {
+                var extension = GetAttachedFrameworkElement(frameworkElement);
+            }
         }
 
         private void UnregisterEvents()

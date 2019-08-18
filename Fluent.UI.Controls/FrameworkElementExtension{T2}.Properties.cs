@@ -1,5 +1,4 @@
-﻿using Fluent.UI.Core;
-using System.Windows;
+﻿using System.Windows;
 
 namespace Fluent.UI.Controls
 {
@@ -16,8 +15,9 @@ namespace Fluent.UI.Controls
                 new PropertyMetadata(ElementTheme.Light, OnRequestedThemePropertyChanged));
 
         internal static readonly DependencyProperty IsRequestedThemePropagatedProperty =
-                    DependencyProperty.RegisterAttached("IsRequestedThemePropagated",
+            DependencyProperty.RegisterAttached("IsRequestedThemePropagated",
                 typeof(bool), typeof(FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension>));
+        
         internal static readonly DependencyProperty RequestedThemePropagatedProperty =
             DependencyProperty.RegisterAttached("RequestedThemePropagated",
                 typeof(ElementTheme), typeof(FrameworkElementExtension<TFrameworkElement, TFrameworkElementExtension>),
