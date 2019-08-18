@@ -131,9 +131,9 @@ namespace Fluent.UI.Controls
 
                     AttachedFrameworkElement.Style = style;
                     AttachedFrameworkElement.UpdateLayout();
-
+                    
                     ChangeVisualState(true);
-
+                    OnApplyTemplate();
                 }
             }
         }

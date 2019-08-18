@@ -229,7 +229,7 @@
                                             Duration="0" />
                                     </Storyboard>
                                 </VisualState>
-                                <VisualState x:Name="UncheckedDisabled2">
+                                <VisualState x:Name="UncheckedDisabled">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(TextBlock.Foreground)">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource CheckBoxForegroundUncheckedDisabled}" />
