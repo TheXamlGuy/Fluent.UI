@@ -2,11 +2,11 @@
 
 namespace Fluent.UI.Controls
 {
-    public class StackPanelExtension : FrameworkElementExtension<StackPanel, StackPanelExtension>
+    public class StackPanelExtensionHandler : FrameworkElementExtensionHandler<StackPanel>
     {
     }
 
-    public class BorderExtension : FrameworkElementExtension<Border, BorderExtension>
+    public class BorderExtensionHandler : FrameworkElementExtensionHandler<Border>
     {
     }
 }

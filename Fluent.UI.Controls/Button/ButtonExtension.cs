@@ -1,42 +1,9 @@
-﻿using Fluent.UI.Core;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
+﻿using System.Windows.Controls;
 
 namespace Fluent.UI.Controls
 {
-    public class ButtonExtension : FrameworkElementExtension<Button, ButtonExtension>
+    public class ButtonExtension : FrameworkElementExtension<Button>
     {
-        protected override void DependencyPropertyChangedHandler(DependencyPropertyChangedHandler handler)
-        {
-            handler.Add(AttachedFrameworkElement, UIElement.IsEnabledProperty, () => ChangeVisualState(true));
-            handler.Add(AttachedFrameworkElement, ButtonBase.IsPressedProperty, () => ChangeVisualState(true));
-            handler.Add(AttachedFrameworkElement, UIElement.IsMouseOverProperty, () => ChangeVisualState(true));
-
-            base.DependencyPropertyChangedHandler(handler);
-        }
-
-        protected override void ChangeVisualState(bool useTransitions = true)
-        {
-            string visualState;
-            if (!AttachedFrameworkElement.IsEnabled)
-            {
-                visualState = Core.CommonVisualState.Disabled;
-            }
-            else if (AttachedFrameworkElement.IsPressed)
-            {
-                visualState = Core.CommonVisualState.Pressed;
-            }
-            else if (AttachedFrameworkElement.IsMouseOver)
-            {
-                visualState = Core.CommonVisualState.PointerOver;
-            }
-            else
-            {
-                visualState = Core.CommonVisualState.Normal;
-            }
-
-            GoToVisualState(visualState, useTransitions);
-        }
+  
     }
 }

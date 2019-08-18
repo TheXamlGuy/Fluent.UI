@@ -4,7 +4,7 @@ using System.Windows.Media;
 
 namespace Fluent.UI.Controls
 {
-    public partial class TextBoxExtension : FrameworkElementExtension<TextBox, TextBoxExtension>
+    public partial class TextBoxExtension : FrameworkElementExtension<TextBox>
     {
         public static readonly DependencyProperty DescriptionProperty =
             DependencyProperty.RegisterAttached("Description",
@@ -21,8 +21,9 @@ namespace Fluent.UI.Controls
                 new PropertyMetadata(null, OnHeaderTemplatePropertyChanged));
 
         public static readonly DependencyProperty PlaceholderForegroundProperty =
-                                    DependencyProperty.RegisterAttached("PlaceholderForeground",
+            DependencyProperty.RegisterAttached("PlaceholderForeground",
                 typeof(Brush), typeof(TextBoxExtension));
+
         public static readonly DependencyProperty PlaceholderTextProperty =
             DependencyProperty.RegisterAttached("PlaceholderText",
                 typeof(string), typeof(TextBoxExtension));

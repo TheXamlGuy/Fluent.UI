@@ -20,7 +20,8 @@
                 Padding="10"
                 BorderBrush="Red"
                 BorderThickness="5">
-                <StackPanel>
+                <CheckBox />
+                <!--<StackPanel>
                     <Button
                         x:Name="Button"
                         Margin="0,0,0,10"
@@ -32,7 +33,7 @@
                         <StackPanel Margin="10">
                             <TextBox
                                 Margin="0,0,0,10"
-                                TextBoxExtension.Description="This is a description"
+
                                 TextBoxExtension.Header="Header text" />
                             <TextBox
                                 Margin="0,0,0,10"
@@ -100,7 +101,7 @@
                             </Border>
                         </StackPanel>
                     </Border>
-                </StackPanel>
+                </StackPanel>-->
             </Border>
         </Grid>
     </ScrollViewer>
