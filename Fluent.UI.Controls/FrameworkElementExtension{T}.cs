@@ -5,7 +5,7 @@ using System.Windows;
 
 namespace Fluent.UI.Controls
 {
-    public class FrameworkElementExtension<TFrameworkElement> where TFrameworkElement : FrameworkElement
+    public abstract class FrameworkElementExtension<TFrameworkElement> where TFrameworkElement : FrameworkElement
     {
         public static readonly DependencyProperty IsAttachedProperty =
             DependencyProperty.RegisterAttached("IsAttached",
@@ -90,7 +90,7 @@ namespace Fluent.UI.Controls
             }
 
             SetAttachedHandler(frameworkElement, handler);
-            SetIsAttached(frameworkElement, true);
+            handler.SetAttachedControl(frameworkElement);
 
             return handler;
         }
@@ -109,10 +109,7 @@ namespace Fluent.UI.Controls
             {
                 if ((bool)args.NewValue)
                 {
-                    if (TryAttachHandler(dependencyObject as TFrameworkElement, out IFrameworkExtensionHandler handler))
-                    {
-                        handler?.SetAttachedControl(dependencyObject as TFrameworkElement);
-                    }
+                    AttachHandler(dependencyObject as FrameworkElement);
                 }
                 else
                 {
@@ -125,9 +122,9 @@ namespace Fluent.UI.Controls
         {
             if ((ElementTheme)args.NewValue != (ElementTheme)args.OldValue)
             {
-                if (TryAttachHandler(dependencyObject as TFrameworkElement, out IFrameworkExtensionHandler handler))
+                if (TryAttachHandler(dependencyObject as FrameworkElement, out IFrameworkExtensionHandler handler))
                 {
-                    handler?.SetRequestedTheme((ElementTheme)args.NewValue);
+                    handler?.SetRequestedThemePropagated((ElementTheme)args.NewValue);
                 }
             }
         }
@@ -136,7 +133,7 @@ namespace Fluent.UI.Controls
         {
             if ((ElementTheme)args.NewValue != (ElementTheme)args.OldValue)
             {
-                if (TryAttachHandler(dependencyObject as TFrameworkElement, out IFrameworkExtensionHandler handler))
+                if (TryAttachHandler(dependencyObject as FrameworkElement, out IFrameworkExtensionHandler handler))
                 {
                     handler?.SetRequestedTheme((ElementTheme)args.NewValue);
                 }

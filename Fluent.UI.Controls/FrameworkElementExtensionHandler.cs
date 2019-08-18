@@ -1,6 +1,8 @@
 ﻿using Fluent.UI.Core;
 using Fluent.UI.Core.Extensions;
 using System;
+using System.Diagnostics;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -72,7 +74,12 @@ namespace Fluent.UI.Controls
 
         protected TTemplateChild GetTemplateChild<TTemplateChild>(string name) where TTemplateChild : FrameworkElement => AttachedFrameworkElement.FindDescendantByName(name) as TTemplateChild;
 
-        protected void GoToVisualState(string stateName, bool useTransitions = true) => VisualStateManager.GoToState(AttachedFrameworkElement, stateName, useTransitions);
+        protected void GoToVisualState(string stateName, bool useTransitions = true)
+        {
+
+            var foo =VisualStateManager.GoToState(AttachedFrameworkElement, stateName, useTransitions);
+            Debug.WriteLine(stateName + " = " + foo);
+        }
 
         protected virtual void OnApplyTemplate()
         {
@@ -121,9 +128,12 @@ namespace Fluent.UI.Controls
                     var resourceDictionary = new SharedResourceDictionary { Source = themeResource };
 
                     var style = resourceDictionary[elementType] as Style;
-                    AttachedFrameworkElement.SetValue(FrameworkElement.StyleProperty, style);
+
+                    AttachedFrameworkElement.Style = style;
+                    AttachedFrameworkElement.UpdateLayout();
 
                     ChangeVisualState(true);
+
                 }
             }
         }
@@ -155,6 +165,7 @@ namespace Fluent.UI.Controls
                 }
                 requestedTheme = _requestedTheme;
             }
+
             ApplyRequestedTheme(requestedTheme);
         }
 
@@ -177,16 +188,10 @@ namespace Fluent.UI.Controls
 
         private void SetChildThemeRequest(UIElement frameworkElement, ElementTheme requestedTheme)
         {
-            FrameworkElementExtension.SetRequestedThemePropagated(frameworkElement, requestedTheme);
-            //if (!(bool)frameworkElement.GetValue(IsAttachedProperty))
-            //{
-            //    FrameworkElementExtension.SetIsAttached(frameworkElement, true);
-            //    FrameworkElementExtension.SetRequestedThemePropagated(frameworkElement, requestedTheme);
-            //}
-            //else
-            //{
-            //    var extension = GetAttachedFrameworkElement(frameworkElement);
-            //}
+            var foo = typeof(FrameworkElementExtension<>).MakeGenericType(frameworkElement.GetType());
+
+            MethodInfo myStaticMethodInfo = foo.GetMethod("SetRequestedThemePropagated");
+            myStaticMethodInfo.Invoke(null, new object[] { frameworkElement, requestedTheme });
         }
 
         private void UnregisterEvents()
