@@ -139,15 +139,7 @@ namespace Fluent.UI.Controls
         private void PrepareRequestedTheme(ElementTheme requestedTheme)
         {
             var elementType = AttachedFrameworkElement.GetType();
-            var extensionType = GetType();
-            var elementTypeName = elementType.Name;
-            var extensionTypeNamespace = extensionType.Namespace;
-            var requestedThemeName = (requestedTheme == ElementTheme.Default || requestedTheme == ElementTheme.Dark) ? "Default" : "Light";
-
-            var themeResource = new Uri($@"pack://application:,,,/{extensionTypeNamespace};component/{elementTypeName}/{elementTypeName}.{requestedThemeName}.xaml", UriKind.Absolute);
-            var resourceDictionary = new SharedResourceDictionary { Source = themeResource };
-
-            var style = resourceDictionary[elementType] as Style;
+            var style = RequestedThemeFactory.Current.Create(elementType, requestedTheme);
 
             AttachedFrameworkElement.Style = style;
             AttachedFrameworkElement.UpdateLayout();
