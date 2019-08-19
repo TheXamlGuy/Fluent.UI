@@ -8,9 +8,4 @@ namespace Fluent.UI.Core
         void SetRequestedTheme(ElementTheme requestedTheme);
         void SetRequestedThemePropagated(ElementTheme requestedTheme);
     }
-
-    public interface IFrameworkExtensionHandler<TFrameworkElement> : IFrameworkExtensionHandler where TFrameworkElement : FrameworkElement
-    {
-
-    }
 }
