@@ -13,5 +13,8 @@
         internal const string PlaceholderCollapsed = "PlaceholderCollapsed";
         internal const string ButtonVisible = "ButtonVisible";
         internal const string ButtonCollapsed = "ButtonCollapsed";
+        internal const string SelectedPressed = "SelectedPressed";
+        internal const string SelectedPointerOver = "SelectedPointerOver";
+        internal const string Selected = "Selected";
     }
 }
