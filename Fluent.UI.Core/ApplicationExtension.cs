@@ -17,27 +17,29 @@ namespace Fluent.UI.Core
         public static void SetRequestedTheme(Application application, ApplicationTheme requestedTheme)
         {
             RequestedTheme = requestedTheme;
+
+            var requestedThemeName = (requestedTheme == ApplicationTheme.Default || requestedTheme == ApplicationTheme.Dark) ? "Default" : "Light";
+
             application.Startup += (sender, args) =>
             {
-                var objectType = Type.GetType("Fluent.UI.Controls.FrameworkElementExtension`1, Fluent.UI.Controls");
-
-                var themeResource = new Uri($@"pack://application:,,,/Fluent.UI.Controls;component/Themes/ThemeResources.Light.xaml", UriKind.Absolute);
+                var themeResource = new Uri($"pack://application:,,,/Fluent.UI.Controls;component/Themes/ThemeResources.{requestedThemeName}.xaml", UriKind.Absolute);
                 application.Resources.MergedDictionaries.Insert(0, new SharedResourceDictionary { Source = themeResource });
+
+                var objectType = Type.GetType("Fluent.UI.Controls.FrameworkElementExtension`1, Fluent.UI.Controls");
 
                 foreach (var type in Assembly.GetAssembly(objectType).GetTypes().Where(x => !x.IsAbstract && x.BaseType.IsGenericType && x.BaseType.GetGenericTypeDefinition() == objectType))
                 {
-                    MergeThemeResource(application, requestedTheme, type);
+                    MergeThemeResource(application, requestedThemeName, type);
                 }
             };
         }
 
-        private static void MergeThemeResource(Application application, ApplicationTheme requestedTheme, Type type)
+        private static void MergeThemeResource(Application application, string requestedThemeName, Type type)
         {
             var typeName = type.BaseType.GetGenericArguments()[0].Name;
             var typeNamespace = type.Namespace;
-            var requestedThemeName = (requestedTheme == ApplicationTheme.Default || requestedTheme == ApplicationTheme.Dark) ? "Default" : "Light";
 
-            var themeResource = new Uri($@"pack://application:,,,/{typeNamespace};component/{typeName}/{typeName}.{requestedThemeName}.xaml", UriKind.Absolute);
+            var themeResource = new Uri($"pack://application:,,,/{typeNamespace};component/{typeName}/{typeName}.{requestedThemeName}.xaml", UriKind.Absolute);
 
             try
             {
