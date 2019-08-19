@@ -91,7 +91,6 @@ namespace Fluent.UI.Controls
             OnApplyTemplate();
             ChangeVisualState(false);
             PrepareRequestedTheme();
-
             IsLoaded = true;
         }
 
