@@ -22,7 +22,7 @@ namespace Fluent.UI.Controls
             string visualState = "";
             if (AttachedFrameworkElement.IsChecked == true)
             {
-                if (!AttachedFrameworkElement.IsEnabled)
+                if (IsEnabled)
                 {
                     visualState = "CheckedDisabled";
                 }
@@ -30,7 +30,7 @@ namespace Fluent.UI.Controls
                 {
                     visualState = "CheckedPressed";
                 }
-                else if (AttachedFrameworkElement.IsMouseOver)
+                else if (IsMouseOver)
                 {
                     visualState = "CheckedPointerOver";
                 }
@@ -42,7 +42,7 @@ namespace Fluent.UI.Controls
 
             if (AttachedFrameworkElement.IsChecked == null)
             {
-                if (!AttachedFrameworkElement.IsEnabled)
+                if (!IsEnabled)
                 {
                     visualState = "IndeterminateDisabled";
                 }
@@ -50,7 +50,7 @@ namespace Fluent.UI.Controls
                 {
                     visualState = "IndeterminatePressed";
                 }
-                else if (AttachedFrameworkElement.IsMouseOver)
+                else if (IsMouseOver)
                 {
                     visualState = "IndeterminatePointerOver";
                 }
@@ -62,7 +62,7 @@ namespace Fluent.UI.Controls
 
             if (AttachedFrameworkElement.IsChecked == false)
             {
-                if (!AttachedFrameworkElement.IsEnabled)
+                if (!IsEnabled)
                 {
                     visualState = "UncheckedDisabled";
                 }
@@ -70,7 +70,7 @@ namespace Fluent.UI.Controls
                 {
                     visualState = "UncheckedPressed";
                 }
-                else if (AttachedFrameworkElement.IsMouseOver)
+                else if (IsMouseOver)
                 {
                     visualState = "UncheckedPointerOver";
                 }

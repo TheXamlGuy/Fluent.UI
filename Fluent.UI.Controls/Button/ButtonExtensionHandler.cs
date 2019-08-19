@@ -19,7 +19,7 @@ namespace Fluent.UI.Controls
         protected override void ChangeVisualState(bool useTransitions = true)
         {
             string visualState;
-            if (!AttachedFrameworkElement.IsEnabled)
+            if (!IsEnabled)
             {
                 visualState = CommonVisualState.Disabled;
             }
@@ -27,7 +27,7 @@ namespace Fluent.UI.Controls
             {
                 visualState = CommonVisualState.Pressed;
             }
-            else if (AttachedFrameworkElement.IsMouseOver)
+            else if (IsMouseOver)
             {
                 visualState = CommonVisualState.PointerOver;
             }

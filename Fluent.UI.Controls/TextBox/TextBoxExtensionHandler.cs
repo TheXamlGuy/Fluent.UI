@@ -27,15 +27,15 @@ namespace Fluent.UI.Controls
         protected override void ChangeVisualState(bool useTransitions = true)
         {
             string visualState;
-            if (!AttachedFrameworkElement.IsEnabled)
+            if (!IsEnabled)
             {
                 visualState = CommonVisualState.Disabled;
             }
-            else if (AttachedFrameworkElement.IsFocused)
+            else if (IsFocused)
             {
                 visualState = CommonVisualState.Focused;
             }
-            else if (AttachedFrameworkElement.IsMouseOver)
+            else if (IsMouseOver)
             {
                 visualState = CommonVisualState.PointerOver;
             }

@@ -55,6 +55,9 @@
     <Page Update="ContentDialog\ContentDialog.Light.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="ListBoxItem\ListBoxItem.Default.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="ListBox\ListBox.Default.xaml">
       <SubType>Designer</SubType>
     </Page>

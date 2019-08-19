@@ -16,6 +16,10 @@ namespace Fluent.UI.Controls
         private bool _isRequestedThemePropagated;
         private ElementTheme _requestedTheme;
         private ElementTheme _requestedThemePropagated;
+
+        protected bool IsEnabled => AttachedFrameworkElement.IsEnabled;
+        protected bool IsFocused => AttachedFrameworkElement.IsFocused;
+        protected bool IsMouseOver => AttachedFrameworkElement.IsMouseOver;
         protected TFrameworkElement AttachedFrameworkElement { get; private set; }
         protected bool IsLoaded { get; private set; }
 
@@ -76,7 +80,6 @@ namespace Fluent.UI.Controls
 
         protected void GoToVisualState(string stateName, bool useTransitions = true)
         {
-
             var foo =VisualStateManager.GoToState(AttachedFrameworkElement, stateName, useTransitions);
             Debug.WriteLine(stateName + " = " + foo);
         }
@@ -103,6 +106,16 @@ namespace Fluent.UI.Controls
         {
             if (AttachedFrameworkElement.TryIsThemeRequestSupported(out Type supportedType))
             {
+                if (supportedType == typeof(ItemsControl) && AttachedFrameworkElement is ItemsControl itemsControl)
+                {
+                    foreach (FrameworkElement item in itemsControl.Items)
+                    {
+                        SetChildThemeRequest(item, requestedTheme);
+                    }
+
+                    PrepareRequestedTheme(requestedTheme);
+                }
+
                 if (supportedType == typeof(Panel) && AttachedFrameworkElement is Panel panel)
                 {
                     foreach (FrameworkElement child in panel.Children)
@@ -118,24 +131,29 @@ namespace Fluent.UI.Controls
 
                 if (supportedType == typeof(Control))
                 {
-                    var elementType = AttachedFrameworkElement.GetType();
-                    var extensionType = GetType();
-                    var elementTypeName = elementType.Name;
-                    var extensionTypeNamespace = extensionType.Namespace;
-                    var requestedThemeName = (requestedTheme == ElementTheme.Default || requestedTheme == ElementTheme.Dark) ? "Default" : "Light";
-
-                    var themeResource = new Uri($@"pack://application:,,,/{extensionTypeNamespace};component/{elementTypeName}/{elementTypeName}.{requestedThemeName}.xaml", UriKind.Absolute);
-                    var resourceDictionary = new SharedResourceDictionary { Source = themeResource };
-
-                    var style = resourceDictionary[elementType] as Style;
-
-                    AttachedFrameworkElement.Style = style;
-                    AttachedFrameworkElement.UpdateLayout();
-                    
-                    ChangeVisualState(true);
-                    OnApplyTemplate();
+                    PrepareRequestedTheme(requestedTheme);
                 }
             }
+        }
+
+        private void PrepareRequestedTheme(ElementTheme requestedTheme)
+        {
+            var elementType = AttachedFrameworkElement.GetType();
+            var extensionType = GetType();
+            var elementTypeName = elementType.Name;
+            var extensionTypeNamespace = extensionType.Namespace;
+            var requestedThemeName = (requestedTheme == ElementTheme.Default || requestedTheme == ElementTheme.Dark) ? "Default" : "Light";
+
+            var themeResource = new Uri($@"pack://application:,,,/{extensionTypeNamespace};component/{elementTypeName}/{elementTypeName}.{requestedThemeName}.xaml", UriKind.Absolute);
+            var resourceDictionary = new SharedResourceDictionary { Source = themeResource };
+
+            var style = resourceDictionary[elementType] as Style;
+
+            AttachedFrameworkElement.Style = style;
+            AttachedFrameworkElement.UpdateLayout();
+
+            ChangeVisualState(true);
+            OnApplyTemplate();
         }
 
         private void OnUnloaded(object sender, RoutedEventArgs args)

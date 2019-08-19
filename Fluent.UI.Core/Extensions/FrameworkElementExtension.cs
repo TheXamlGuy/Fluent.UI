@@ -42,7 +42,13 @@ namespace Fluent.UI.Core.Extensions
                 return true;
             }
 
-             if (typeof(Control).IsAssignableFrom(frameworkElementType))
+            if (typeof(ItemsControl).IsAssignableFrom(frameworkElementType))
+            {
+                supportedType = typeof(ItemsControl);
+                return true;
+            }
+
+            if (typeof(Control).IsAssignableFrom(frameworkElementType))
             {
                 supportedType = typeof(Control);
                 return true;
