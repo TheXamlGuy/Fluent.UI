@@ -57,26 +57,24 @@ namespace Fluent.UI.Controls
             base.DependencyPropertyChangedHandler(handler);
         }
 
-        protected override void OnLoaded()
+        protected override void OnAttached()
         {
             AttachedFrameworkElement.AddHandler(UIElement.PreviewMouseDownEvent, (MouseButtonEventHandler)OnPreviewMouseDown, true);
             AttachedFrameworkElement.AddHandler(UIElement.MouseUpEvent, (MouseButtonEventHandler)OnMouseUp, true);
             AttachedFrameworkElement.AddHandler(UIElement.MouseLeaveEvent, (RoutedEventHandler)OnMouseLeave, true);
         }
 
-        private void OnMouseLeave(object sender, RoutedEventArgs args)
-        {
-            _isPressed = false;
-            ChangeVisualState(true);
-        }
-
-        protected override void OnUnloaded()
+        protected override void OnDetached()
         {
             AttachedFrameworkElement.RemoveHandler(UIElement.PreviewMouseDownEvent, (MouseButtonEventHandler)OnPreviewMouseDown);
             AttachedFrameworkElement.RemoveHandler(UIElement.MouseUpEvent, (MouseButtonEventHandler)OnMouseUp);
             AttachedFrameworkElement.RemoveHandler(UIElement.MouseLeaveEvent, (RoutedEventHandler)OnMouseLeave);
+        }
 
-            base.OnUnloaded();
+        private void OnMouseLeave(object sender, RoutedEventArgs args)
+        {
+            _isPressed = false;
+            ChangeVisualState(true);
         }
 
         private void OnMouseUp(object sender, MouseButtonEventArgs args)

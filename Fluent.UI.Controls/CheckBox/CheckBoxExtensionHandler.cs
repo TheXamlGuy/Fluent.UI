@@ -22,7 +22,7 @@ namespace Fluent.UI.Controls
             string visualState = "";
             if (AttachedFrameworkElement.IsChecked == true)
             {
-                if (IsEnabled)
+                if (!IsEnabled)
                 {
                     visualState = "CheckedDisabled";
                 }

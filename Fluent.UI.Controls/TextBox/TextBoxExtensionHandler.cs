@@ -56,7 +56,7 @@ namespace Fluent.UI.Controls
             base.DependencyPropertyChangedHandler(handler);
         }
 
-        protected override void OnApplyTemplate()
+        protected override void OnAttached()
         {
             _deleteButton = GetTemplateChild<Button>("DeleteButton");
             if (_deleteButton != null)
@@ -69,7 +69,7 @@ namespace Fluent.UI.Controls
             ChangePlaceholderVisualState();
         }
 
-        protected override void OnUnloaded()
+        protected override void OnDetached()
         {
             if (_deleteButton != null)
             {

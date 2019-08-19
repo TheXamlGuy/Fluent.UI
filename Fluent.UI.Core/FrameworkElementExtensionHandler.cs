@@ -79,7 +79,7 @@ namespace Fluent.UI.Core
 
         protected void GoToVisualState(string stateName, bool useTransitions = true) => VisualStateManager.GoToState(AttachedFrameworkElement, stateName, useTransitions);
 
-        protected virtual void OnApplyTemplate()
+        protected virtual void OnAttached()
         {
 
         }
@@ -91,20 +91,14 @@ namespace Fluent.UI.Core
                 return;
             }
 
-            OnApplyTemplate();
+            OnAttached();
             ChangeVisualState(false);
             PrepareRequestedTheme();
 
-            OnLoaded();
             IsLoaded = true;
         }
 
-        protected virtual void OnLoaded()
-        {
-
-        }
-
-        protected virtual void OnUnloaded()
+        protected virtual void OnDetached()
         {
 
         }
@@ -150,15 +144,16 @@ namespace Fluent.UI.Core
 
             AttachedFrameworkElement.SetCurrentValue(FrameworkElement.StyleProperty, style);
             AttachedFrameworkElement.UpdateLayout();
+            AttachedFrameworkElement.UpdateDefaultStyle();
 
+            OnAttached();
             ChangeVisualState(true);
-            OnApplyTemplate();
         }
 
         private void OnUnloaded(object sender, RoutedEventArgs args)
         {
             UnregisterEvents();
-            OnUnloaded();
+            OnDetached();
         }
 
         private void PrepareRequestedTheme()
@@ -195,7 +190,7 @@ namespace Fluent.UI.Core
         private void RemoveAttachedControl()
         {
             UnregisterEvents();
-            OnUnloaded();
+            OnDetached();
 
             _dependencyPropertyChangedHandler.Clear();
             _dependencyPropertyChangedHandler = null;

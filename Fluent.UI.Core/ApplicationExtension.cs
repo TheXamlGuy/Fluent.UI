@@ -17,7 +17,6 @@ namespace Fluent.UI.Core
         public static void SetRequestedTheme(Application application, ApplicationTheme requestedTheme)
         {
             RequestedTheme = requestedTheme;
-
             var requestedThemeName = (requestedTheme == ApplicationTheme.Default || requestedTheme == ApplicationTheme.Dark) ? "Default" : "Light";
 
             application.Startup += (sender, args) =>
@@ -30,15 +29,20 @@ namespace Fluent.UI.Core
 
                 foreach (var type in Assembly.GetAssembly(assemblyType).GetTypes().Where(x => !x.IsAbstract && x.BaseType.IsGenericType && x.BaseType.GetGenericTypeDefinition() == extensionType))
                 {
-                    var frameworkElementType = type.BaseType.GetGenericArguments()[0];
-
-                    var style = RequestedThemeFactory.Current.Create(frameworkElementType, (ElementTheme)requestedTheme);
-                    if (style != null)
-                    {
-                        application.Resources.Add(frameworkElementType, style);
-                    }
+                    MergeThemeResource(application, (ElementTheme)requestedTheme, type);
                 }
             };
+        }
+
+        private static void MergeThemeResource(Application application, ElementTheme requestedTheme, Type type)
+        {
+            var targetType = type.BaseType.GetGenericArguments()[0];
+
+            var themeResource = RequestedThemeResolver.Current.Resolve(targetType, requestedTheme);
+            if (themeResource != null)
+            {
+                application.Resources.MergedDictionaries.Add(themeResource);
+            }
         }
     }
 }
