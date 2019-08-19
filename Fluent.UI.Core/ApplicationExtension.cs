@@ -25,30 +25,20 @@ namespace Fluent.UI.Core
                 var themeResource = new Uri($"pack://application:,,,/Fluent.UI.Controls;component/Themes/ThemeResources.{requestedThemeName}.xaml", UriKind.Absolute);
                 application.Resources.MergedDictionaries.Insert(0, new SharedResourceDictionary { Source = themeResource });
 
-                var objectType = Type.GetType("Fluent.UI.Controls.FrameworkElementExtension`1, Fluent.UI.Controls");
+                var assemblyType = Type.GetType("Fluent.UI.Controls.FrameworkElementExtension, Fluent.UI.Controls");
+                var extensionType = Type.GetType("Fluent.UI.Core.FrameworkElementExtension`1, Fluent.UI.Core");
 
-                foreach (var type in Assembly.GetAssembly(objectType).GetTypes().Where(x => !x.IsAbstract && x.BaseType.IsGenericType && x.BaseType.GetGenericTypeDefinition() == objectType))
+                foreach (var type in Assembly.GetAssembly(assemblyType).GetTypes().Where(x => !x.IsAbstract && x.BaseType.IsGenericType && x.BaseType.GetGenericTypeDefinition() == extensionType))
                 {
-                    MergeThemeResource(application, requestedThemeName, type);
+                    var frameworkElementType = type.BaseType.GetGenericArguments()[0];
+
+                    var style = RequestedThemeFactory.Current.Create(frameworkElementType, (ElementTheme)requestedTheme);
+                    if (style != null)
+                    {
+                        application.Resources.Add(frameworkElementType, style);
+                    }
                 }
             };
-        }
-
-        private static void MergeThemeResource(Application application, string requestedThemeName, Type type)
-        {
-            var typeName = type.BaseType.GetGenericArguments()[0].Name;
-            var typeNamespace = type.Namespace;
-
-            var themeResource = new Uri($"pack://application:,,,/{typeNamespace};component/{typeName}/{typeName}.{requestedThemeName}.xaml", UriKind.Absolute);
-
-            try
-            {
-                application.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = themeResource });
-            }
-            catch
-            {
-                // nothing
-            }
         }
     }
 }

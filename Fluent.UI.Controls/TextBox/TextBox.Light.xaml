@@ -259,7 +259,7 @@
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxFocusedForegroundThemeBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_ContentHost" Storyboard.TargetProperty="(controls:FrameworkElementExtension.RequestedTheme)">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static controls:ElementTheme.Light}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static ElementTheme.Light}" />
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>

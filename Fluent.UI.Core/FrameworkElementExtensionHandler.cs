@@ -1,12 +1,11 @@
 ﻿using Fluent.UI.Core;
 using Fluent.UI.Core.Extensions;
 using System;
-using System.Diagnostics;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Fluent.UI.Controls
+namespace Fluent.UI.Core
 {
     public class FrameworkElementExtensionHandler<TFrameworkElement> : IFrameworkExtensionHandler<TFrameworkElement> where TFrameworkElement : FrameworkElement
     {
@@ -78,23 +77,31 @@ namespace Fluent.UI.Controls
 
         protected TTemplateChild GetTemplateChild<TTemplateChild>(string name) where TTemplateChild : FrameworkElement => AttachedFrameworkElement.FindDescendantByName(name) as TTemplateChild;
 
-        protected void GoToVisualState(string stateName, bool useTransitions = true)
-        {
-            var foo =VisualStateManager.GoToState(AttachedFrameworkElement, stateName, useTransitions);
-            Debug.WriteLine(stateName + " = " + foo);
-        }
+        protected void GoToVisualState(string stateName, bool useTransitions = true) => VisualStateManager.GoToState(AttachedFrameworkElement, stateName, useTransitions);
 
         protected virtual void OnApplyTemplate()
         {
 
         }
 
-        protected virtual void OnLoaded(object sender, RoutedEventArgs args)
+        private void OnLoaded(object sender, RoutedEventArgs args)
         {
+            if (IsLoaded)
+            {
+                return;
+            }
+
             OnApplyTemplate();
             ChangeVisualState(false);
             PrepareRequestedTheme();
+
+            OnLoaded();
             IsLoaded = true;
+        }
+
+        protected virtual void OnLoaded()
+        {
+
         }
 
         protected virtual void OnUnloaded()
@@ -141,7 +148,7 @@ namespace Fluent.UI.Controls
             var elementType = AttachedFrameworkElement.GetType();
             var style = RequestedThemeFactory.Current.Create(elementType, requestedTheme);
 
-            AttachedFrameworkElement.Style = style;
+            AttachedFrameworkElement.SetCurrentValue(FrameworkElement.StyleProperty, style);
             AttachedFrameworkElement.UpdateLayout();
 
             ChangeVisualState(true);
@@ -198,6 +205,11 @@ namespace Fluent.UI.Controls
 
         private void SetChildThemeRequest(UIElement frameworkElement, ElementTheme requestedTheme)
         {
+            if (frameworkElement == null)
+            {
+                return;
+            }
+
             var foo = typeof(FrameworkElementExtension<>).MakeGenericType(frameworkElement.GetType());
 
             MethodInfo myStaticMethodInfo = foo.GetMethod("SetRequestedThemePropagated");

@@ -1,10 +1,8 @@
-﻿using Fluent.UI.Core;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows;
 
-namespace Fluent.UI.Controls
+namespace Fluent.UI.Core
 {
     public class RequestedThemeFactory : IThemeFactory
     {
@@ -40,18 +38,25 @@ namespace Fluent.UI.Controls
             }
             else
             {
-                var extensionType = GetType();
                 var elementTypeName = targetType.Name;
-                var extensionTypeNamespace = extensionType.Namespace;
+                var extensionTypeNamespace = "Fluent.UI.Controls";
                 var requestedThemeName = (requestedTheme == ElementTheme.Default || requestedTheme == ElementTheme.Dark) ? "Default" : "Light";
 
-                var themeResource = new Uri($@"pack://application:,,,/{extensionTypeNamespace};component/{elementTypeName}/{elementTypeName}.{requestedThemeName}.xaml", UriKind.Absolute);
-                var resourceDictionary = new SharedResourceDictionary { Source = themeResource };
+                try
+                {
+                    var themeResource = new Uri($@"pack://application:,,,/{extensionTypeNamespace};component/{elementTypeName}/{elementTypeName}.{requestedThemeName}.xaml", UriKind.Absolute);
+                    var resourceDictionary = new SharedResourceDictionary { Source = themeResource };
 
-                var style = resourceDictionary[targetType] as Style;
+                    var style = resourceDictionary[targetType] as Style;
 
-                _themeCache[key] = style;
-                return style;
+                    _themeCache[key] = style;
+                    return style;
+                }
+                catch
+                {
+                    return null;
+                }
+    
             }
         }
     }

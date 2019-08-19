@@ -3,7 +3,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 
-namespace Fluent.UI.Controls
+namespace Fluent.UI.Core
 {
     public abstract class FrameworkElementExtension<TFrameworkElement> where TFrameworkElement : FrameworkElement
     {
@@ -77,8 +77,11 @@ namespace Fluent.UI.Controls
             }
 
             var frameworkElementType = frameworkElement.GetType();
-            var extensionType = Type.GetType("Fluent.UI.Controls.FrameworkElementExtension`1, Fluent.UI.Controls");
-            var handlerType = Assembly.GetAssembly(extensionType).GetTypes().FirstOrDefault(x => typeof(IFrameworkExtensionHandler<>).MakeGenericType(frameworkElementType).IsAssignableFrom(x));
+
+            var assemblyType = Type.GetType("Fluent.UI.Controls.FrameworkElementExtension, Fluent.UI.Controls");
+            var extensionType = Type.GetType("Fluent.UI.Core.FrameworkElementExtension`1, Fluent.UI.Core");
+
+            var handlerType = Assembly.GetAssembly(assemblyType).GetTypes().FirstOrDefault(x => typeof(IFrameworkExtensionHandler<>).MakeGenericType(frameworkElementType).IsAssignableFrom(x));
 
             if (handlerType != null)
             {
@@ -95,19 +98,19 @@ namespace Fluent.UI.Controls
             return handler;
         }
 
-        internal static bool TryAttachHandler(FrameworkElement frameworkElement, out IFrameworkExtensionHandler extension)
+        protected static bool TryAttachHandler(FrameworkElement frameworkElement, out IFrameworkExtensionHandler extension)
         {
             extension = AttachHandler(frameworkElement);
             return extension != null;
         }
 
-        internal static bool TryAttachHandler<THandler>(FrameworkElement frameworkElement, out THandler extension) where THandler : IFrameworkExtensionHandler
+        protected static bool TryAttachHandler<THandler>(FrameworkElement frameworkElement, out THandler extension) where THandler : IFrameworkExtensionHandler
         {
             extension = (THandler)AttachHandler(frameworkElement);
             return extension != null;
         }
 
-        internal static void DetachFrameworkElement(TFrameworkElement frameworkElement)
+        protected static void DetachFrameworkElement(TFrameworkElement frameworkElement)
         {
             //var extension = GetAttachedFrameworkElement(frameworkElement);
             //extension.RemoveAttachedControl();

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Fluent.UI.Core;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Fluent.UI.Controls

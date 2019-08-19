@@ -9,7 +9,6 @@ namespace Fluent.UI.Controls
 
         internal ContentDialogClosingDeferral()
         {
-
         }
 
         public void Complete() => _taskCompletionSource.TrySetResult(null);

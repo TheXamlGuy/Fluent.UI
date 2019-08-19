@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Fluent.UI.Core;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -39,13 +40,13 @@ namespace Fluent.UI.Controls
         public static string GetPlaceholderText(DependencyObject dependencyObject) => (string)dependencyObject.GetValue(PlaceholderTextProperty);
 
         public static void SetDescription(DependencyObject dependencyObject, object value) => dependencyObject.SetValue(DescriptionProperty, value);
-        
+
         public static void SetHeader(DependencyObject dependencyObject, object value) => dependencyObject.SetValue(HeaderProperty, value);
 
         public static void SetHeaderTemplate(DependencyObject dependencyObject, DataTemplate value) => dependencyObject.SetValue(HeaderTemplateProperty, value);
 
         public static void SetPlaceholderForeground(DependencyObject dependencyObject, Brush value) => dependencyObject.SetValue(PlaceholderForegroundProperty, value);
-        
+
         public static void SetPlaceholderText(DependencyObject dependencyObject, string value) => dependencyObject.SetValue(PlaceholderTextProperty, value);
     }
 }

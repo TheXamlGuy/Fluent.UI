@@ -1,13 +1,12 @@
-﻿using System;
-using System.Threading;
+﻿using Fluent.UI.Core;
+using Fluent.UI.Core.Extensions;
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
-using Fluent.UI.Core;
-using Fluent.UI.Core.Extensions;
 
 namespace Fluent.UI.Controls
 {
@@ -114,6 +113,7 @@ namespace Fluent.UI.Controls
         private Button _primaryButton;
         private Button _secondaryButton;
         private TaskCompletionSource<object> _taskCompletionSource;
+
         public ContentDialog() => DefaultStyleKey = typeof(ContentDialog);
 
         public event TypedEventHandler<ContentDialog, ContentDialogButtonClickEventArgs> CloseButtonClick;
@@ -177,6 +177,7 @@ namespace Fluent.UI.Controls
             get => (Brush)GetValue(PopupBackgroundProperty);
             set => SetValue(PopupBackgroundProperty, value);
         }
+
         public ICommand PrimaryButtonCommand
         {
             get => (ICommand)GetValue(PrimaryButtonCommandProperty);
@@ -236,12 +237,13 @@ namespace Fluent.UI.Controls
             get => (DataTemplate)GetValue(TitleTemplateProperty);
             set => SetValue(TitleTemplateProperty, value);
         }
+
         public override void OnApplyTemplate()
         {
             _isTemplateReady = true;
 
             _layoutRoot = GetTemplateChild("LayoutRoot") as Grid;
-            _container  = GetTemplateChild("Container") as Border;
+            _container = GetTemplateChild("Container") as Border;
 
             if (_container != null)
             {
@@ -328,9 +330,9 @@ namespace Fluent.UI.Controls
                 _adornerDialog = null;
             }
 
-
             _isOpen = false;
         }
+
         private void FinalizeOpening()
         {
             if (Opened != null)
@@ -385,7 +387,7 @@ namespace Fluent.UI.Controls
             if (_isShowing)
             {
                 FinalizeOpening();
-            }      
+            }
         }
 
         private async void OnPrimaryButtonClick(object sender, RoutedEventArgs routedEventArgs)
@@ -519,6 +521,7 @@ namespace Fluent.UI.Controls
             {
                 case ContentDialogButton.None:
                     break;
+
                 case ContentDialogButton.Primary:
                     if (_primaryButton != null)
                     {
@@ -526,6 +529,7 @@ namespace Fluent.UI.Controls
                         state = "PrimaryAsDefaultButton";
                     }
                     break;
+
                 case ContentDialogButton.Secondary:
                     if (_secondaryButton != null)
                     {
@@ -533,6 +537,7 @@ namespace Fluent.UI.Controls
                         state = "SecondaryAsDefaultButton";
                     }
                     break;
+
                 case ContentDialogButton.Close:
                     if (_closeButton != null)
                     {
@@ -540,6 +545,7 @@ namespace Fluent.UI.Controls
                         state = "CloseAsDefaultButton";
                     }
                     break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }

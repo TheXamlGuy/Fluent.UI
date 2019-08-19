@@ -1,4 +1,4 @@
-﻿namespace Fluent.UI.Controls
+﻿namespace Fluent.UI.Core
 {
     public enum ElementTheme
     {

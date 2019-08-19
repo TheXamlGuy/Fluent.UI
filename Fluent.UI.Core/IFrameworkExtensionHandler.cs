@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Fluent.UI.Controls
+namespace Fluent.UI.Core
 {
     public interface IFrameworkExtensionHandler
     {
