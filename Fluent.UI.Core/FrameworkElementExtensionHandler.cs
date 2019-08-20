@@ -29,6 +29,8 @@ namespace Fluent.UI.Core
 
             _dependencyPropertyChangedHandler = new DependencyPropertyChangedHandler();
             DependencyPropertyChangedHandler(_dependencyPropertyChangedHandler);
+
+            OnAttached();
         }
 
         public void SetRequestedTheme(ElementTheme requestedTheme)
@@ -82,20 +84,6 @@ namespace Fluent.UI.Core
 
         }
 
-        private void OnLoaded(object sender, RoutedEventArgs args)
-        {
-            if (IsLoaded)
-            {
-                return;
-            }
-
-            OnAttached();
-            ChangeVisualState(false);
-            PrepareRequestedTheme();
-
-            IsLoaded = true;
-        }
-
         protected virtual void OnDetached()
         {
 
@@ -106,14 +94,24 @@ namespace Fluent.UI.Core
 
         }
 
-        private void OnUnloaded(object sender, RoutedEventArgs args)
+        protected virtual void OnLoaded(object sender, RoutedEventArgs args)
+        {
+            if (IsLoaded)
+            {
+                return;
+            }
+
+            ChangeVisualState(false);
+            IsLoaded = true;
+        }
+        protected virtual void OnUnloaded(object sender, RoutedEventArgs args)
         {
             UnregisterEvents();
             OnDetached();
         }
 
         private void PrepareRequestedTheme()
-        {
+        {            
             ElementTheme requestedTheme;
             if (_isRequestedThemePropagated)
             {

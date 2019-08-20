@@ -5,8 +5,10 @@ using System.Windows.Controls;
 
 namespace Fluent.UI.Core
 {
-    public class ItemsControlExtensionHandler<TItemsControl> : FrameworkElementExtensionHandler<TItemsControl> where TItemsControl : ItemsControl
+    public class ItemsControlExtensionHandler<TItemsControl> : FrameworkElementExtensionHandler<TItemsControl>, IItemsControlExtensionHandler where TItemsControl : ItemsControl
     {
+        public bool IsItemContainerUpdating { get; set; }
+
         protected virtual Type GetContainerTypeForItem()
         {
             return null;
@@ -16,30 +18,42 @@ namespace Fluent.UI.Core
         {
             if (AttachedFrameworkElement.TryIsThemeRequestSupported(out Type supportedType))
             {
-                if (supportedType == typeof(ItemsControl) && AttachedFrameworkElement is ItemsControl itemsControl)
+                if (supportedType == typeof(ItemsControl))
                 {
-                    PrepareItemsContainerRequestedTheme(itemsControl, requestedTheme);
+                    PrepareItemsContainerRequestedTheme(requestedTheme);
                 }
             }
         }
 
-        private void PrepareItemsContainerRequestedTheme(ItemsControl itemsControl, ElementTheme requestedTheme)
+        protected override void OnAttached()
         {
-            var itemContainerType = GetContainerTypeForItem();
-            var itemContainerStylw = RequestedThemeFactory.Current.Create(itemContainerType, requestedTheme);
+            AttachedFrameworkElement.LayoutUpdated -= OnItemsControlLayoutUpdated;
+            AttachedFrameworkElement.LayoutUpdated += OnItemsControlLayoutUpdated;
 
-            AttachedFrameworkElement.SetCurrentValue(ItemsControl.ItemContainerStyleProperty, itemContainerStylw);
+            base.OnAttached();
+        }
 
+        private void PrepareItemsContainerRequestedTheme(ElementTheme requestedTheme)
+        {
             var itemsControlType = AttachedFrameworkElement.GetType();
             var itemsControlStyle = RequestedThemeFactory.Current.Create(itemsControlType, requestedTheme);
 
-            AttachedFrameworkElement.SetCurrentValue(FrameworkElement.StyleProperty, itemsControlStyle);
+            var itemContainerType = GetContainerTypeForItem();
+            var itemContainerStyle = RequestedThemeFactory.Current.Create(itemContainerType, requestedTheme);
+
+            AttachedFrameworkElement.SetValue(ItemsControl.ItemContainerStyleProperty, itemContainerStyle);
+            AttachedFrameworkElement.SetValue(FrameworkElement.StyleProperty, itemsControlStyle);
 
             AttachedFrameworkElement.UpdateLayout();
             AttachedFrameworkElement.UpdateDefaultStyle();
 
             OnAttached();
             ChangeVisualState(true);
+        }
+
+        private void OnItemsControlLayoutUpdated(object sender, EventArgs args)
+        {
+            IsItemContainerUpdating = true;
         }
     }
 }

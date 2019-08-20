@@ -113,7 +113,9 @@
                 BorderBrush="Green"
                 BorderThickness="10">
                 <ListBox Height="500" Margin="10">
-                    <ListBoxItem Content="hello" />
+                    <ListBoxItem>
+                        <Button Content="long" />
+                    </ListBoxItem>
                     <ListBoxItem Content="hello" />
                     <ListBoxItem Content="hello" />
                     <ListBoxItem Content="hello" />

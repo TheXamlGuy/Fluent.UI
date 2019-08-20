@@ -1,13 +1,16 @@
 ﻿using Fluent.UI.Core;
+using Fluent.UI.Core.Extensions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Fluent.UI.Controls
 {
-    public class ListBoxItemExtensionHandler : ControlExtensionHandler<ListBoxItem>
+    public class ListBoxItemExtensionHandler : ItemContainerExtensionHandler<ListBoxItem>
     {
         private bool _isPressed;
+
+        protected override IItemsControlExtensionHandler GetItemsControlHandler(ItemsControl itemsControl) => FrameworkElementExtension<ListBox>.GetAttachedHandler(itemsControl) as IItemsControlExtensionHandler;
 
         protected override void ChangeVisualState(bool useTransitions = true)
         {
@@ -61,7 +64,7 @@ namespace Fluent.UI.Controls
         {
             AttachedFrameworkElement.AddHandler(UIElement.PreviewMouseDownEvent, (MouseButtonEventHandler)OnPreviewMouseDown, true);
             AttachedFrameworkElement.AddHandler(UIElement.MouseUpEvent, (MouseButtonEventHandler)OnMouseUp, true);
-            AttachedFrameworkElement.AddHandler(UIElement.MouseLeaveEvent, (RoutedEventHandler)OnMouseLeave, true);
+            AttachedFrameworkElement.AddHandler(UIElement.MouseLeaveEvent, (RoutedEventHandler)OnMouseLeave, true);   
         }
 
         protected override void OnDetached()
