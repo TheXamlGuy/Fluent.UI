@@ -5,7 +5,7 @@ using System.Windows.Controls.Primitives;
 
 namespace Fluent.UI.Controls
 {
-    public class ButtonExtensionHandler : FrameworkElementExtensionHandler<Button>
+    public class ButtonExtensionHandler : ControlExtensionHandler<Button>
     {
         protected override void DependencyPropertyChangedHandler(DependencyPropertyChangedHandler handler)
         {

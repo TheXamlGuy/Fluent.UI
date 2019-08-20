@@ -5,7 +5,7 @@ using System.Windows.Controls.Primitives;
 
 namespace Fluent.UI.Controls
 {
-    public class CheckBoxExtensionHandler : FrameworkElementExtensionHandler<CheckBox>
+    public class CheckBoxExtensionHandler : ControlExtensionHandler<CheckBox>
     {
         protected override void DependencyPropertyChangedHandler(DependencyPropertyChangedHandler handler)
         {

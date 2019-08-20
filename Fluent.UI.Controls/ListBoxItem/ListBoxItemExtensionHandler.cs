@@ -5,7 +5,7 @@ using System.Windows.Input;
 
 namespace Fluent.UI.Controls
 {
-    public class ListBoxItemExtensionHandler : FrameworkElementExtensionHandler<ListBoxItem>
+    public class ListBoxItemExtensionHandler : ControlExtensionHandler<ListBoxItem>
     {
         private bool _isPressed;
 
