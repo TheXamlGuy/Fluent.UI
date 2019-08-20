@@ -89,7 +89,7 @@ namespace Fluent.UI.Core
             }
             else
             {
-                handler = Activator.CreateInstance(typeof(DecoratorExtensionHandler<>).MakeGenericType(frameworkElementType)) as IFrameworkExtensionHandler;
+                handler = Activator.CreateInstance(typeof(FrameworkElementExtensionHandler<>).MakeGenericType(frameworkElementType)) as IFrameworkExtensionHandler;
             }
 
             SetAttachedHandler(frameworkElement, handler);

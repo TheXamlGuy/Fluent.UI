@@ -1,5 +1,6 @@
 ﻿using Fluent.UI.Core.Extensions;
 using System;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Fluent.UI.Core
@@ -24,11 +25,21 @@ namespace Fluent.UI.Core
 
         private void PrepareItemsContainerRequestedTheme(ItemsControl itemsControl, ElementTheme requestedTheme)
         {
+            var itemContainerType = GetContainerTypeForItem();
+            var itemContainerStylw = RequestedThemeFactory.Current.Create(itemContainerType, requestedTheme);
 
-            var returnValue = itemsControl.GetType().GetMethods();
-            // var style = RequestedThemeFactory.Current.Create(elementType, requestedTheme);
+            AttachedFrameworkElement.SetCurrentValue(ItemsControl.ItemContainerStyleProperty, itemContainerStylw);
 
+            var itemsControlType = AttachedFrameworkElement.GetType();
+            var itemsControlStyle = RequestedThemeFactory.Current.Create(itemsControlType, requestedTheme);
+
+            AttachedFrameworkElement.SetCurrentValue(FrameworkElement.StyleProperty, itemsControlStyle);
+
+            AttachedFrameworkElement.UpdateLayout();
+            AttachedFrameworkElement.UpdateDefaultStyle();
+
+            OnAttached();
+            ChangeVisualState(true);
         }
-
     }
 }

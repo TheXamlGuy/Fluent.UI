@@ -155,7 +155,6 @@ namespace Fluent.UI.Core
         }
 
 
-
         private void UnregisterEvents()
         {
             AttachedFrameworkElement.Unloaded -= OnUnloaded;
