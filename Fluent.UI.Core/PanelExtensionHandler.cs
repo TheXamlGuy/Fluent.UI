@@ -28,8 +28,7 @@ namespace Fluent.UI.Core
                 return;
             }
 
-            var frameworkExtension = typeof(FrameworkElementExtension<>).MakeGenericType(frameworkElement.GetType());
-            frameworkExtension.GetMethod("SetRequestedThemePropagated").Invoke(null, new object[] { frameworkElement, requestedTheme });
+            FrameworkElementExtension.SetRequestedThemePropagated(frameworkElement, requestedTheme);
         }
     }
 }

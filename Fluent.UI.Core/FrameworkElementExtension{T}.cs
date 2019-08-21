@@ -5,38 +5,34 @@ using System.Windows;
 
 namespace Fluent.UI.Core
 {
-    public abstract class FrameworkElementExtension2 : FrameworkElementExtension<FrameworkElement>
-    {
-
-    }
-    public abstract class FrameworkElementExtension<TFrameworkElement> where TFrameworkElement : FrameworkElement
+    public abstract class FrameworkElementExtension
     {
         public static readonly DependencyProperty IsAttachedProperty =
             DependencyProperty.RegisterAttached("IsAttached",
-                typeof(bool), typeof(FrameworkElementExtension<TFrameworkElement>),
+                typeof(bool), typeof(FrameworkElementExtension),
                 new PropertyMetadata(false, OnIsAttachedPropertyChanged));
 
         public static readonly DependencyProperty RequestedThemeProperty =
             DependencyProperty.RegisterAttached("RequestedTheme",
-                typeof(ElementTheme), typeof(FrameworkElementExtension<TFrameworkElement>),
+                typeof(ElementTheme), typeof(FrameworkElementExtension),
                 new PropertyMetadata(ElementTheme.Light, OnRequestedThemePropertyChanged));
 
         internal static readonly DependencyProperty IsRequestedThemePropagatedProperty =
             DependencyProperty.RegisterAttached("IsRequestedThemePropagated",
-                typeof(bool), typeof(FrameworkElementExtension<TFrameworkElement>));
+                typeof(bool), typeof(FrameworkElementExtension));
 
         internal static readonly DependencyProperty RequestedThemePropagatedProperty =
             DependencyProperty.RegisterAttached("RequestedThemePropagated",
-                typeof(ElementTheme), typeof(FrameworkElementExtension<TFrameworkElement>),
+                typeof(ElementTheme), typeof(FrameworkElementExtension),
                 new PropertyMetadata(ElementTheme.Default, OnRequestedThemePropagatedPropertyChanged));
 
         internal static DependencyProperty AttachedHandlerProperty =
             DependencyProperty.RegisterAttached("AttachedHandler",
-              typeof(IFrameworkExtensionHandler), typeof(FrameworkElementExtension<TFrameworkElement>));
+              typeof(IFrameworkExtensionHandler), typeof(FrameworkElementExtension));
 
         internal static DependencyProperty IsRequestedThemeProperty =
             DependencyProperty.RegisterAttached("IsRequestedTheme",
-                typeof(bool), typeof(FrameworkElementExtension<TFrameworkElement>));
+                typeof(bool), typeof(FrameworkElementExtension));
 
         public static ElementTheme GetRequestedTheme(DependencyObject dependencyObject) => (ElementTheme)dependencyObject.GetValue(RequestedThemeProperty);
 
@@ -80,8 +76,8 @@ namespace Fluent.UI.Core
 
             var frameworkElementType = frameworkElement.GetType();
 
-            var assemblyType = Type.GetType("Fluent.UI.Controls.FrameworkElementExtension, Fluent.UI.Controls");
-            var extensionType = Type.GetType("Fluent.UI.Core.FrameworkElementExtension`1, Fluent.UI.Core");
+            var assemblyType = Type.GetType("Fluent.UI.Controls.ButtonExtension, Fluent.UI.Controls");
+            var extensionType = Type.GetType("Fluent.UI.Core.FrameworkElementExtension, Fluent.UI.Core");
 
             var handlerType = Assembly.GetAssembly(assemblyType).GetTypes().FirstOrDefault(x => typeof(IFrameworkExtensionHandler<>).MakeGenericType(frameworkElementType).IsAssignableFrom(x));
 
@@ -112,13 +108,13 @@ namespace Fluent.UI.Core
             return extension != null;
         }
 
-        protected static void DetachFrameworkElement(TFrameworkElement frameworkElement)
-        {
-            //var extension = GetAttachedFrameworkElement(frameworkElement);
-            //extension.RemoveAttachedControl();
+        //protected static void DetachFrameworkElement(TFrameworkElement frameworkElement)
+        //{
+        //    //var extension = GetAttachedFrameworkElement(frameworkElement);
+        //    //extension.RemoveAttachedControl();
 
-            //frameworkElement.ClearValue(AttachedFrameworkElementProperty);
-        }
+        //    //frameworkElement.ClearValue(AttachedFrameworkElementProperty);
+        //}
 
         private static void OnIsAttachedPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {

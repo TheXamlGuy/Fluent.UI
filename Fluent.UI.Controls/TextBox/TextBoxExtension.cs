@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 namespace Fluent.UI.Controls
 {
-    public partial class TextBoxExtension : FrameworkElementExtension<TextBox>
+    public partial class TextBoxExtension : FrameworkElementExtension
     {
         private static void OnHeaderPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {

@@ -5,7 +5,7 @@ using System.Windows.Media;
 
 namespace Fluent.UI.Controls
 {
-    public partial class TextBoxExtension : FrameworkElementExtension<TextBox>
+    public partial class TextBoxExtension : FrameworkElementExtension
     {
         public static readonly DependencyProperty DescriptionProperty =
             DependencyProperty.RegisterAttached("Description",

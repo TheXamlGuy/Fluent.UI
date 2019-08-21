@@ -25,8 +25,8 @@ namespace Fluent.UI.Core
                 var themeResource = new Uri($"pack://application:,,,/Fluent.UI.Controls;component/Themes/ThemeResources.{requestedThemeName}.xaml", UriKind.Absolute);
                 application.Resources.MergedDictionaries.Insert(0, new SharedResourceDictionary { Source = themeResource });
 
-                var assemblyType = Type.GetType("Fluent.UI.Controls.FrameworkElementExtension, Fluent.UI.Controls");
-                var extensionType = Type.GetType("Fluent.UI.Core.FrameworkElementExtension`1, Fluent.UI.Core");
+                var assemblyType = Type.GetType("Fluent.UI.Controls.ButtonExtension, Fluent.UI.Controls");
+                var extensionType = Type.GetType("Fluent.UI.Core.FrameworkElementExtension, Fluent.UI.Core");
 
                 foreach (var type in Assembly.GetAssembly(assemblyType).GetTypes())
                 {

@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 namespace Fluent.UI.Controls
 {
-    public class ButtonExtension : FrameworkElementExtension<Button>
+    public class ButtonExtension : FrameworkElementExtension
     {
     }
 }

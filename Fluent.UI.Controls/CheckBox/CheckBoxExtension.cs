@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 namespace Fluent.UI.Controls
 {
-    public class CheckBoxExtension : FrameworkElementExtension<CheckBox>
+    public class CheckBoxExtension : FrameworkElementExtension
     {
     }
 }
