@@ -5,7 +5,7 @@ using System.Windows.Controls;
 namespace Fluent.UI.Controls
 {
     [DefaultStyleTarget(typeof(ListBox))]
-    public class ListBoxExtensionHandler : ItemsControlExtensionHandler<ListBox>
+    public class AttachedListBoxControl : AttachedItemsControlTemplate<ListBox>
     {
         protected override Type GetContainerTypeForItem() => typeof(ListBoxItem);
     }

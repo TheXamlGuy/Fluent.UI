@@ -1,6 +1,6 @@
 ﻿namespace Fluent.UI.Core
 {
-    public interface IItemsControlExtensionHandler
+    public interface IAttachedItemsControlTemplate
     {
         bool IsItemContainerUpdating { get; set; }
     }

@@ -1,11 +1,9 @@
 ﻿using Fluent.UI.Core.Extensions;
-using System;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace Fluent.UI.Core
 {
-    public class FrameworkElementExtensionHandler<TFrameworkElement> : IFrameworkExtensionHandler<TFrameworkElement> where TFrameworkElement : FrameworkElement
+    public class AttachedFrameworkElementTemplate<TFrameworkElement> : IAttachedFrameworkElementTemplate<TFrameworkElement> where TFrameworkElement : FrameworkElement
     {
         private DependencyPropertyChangedHandler _dependencyPropertyChangedHandler;
 
@@ -89,11 +87,6 @@ namespace Fluent.UI.Core
 
         }
 
-        protected virtual void PrepareRequestedTheme(ElementTheme requestedTheme)
-        {
-
-        }
-
         protected virtual void OnLoaded(object sender, RoutedEventArgs args)
         {
             if (IsLoaded)
@@ -104,12 +97,17 @@ namespace Fluent.UI.Core
             ChangeVisualState(false);
             IsLoaded = true;
         }
+
         protected virtual void OnUnloaded(object sender, RoutedEventArgs args)
         {
             UnregisterEvents();
             OnDetached();
         }
 
+        protected virtual void PrepareRequestedTheme(ElementTheme requestedTheme)
+        {
+
+        }
         private void PrepareRequestedTheme()
         {            
             ElementTheme requestedTheme;

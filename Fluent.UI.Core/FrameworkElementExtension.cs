@@ -26,9 +26,9 @@ namespace Fluent.UI.Core
                 typeof(ElementTheme), typeof(FrameworkElementExtension),
                 new PropertyMetadata(ElementTheme.Default, OnRequestedThemePropagatedPropertyChanged));
 
-        internal static DependencyProperty AttachedHandlerProperty =
-            DependencyProperty.RegisterAttached("AttachedHandler",
-              typeof(IFrameworkExtensionHandler), typeof(FrameworkElementExtension));
+        internal static DependencyProperty AttachedTemplatetProperty =
+            DependencyProperty.RegisterAttached("AttachedTemplate",
+              typeof(IAttachedFrameworkElementTemplate), typeof(FrameworkElementExtension));
 
         internal static DependencyProperty IsRequestedThemeProperty =
             DependencyProperty.RegisterAttached("IsRequestedTheme",
@@ -52,7 +52,7 @@ namespace Fluent.UI.Core
             dependencyObject.SetValue(RequestedThemePropagatedProperty, value);
         }
 
-        public static IFrameworkExtensionHandler GetAttachedHandler(DependencyObject dependencyObject) => (IFrameworkExtensionHandler)dependencyObject.GetValue(AttachedHandlerProperty);
+        public static IAttachedFrameworkElementTemplate GetAttachedTemplate(DependencyObject dependencyObject) => (IAttachedFrameworkElementTemplate)dependencyObject.GetValue(AttachedTemplatetProperty);
 
         public static bool GetIsAttached(DependencyObject dependencyObject) => (bool)dependencyObject.GetValue(IsAttachedProperty);
 
@@ -60,18 +60,18 @@ namespace Fluent.UI.Core
 
         internal static bool GetIsRequestedThemePropagated(DependencyObject dependencyObject) => (bool)dependencyObject.GetValue(IsRequestedThemePropagatedProperty);
 
-        internal static void SetAttachedHandler(DependencyObject dependencyObject, IFrameworkExtensionHandler extension) => dependencyObject.SetValue(AttachedHandlerProperty, extension);
+        internal static void SetAttachedTemplate(DependencyObject dependencyObject, IAttachedFrameworkElementTemplate extension) => dependencyObject.SetValue(AttachedTemplatetProperty, extension);
         
         internal static void SetIsRequestedTheme(DependencyObject dependencyObject, bool value) => dependencyObject.SetValue(IsRequestedThemeProperty, value);
 
         internal static void SetIsRequestedThemePropagated(DependencyObject dependencyObject, bool value) => dependencyObject.SetValue(IsRequestedThemePropagatedProperty, value);
 
-        internal static IFrameworkExtensionHandler AttachHandler(FrameworkElement frameworkElement)
+        internal static IAttachedFrameworkElementTemplate AttachTemplate(FrameworkElement frameworkElement)
         {
-            var handler = GetAttachedHandler(frameworkElement);
-            if (handler != null)
+            var attachedTemplate = GetAttachedTemplate(frameworkElement);
+            if (attachedTemplate != null)
             {
-                return handler;
+                return attachedTemplate;
             }
 
             var frameworkElementType = frameworkElement.GetType();
@@ -79,33 +79,33 @@ namespace Fluent.UI.Core
             var assemblyType = Type.GetType("Fluent.UI.Controls.ButtonExtension, Fluent.UI.Controls");
             var extensionType = Type.GetType("Fluent.UI.Core.FrameworkElementExtension, Fluent.UI.Core");
 
-            var handlerType = Assembly.GetAssembly(assemblyType).GetTypes().FirstOrDefault(x => typeof(IFrameworkExtensionHandler<>).MakeGenericType(frameworkElementType).IsAssignableFrom(x));
+            var attachedTemplateType = Assembly.GetAssembly(assemblyType).GetTypes().FirstOrDefault(x => typeof(IAttachedFrameworkElementTemplate<>).MakeGenericType(frameworkElementType).IsAssignableFrom(x));
 
-            if (handlerType != null)
+            if (attachedTemplateType != null)
             {
-                handler = Activator.CreateInstance(handlerType) as IFrameworkExtensionHandler;
+                attachedTemplate = Activator.CreateInstance(attachedTemplateType) as IAttachedFrameworkElementTemplate;
             }
             else
             {
-                handler = Activator.CreateInstance(typeof(FrameworkElementExtensionHandler<>).MakeGenericType(frameworkElementType)) as IFrameworkExtensionHandler;
+                attachedTemplate = Activator.CreateInstance(typeof(AttachedFrameworkElementTemplate<>).MakeGenericType(frameworkElementType)) as IAttachedFrameworkElementTemplate;
             }
 
-            SetAttachedHandler(frameworkElement, handler);
-            handler.SetAttachedControl(frameworkElement);
+            SetAttachedTemplate(frameworkElement, attachedTemplate);
+            attachedTemplate.SetAttachedControl(frameworkElement);
 
-            return handler;
+            return attachedTemplate;
         }
 
-        protected static bool TryAttachHandler(FrameworkElement frameworkElement, out IFrameworkExtensionHandler extension)
+        protected static bool TryAttachTemplate(FrameworkElement frameworkElement, out IAttachedFrameworkElementTemplate extension)
         {
-            extension = AttachHandler(frameworkElement);
+            extension = AttachTemplate(frameworkElement);
             return extension != null;
         }
 
-        protected static bool TryAttachHandler<THandler>(FrameworkElement frameworkElement, out THandler extension) where THandler : IFrameworkExtensionHandler
+        protected static bool TryAttachTemplate<TAttachedTemplate>(FrameworkElement frameworkElement, out TAttachedTemplate attachedTemplate) where TAttachedTemplate : IAttachedFrameworkElementTemplate
         {
-            extension = (THandler)AttachHandler(frameworkElement);
-            return extension != null;
+            attachedTemplate = (TAttachedTemplate)AttachTemplate(frameworkElement);
+            return attachedTemplate != null;
         }
 
         //protected static void DetachFrameworkElement(TFrameworkElement frameworkElement)
@@ -122,7 +122,7 @@ namespace Fluent.UI.Core
             {
                 if ((bool)args.NewValue)
                 {
-                    AttachHandler(dependencyObject as FrameworkElement);
+                    AttachTemplate(dependencyObject as FrameworkElement);
                 }
                 else
                 {
@@ -135,9 +135,9 @@ namespace Fluent.UI.Core
         {
             if ((ElementTheme)args.NewValue != (ElementTheme)args.OldValue)
             {
-                if (TryAttachHandler(dependencyObject as FrameworkElement, out IFrameworkExtensionHandler handler))
+                if (TryAttachTemplate(dependencyObject as FrameworkElement, out IAttachedFrameworkElementTemplate attachedTemplate))
                 {
-                    handler?.SetRequestedThemePropagated((ElementTheme)args.NewValue);
+                    attachedTemplate?.SetRequestedThemePropagated((ElementTheme)args.NewValue);
                 }
             }
         }
@@ -146,9 +146,9 @@ namespace Fluent.UI.Core
         {
             if ((ElementTheme)args.NewValue != (ElementTheme)args.OldValue)
             {
-                if (TryAttachHandler(dependencyObject as FrameworkElement, out IFrameworkExtensionHandler handler))
+                if (TryAttachTemplate(dependencyObject as FrameworkElement, out IAttachedFrameworkElementTemplate attachedTemplate))
                 {
-                    handler?.SetRequestedTheme((ElementTheme)args.NewValue);
+                    attachedTemplate?.SetRequestedTheme((ElementTheme)args.NewValue);
                 }
             }
         }

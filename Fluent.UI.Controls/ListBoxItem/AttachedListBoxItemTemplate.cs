@@ -6,7 +6,7 @@ using System.Windows.Input;
 namespace Fluent.UI.Controls
 {
     [DefaultStyleTarget(typeof(ListBoxItem))]
-    public class ListBoxItemExtensionHandler : ItemContainerExtensionHandler<ListBoxItem>
+    public class AttachedListBoxItemTemplate : AttachedItemContainerTemplate<ListBoxItem>
     {
         private bool _isPressed;
 

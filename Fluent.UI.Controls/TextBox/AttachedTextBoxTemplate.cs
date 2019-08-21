@@ -5,7 +5,7 @@ using System.Windows.Controls;
 namespace Fluent.UI.Controls
 {
     [DefaultStyleTarget(typeof(TextBox))]
-    internal class TextBoxExtensionHandler : ControlExtensionHandler<TextBox>
+    internal class AttachedTextBoxTemplate : AttachedControlTemplate<TextBox>
     {
         private Button _deleteButton;
 

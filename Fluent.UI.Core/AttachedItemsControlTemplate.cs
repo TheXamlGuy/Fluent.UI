@@ -5,7 +5,7 @@ using System.Windows.Controls;
 
 namespace Fluent.UI.Core
 {
-    public class ItemsControlExtensionHandler<TItemsControl> : FrameworkElementExtensionHandler<TItemsControl>, IItemsControlExtensionHandler where TItemsControl : ItemsControl
+    public class AttachedItemsControlTemplate<TItemsControl> : AttachedControlTemplate<TItemsControl>, IAttachedItemsControlTemplate where TItemsControl : ItemsControl
     {
         public bool IsItemContainerUpdating { get; set; }
 

@@ -5,15 +5,18 @@ using System.Windows.Controls;
 
 namespace Fluent.UI.Core
 {
-    public class DecoratorExtensionHandler<TDecorator> : FrameworkElementExtensionHandler<TDecorator> where TDecorator : Decorator
+    public class AttachedPanelTemplate<TPanel> : AttachedFrameworkElementTemplate<TPanel> where TPanel : Panel
     {
         protected override void PrepareRequestedTheme(ElementTheme requestedTheme)
         {
             if (AttachedFrameworkElement.TryIsThemeRequestSupported(out Type supportedType))
             {
-                if (supportedType == typeof(Decorator) && AttachedFrameworkElement is Decorator decorator)
+                if (supportedType == typeof(Panel) && AttachedFrameworkElement is Panel panel)
                 {
-                    PrepareChildThemeRequest(decorator.Child, requestedTheme);
+                    foreach (FrameworkElement child in panel.Children)
+                    {
+                        PrepareChildThemeRequest(child, requestedTheme);
+                    }
                 }
             }
         }

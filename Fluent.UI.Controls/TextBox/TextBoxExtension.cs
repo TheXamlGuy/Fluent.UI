@@ -8,17 +8,17 @@ namespace Fluent.UI.Controls
     {
         private static void OnHeaderPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
-            if (TryAttachHandler(dependencyObject as TextBox, out TextBoxExtensionHandler handler))
+            if (TryAttachTemplate(dependencyObject as TextBox, out AttachedTextBoxTemplate attachedTemplate))
             {
-                handler?.SetHeader((object)args.NewValue);
+                attachedTemplate?.SetHeader((object)args.NewValue);
             }
         }
 
         private static void OnHeaderTemplatePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
-            if (TryAttachHandler(dependencyObject as TextBox, out TextBoxExtensionHandler handler))
+            if (TryAttachTemplate(dependencyObject as TextBox, out AttachedTextBoxTemplate attachedTemplate))
             {
-                handler?.SetHeaderTemplate((DataTemplate)args.NewValue);
+                attachedTemplate?.SetHeaderTemplate((DataTemplate)args.NewValue);
             }
         }
     }

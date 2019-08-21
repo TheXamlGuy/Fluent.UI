@@ -5,7 +5,7 @@ using System.Windows.Controls;
 
 namespace Fluent.UI.Core
 {
-    public class ControlExtensionHandler<TControl> : FrameworkElementExtensionHandler<TControl> where TControl : Control
+    public class AttachedControlTemplate<TControl> : AttachedFrameworkElementTemplate<TControl> where TControl : Control
     {
         protected void ApplyRequestedTheme(ElementTheme requestedTheme)
         {
