@@ -4,7 +4,7 @@ Bring Microsoft's Fluent Design System to Windows Presentation Foundation.
 
 ## Getting Started
 
-Consider Fluent UI to be in serious alpha state right now. It is missing a lot of default inbuilt Control Styles as well planned custom Controls which can be found in UWP and Win UI.
+Consider Fluent UI to be in serious alpha state right now. It is missing a lot of default inbuilt Control Styles as well planned custom Controls which can be found in UWP and WinUI.
 
 ## Default Control Styles
 
