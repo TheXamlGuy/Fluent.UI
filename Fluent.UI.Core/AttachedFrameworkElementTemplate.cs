@@ -94,8 +94,14 @@ namespace Fluent.UI.Core
                 return;
             }
 
+            OnApplyTemplate();
             ChangeVisualState(false);
             IsLoaded = true;
+        }
+
+        protected virtual void OnApplyTemplate()
+        {
+
         }
 
         protected virtual void OnUnloaded(object sender, RoutedEventArgs args)

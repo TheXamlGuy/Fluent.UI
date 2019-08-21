@@ -1,6 +1,9 @@
 ﻿using Fluent.UI.Core;
+using Fluent.UI.Core.Extensions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Media;
 
 namespace Fluent.UI.Controls
 {
@@ -57,7 +60,7 @@ namespace Fluent.UI.Controls
             base.DependencyPropertyChangedHandler(handler);
         }
 
-        protected override void OnAttached()
+        protected override void OnApplyTemplate()
         {
             _deleteButton = GetTemplateChild<Button>("DeleteButton");
             if (_deleteButton != null)
@@ -66,9 +69,21 @@ namespace Fluent.UI.Controls
                 _deleteButton.Click += OnDeleteButtonClick;
             }
 
+            var scrollViewer = GetTemplateChild<ScrollViewer>("PART_ContentHost");
+            var binding = new Binding
+            {
+                Source = scrollViewer,
+                Path = new PropertyPath("Foreground"),
+                Mode = BindingMode.OneWay
+            };
+
+            BindingOperations.SetBinding(AttachedFrameworkElement, Control.ForegroundProperty, binding);
+
+
             ChangeHeaderVisualState();
             ChangePlaceholderVisualState();
         }
+
 
         protected override void OnDetached()
         {
