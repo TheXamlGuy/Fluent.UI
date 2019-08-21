@@ -9,6 +9,7 @@ Consider Fluent UI to be in serious alpha state right now. It is missing a lot o
 ## Default Control Styles
 
 - [x] Button
+- [ ] RepeatButton
 - [ ] TextBox
 - [ ] PasswordBox
 - [x] ChecBox
@@ -18,8 +19,16 @@ Consider Fluent UI to be in serious alpha state right now. It is missing a lot o
 - [x] ListBoxItem
 - [ ] ListView
 - [ ] ListViewItem
+- [ ] ContextMenu
 - [ ] Menu
 - [ ] MenuItem
+- [ ] DataGrid
+- [ ] ListView
+- [ ] TreeView
+- [ ] Calendar
+- [ ] DatePicker
+- [ ] Slider
+- [ ] ComboBox
 
 ## Custom Controls
 
