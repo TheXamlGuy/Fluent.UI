@@ -16,6 +16,10 @@ Consider Fluent UI to be in serious alpha state right now. It is missing a lot o
 - [ ] TabControl
 - [x] ListBox
 - [x] ListBoxItem
+- [ ] ListView
+- [ ] ListViewItem
+- [ ] Menu
+- [ ] MenuItem
 
 ## Custom Controls
 
