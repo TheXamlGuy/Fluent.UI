@@ -5,6 +5,10 @@ using System.Windows;
 
 namespace Fluent.UI.Core
 {
+    public abstract class FrameworkElementExtension2 : FrameworkElementExtension<FrameworkElement>
+    {
+
+    }
     public abstract class FrameworkElementExtension<TFrameworkElement> where TFrameworkElement : FrameworkElement
     {
         public static readonly DependencyProperty IsAttachedProperty =
@@ -38,7 +42,7 @@ namespace Fluent.UI.Core
 
         public static ElementTheme GetRequestedThemePropagated(DependencyObject dependencyObject) => (ElementTheme)dependencyObject.GetValue(RequestedThemePropagatedProperty);
 
-        public static void SetIsAttached(TFrameworkElement dependencyObject, bool value) => dependencyObject.SetValue(IsAttachedProperty, value);
+        internal static void SetIsAttached(DependencyObject dependencyObject, bool value) => dependencyObject.SetValue(IsAttachedProperty, value);
 
         public static void SetRequestedTheme(DependencyObject dependencyObject, ElementTheme value)
         {
@@ -52,17 +56,15 @@ namespace Fluent.UI.Core
             dependencyObject.SetValue(RequestedThemePropagatedProperty, value);
         }
 
-        internal static IFrameworkExtensionHandler GetAttachedHandler(DependencyObject dependencyObject) => (IFrameworkExtensionHandler)dependencyObject.GetValue(AttachedHandlerProperty);
+        public static IFrameworkExtensionHandler GetAttachedHandler(DependencyObject dependencyObject) => (IFrameworkExtensionHandler)dependencyObject.GetValue(AttachedHandlerProperty);
 
-        internal static bool GetIsAttached(DependencyObject dependencyObject) => (bool)dependencyObject.GetValue(IsAttachedProperty);
+        public static bool GetIsAttached(DependencyObject dependencyObject) => (bool)dependencyObject.GetValue(IsAttachedProperty);
 
         internal static bool GetIsRequestedTheme(DependencyObject dependencyObject) => (bool)dependencyObject.GetValue(IsRequestedThemeProperty);
 
         internal static bool GetIsRequestedThemePropagated(DependencyObject dependencyObject) => (bool)dependencyObject.GetValue(IsRequestedThemePropagatedProperty);
 
         internal static void SetAttachedHandler(DependencyObject dependencyObject, IFrameworkExtensionHandler extension) => dependencyObject.SetValue(AttachedHandlerProperty, extension);
-
-        internal static void SetIsAttached(DependencyObject dependencyObject, bool value) => dependencyObject.SetValue(IsAttachedProperty, value);
         
         internal static void SetIsRequestedTheme(DependencyObject dependencyObject, bool value) => dependencyObject.SetValue(IsRequestedThemeProperty, value);
 

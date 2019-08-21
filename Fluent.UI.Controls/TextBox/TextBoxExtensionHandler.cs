@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 namespace Fluent.UI.Controls
 {
-    internal class TextBoxExtensionHandler : FrameworkElementExtensionHandler<TextBox>
+    internal class TextBoxExtensionHandler : ControlExtensionHandler<TextBox>
     {
         private Button _deleteButton;
 

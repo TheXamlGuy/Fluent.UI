@@ -1,9 +1,11 @@
 ﻿using Fluent.UI.Core;
+using System;
 using System.Windows.Controls;
 
 namespace Fluent.UI.Controls
 {
-    public class ListBoxExtensionHandler : FrameworkElementExtensionHandler<ListBox>
+    public class ListBoxExtensionHandler : ItemsControlExtensionHandler<ListBox>
     {
+        protected override Type GetContainerTypeForItem() => typeof(ListBoxItem);
     }
 }

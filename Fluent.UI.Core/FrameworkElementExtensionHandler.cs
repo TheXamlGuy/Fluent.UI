@@ -1,7 +1,5 @@
-﻿using Fluent.UI.Core;
-using Fluent.UI.Core.Extensions;
+﻿using Fluent.UI.Core.Extensions;
 using System;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -31,6 +29,8 @@ namespace Fluent.UI.Core
 
             _dependencyPropertyChangedHandler = new DependencyPropertyChangedHandler();
             DependencyPropertyChangedHandler(_dependencyPropertyChangedHandler);
+
+            OnAttached();
         }
 
         public void SetRequestedTheme(ElementTheme requestedTheme)
@@ -62,7 +62,7 @@ namespace Fluent.UI.Core
 
         internal void PropagateRequestedTheme(ElementTheme requestedTheme)
         {
-            ApplyRequestedTheme(requestedTheme);
+            PrepareRequestedTheme(requestedTheme);
         }
 
         protected virtual void ChangeVisualState(bool useTransitions = true)
@@ -84,80 +84,34 @@ namespace Fluent.UI.Core
 
         }
 
-        private void OnLoaded(object sender, RoutedEventArgs args)
+        protected virtual void OnDetached()
+        {
+
+        }
+
+        protected virtual void PrepareRequestedTheme(ElementTheme requestedTheme)
+        {
+
+        }
+
+        protected virtual void OnLoaded(object sender, RoutedEventArgs args)
         {
             if (IsLoaded)
             {
                 return;
             }
 
-            OnAttached();
             ChangeVisualState(false);
-            PrepareRequestedTheme();
-
             IsLoaded = true;
         }
-
-        protected virtual void OnDetached()
-        {
-
-        }
-
-        private void ApplyRequestedTheme(ElementTheme requestedTheme)
-        {
-            if (AttachedFrameworkElement.TryIsThemeRequestSupported(out Type supportedType))
-            {
-                if (supportedType == typeof(ItemsControl) && AttachedFrameworkElement is ItemsControl itemsControl)
-                {
-                    foreach (FrameworkElement item in itemsControl.Items)
-                    {
-                        SetChildThemeRequest(item, requestedTheme);
-                    }
-
-                    PrepareRequestedTheme(requestedTheme);
-                }
-
-                if (supportedType == typeof(Panel) && AttachedFrameworkElement is Panel panel)
-                {
-                    foreach (FrameworkElement child in panel.Children)
-                    {
-                        SetChildThemeRequest(child, requestedTheme);
-                    }
-                }
-
-                if (supportedType == typeof(Decorator) && AttachedFrameworkElement is Decorator decorator)
-                {
-                    SetChildThemeRequest(decorator.Child, requestedTheme);
-                }
-
-                if (supportedType == typeof(Control))
-                {
-                    PrepareRequestedTheme(requestedTheme);
-                }
-            }
-        }
-
-        private void PrepareRequestedTheme(ElementTheme requestedTheme)
-        {
-            var elementType = AttachedFrameworkElement.GetType();
-            var style = RequestedThemeFactory.Current.Create(elementType, requestedTheme);
-
-            AttachedFrameworkElement.SetCurrentValue(FrameworkElement.StyleProperty, style);
-            AttachedFrameworkElement.UpdateLayout();
-            AttachedFrameworkElement.UpdateDefaultStyle();
-
-            OnAttached();
-            ChangeVisualState(true);
-        }
-
-        private void OnUnloaded(object sender, RoutedEventArgs args)
+        protected virtual void OnUnloaded(object sender, RoutedEventArgs args)
         {
             UnregisterEvents();
             OnDetached();
         }
 
         private void PrepareRequestedTheme()
-        {
+        {            
             ElementTheme requestedTheme;
             if (_isRequestedThemePropagated)
             {
@@ -178,7 +132,7 @@ namespace Fluent.UI.Core
                 requestedTheme = _requestedTheme;
             }
 
-            ApplyRequestedTheme(requestedTheme);
+            PrepareRequestedTheme(requestedTheme);
         }
 
         private void RegisterEvents()
@@ -198,18 +152,6 @@ namespace Fluent.UI.Core
             AttachedFrameworkElement = null;
         }
 
-        private void SetChildThemeRequest(UIElement frameworkElement, ElementTheme requestedTheme)
-        {
-            if (frameworkElement == null)
-            {
-                return;
-            }
-
-            var foo = typeof(FrameworkElementExtension<>).MakeGenericType(frameworkElement.GetType());
-
-            MethodInfo myStaticMethodInfo = foo.GetMethod("SetRequestedThemePropagated");
-            myStaticMethodInfo.Invoke(null, new object[] { frameworkElement, requestedTheme });
-        }
 
         private void UnregisterEvents()
         {

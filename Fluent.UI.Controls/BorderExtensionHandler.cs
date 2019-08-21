@@ -3,8 +3,7 @@ using System.Windows.Controls;
 
 namespace Fluent.UI.Controls
 {
-    public class ListBoxItemExtension : FrameworkElementExtension<ListBoxItem>
+    public class BorderExtensionHandler : DecoratorExtensionHandler<Border>
     {
-
     }
 }

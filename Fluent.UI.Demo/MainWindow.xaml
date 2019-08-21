@@ -26,7 +26,7 @@
                 VerticalAlignment="Top"
                 BorderBrush="Red"
                 BorderThickness="5">
-                <!--<StackPanel>
+                <StackPanel>
                     <Button
                         x:Name="Button"
                         Margin="0,0,0,10"
@@ -103,7 +103,7 @@
                             </Border>
                         </StackPanel>
                     </Border>
-                </StackPanel>-->
+                </StackPanel>
             </Border>
             <Border
                 x:Name="Border2"
@@ -113,7 +113,9 @@
                 BorderBrush="Green"
                 BorderThickness="10">
                 <ListBox Height="500" Margin="10">
-                    <ListBoxItem Content="hello" />
+                    <ListBoxItem>
+                        <Button Content="long" />
+                    </ListBoxItem>
                     <ListBoxItem Content="hello" />
                     <ListBoxItem Content="hello" />
                     <ListBoxItem Content="hello" />
