@@ -5,8 +5,8 @@ using System.Windows.Data;
 
 namespace Fluent.UI.Controls
 {
-    [DefaultStyleTarget(typeof(TextBox))]
-    internal class AttachedTextBoxTemplate : AttachedControlTemplate<TextBox>
+    [DefaultStyleTarget(typeof(PasswordBox))]
+    internal class AttachedPasswordBoxTemplate : AttachedControlTemplate<PasswordBox>
     {
         private Button _deleteButton;
         private object _header;
@@ -51,7 +51,6 @@ namespace Fluent.UI.Controls
         {
             handler.Add(AttachedFrameworkElement, UIElement.IsMouseOverProperty, () => ChangeVisualState(true));
             handler.Add(AttachedFrameworkElement, UIElement.IsFocusedProperty, OnFocusedChanged);
-            handler.Add(AttachedFrameworkElement, TextBox.TextProperty, OnTextChanged);
 
             base.DependencyPropertyChangedHandler(handler);
         }
@@ -87,13 +86,13 @@ namespace Fluent.UI.Controls
             }
         }
 
-        private void ChangeDeleteButtonVisualState(bool useTransitions = true) => GoToVisualState(AttachedFrameworkElement.IsFocused && AttachedFrameworkElement.Text.Length > 0 ? CommonVisualState.ButtonVisible : CommonVisualState.ButtonCollapsed, useTransitions);
+        private void ChangeDeleteButtonVisualState(bool useTransitions = true) => GoToVisualState(AttachedFrameworkElement.IsFocused && AttachedFrameworkElement.Password.Length > 0 ? CommonVisualState.ButtonVisible : CommonVisualState.ButtonCollapsed, useTransitions);
 
         private void ChangeHeaderVisualState(bool useTransitions = true) => VisualStateManager.GoToState(AttachedFrameworkElement, _headerTemplate == null && _header == null ? CommonVisualState.HeaderCollapsed : CommonVisualState.HeaderVisible, useTransitions);
 
-        private void ChangePlaceholderVisualState(bool useTransitions = true) => VisualStateManager.GoToState(AttachedFrameworkElement, AttachedFrameworkElement.Text.Length > 0 ? CommonVisualState.PlaceholderCollapsed : CommonVisualState.PlaceholderVisible, useTransitions);
+        private void ChangePlaceholderVisualState(bool useTransitions = true) => VisualStateManager.GoToState(AttachedFrameworkElement, AttachedFrameworkElement.Password.Length > 0 ? CommonVisualState.PlaceholderCollapsed : CommonVisualState.PlaceholderVisible, useTransitions);
 
-        private void OnDeleteButtonClick(object sender, RoutedEventArgs args) => AttachedFrameworkElement.Text = "";
+        private void OnDeleteButtonClick(object sender, RoutedEventArgs args) => AttachedFrameworkElement.Password = "";
 
         private void OnFocusedChanged() => ChangeDeleteButtonVisualState();
 

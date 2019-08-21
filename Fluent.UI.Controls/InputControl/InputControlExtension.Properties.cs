@@ -1,11 +1,10 @@
 ﻿using Fluent.UI.Core;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace Fluent.UI.Controls
 {
-    public partial class TextBoxExtension : FrameworkElementExtension
+    public partial class InputControlExtension : FrameworkElementExtension
     {
         public static readonly DependencyProperty DescriptionProperty =
             DependencyProperty.RegisterAttached("Description",
