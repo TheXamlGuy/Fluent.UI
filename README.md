@@ -35,6 +35,9 @@ Consider Fluent UI to be in serious alpha state right now. It is missing a lot o
 
 - [x] ContentDialog
 
-## Custom Extensions
+## Application Extensions
+- [x] RequestedTheme
+
+## Control Extensions
 - [x] RequestedTheme
 
