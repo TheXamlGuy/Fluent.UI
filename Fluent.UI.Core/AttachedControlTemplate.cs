@@ -16,7 +16,7 @@ namespace Fluent.UI.Core
             AttachedFrameworkElement.UpdateLayout();
             AttachedFrameworkElement.UpdateDefaultStyle();
 
-            OnAttached();
+            OnApplyTemplate();
             ChangeVisualState(true);
         }
 
