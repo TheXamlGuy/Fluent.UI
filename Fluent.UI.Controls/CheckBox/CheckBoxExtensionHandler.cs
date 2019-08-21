@@ -5,6 +5,7 @@ using System.Windows.Controls.Primitives;
 
 namespace Fluent.UI.Controls
 {
+    [DefaultStyleTarget(typeof(CheckBox))]
     public class CheckBoxExtensionHandler : ControlExtensionHandler<CheckBox>
     {
         protected override void DependencyPropertyChangedHandler(DependencyPropertyChangedHandler handler)

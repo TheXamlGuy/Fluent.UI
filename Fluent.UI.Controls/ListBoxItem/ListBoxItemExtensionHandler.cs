@@ -1,11 +1,11 @@
 ﻿using Fluent.UI.Core;
-using Fluent.UI.Core.Extensions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Fluent.UI.Controls
 {
+    [DefaultStyleTarget(typeof(ListBoxItem))]
     public class ListBoxItemExtensionHandler : ItemContainerExtensionHandler<ListBoxItem>
     {
         private bool _isPressed;
