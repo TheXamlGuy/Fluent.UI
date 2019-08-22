@@ -67,5 +67,8 @@
     <Page Update="ListBox\ListBox.Light.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="TabItem\TabItem.Light.xaml">
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 </Project>
