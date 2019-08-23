@@ -1,5 +1,4 @@
 ﻿using Fluent.UI.Core;
-using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -39,7 +38,7 @@ namespace Fluent.UI.Controls
             AddPropertyChangedHandler(UIElement.IsMouseOverProperty, OnPropertyChanged);
         }
 
-        private void OnPropertyChanged(object sender, EventArgs args)
+        private void OnPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
             ChangeVisualState(true);
         }

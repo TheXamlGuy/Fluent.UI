@@ -55,18 +55,18 @@ namespace Fluent.UI.Controls
             AddPropertyChangedHandler(TextBox.TextProperty, OnTextPropertyChanged);
         }
 
-        private void OnTextPropertyChanged(object sender, EventArgs args)
+        private void OnTextPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
             ChangePlaceholderVisualState();
             ChangeDeleteButtonVisualState();
         }
 
-        private void OnIsFocusedPropertyChanged(object sender, EventArgs args)
+        private void OnIsFocusedPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
             ChangeDeleteButtonVisualState(true);
         }
 
-        private void OnPropertyChanged(object sender, EventArgs args)
+        private void OnPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
             ChangeVisualState(true);
         }

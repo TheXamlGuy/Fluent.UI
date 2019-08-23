@@ -13,15 +13,16 @@ namespace Fluent.UI.Core
 
         private readonly WeakReference _weakPropertySource;
 
-        public DependencyPropertyChangedSubscription(DependencyObject propertySource, string path) : this(propertySource, new PropertyPath(path))
+        public DependencyPropertyChangedSubscription(DependencyObject propertySource, string path, PropertyChangedCallback propertyChangedCallback) : this(propertySource, new PropertyPath(path), propertyChangedCallback)
+        {
+
+        }
+
+        public DependencyPropertyChangedSubscription(DependencyObject propertySource, DependencyProperty property, PropertyChangedCallback propertyChangedCallback) : this(propertySource, new PropertyPath(property), propertyChangedCallback)
         {
         }
 
-        public DependencyPropertyChangedSubscription(DependencyObject propertySource, DependencyProperty property) : this(propertySource, new PropertyPath(property))
-        {
-        }
-
-        public DependencyPropertyChangedSubscription(DependencyObject propertySource, PropertyPath property)
+        public DependencyPropertyChangedSubscription(DependencyObject propertySource, PropertyPath property, PropertyChangedCallback propertyChangedCallback)
         {
             if (propertySource == null)
             {
@@ -42,9 +43,11 @@ namespace Fluent.UI.Core
             };
 
             BindingOperations.SetBinding(this, ValueProperty, binding);
+
+            _propertyChangedCallback = propertyChangedCallback;
         }
 
-        public event EventHandler ValueChanged;
+        private PropertyChangedCallback _propertyChangedCallback;
 
         public DependencyObject PropertySource
         {
@@ -75,7 +78,7 @@ namespace Fluent.UI.Core
         private static void OnValueChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
             var sender = dependencyObject as DependencyPropertyChangedSubscription;
-            sender.ValueChanged?.Invoke(sender.PropertySource, EventArgs.Empty);
+            sender?._propertyChangedCallback?.Invoke(dependencyObject, args);
         }
     }
 }

@@ -7,9 +7,9 @@ namespace Fluent.UI.Core
     {
         private readonly IList<DependencyPropertyChangedSubscription> _subscriptions = new List<DependencyPropertyChangedSubscription>();
 
-        public void AddEventHandler(DependencyObject source, DependencyProperty property)
+        public void AddEventHandler(DependencyObject source, DependencyProperty property, PropertyChangedCallback propertyChangedCallback)
         {
-            _subscriptions.Add(new DependencyPropertyChangedSubscription(source, property));
+            _subscriptions.Add(new DependencyPropertyChangedSubscription(source, property, propertyChangedCallback));
         }
     }
 }

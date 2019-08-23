@@ -9,28 +9,10 @@ namespace Fluent.UI.Demo
             InitializeComponent();
         }
 
-        private void CheckBox1_Checked(object sender, RoutedEventArgs e)
-        {
-            //CheckBox1.Content = "Switch to dark theme";
-            //FrameworkElementExtension.SetRequestedTheme(WrapPanel, ElementTheme.Dark);
-            //Border1.Background = Brushes.Black;
-
-            //FrameworkElementExtension.SetRequestedTheme(Border2, ElementTheme.Dark);
-            //Border2.Background = Brushes.Black;
-        }
-
-        private void CheckBox1_Unchecked(object sender, RoutedEventArgs e)
-        {
-            //CheckBox1.Content = "Switch to light theme";
-            //FrameworkElementExtension.SetRequestedTheme(Border1, ElementTheme.Light);
-            //Border1.Background = Brushes.Transparent;
-            //FrameworkElementExtension.SetRequestedTheme(Border2, ElementTheme.Light);
-            //Border2.Background = Brushes.Transparent;
-        }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            this.Grid.Children.Clear();
+            Button.Click -= Button_Click;
+            Foo.Children.Clear();
         }
     }
 }

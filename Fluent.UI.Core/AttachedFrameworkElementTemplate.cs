@@ -18,7 +18,7 @@ namespace Fluent.UI.Core
         protected bool IsFocused => AttachedFrameworkElement.IsFocused;
         protected bool IsMouseOver => AttachedFrameworkElement.IsMouseOver;
 
-        protected TFrameworkElement AttachedFrameworkElement
+        public TFrameworkElement AttachedFrameworkElement
         {
             get
             {
@@ -30,8 +30,6 @@ namespace Fluent.UI.Core
                 return null;
             }
         }
-
-        protected bool IsLoaded { get; private set; }
 
         public void SetAttachedControl(FrameworkElement frameworkElement)
         {
@@ -79,9 +77,9 @@ namespace Fluent.UI.Core
             WeakEventManager<TFrameworkElement, TEventArgs>.AddHandler(AttachedFrameworkElement, eventName, handler);
         }
 
-        protected void AddPropertyChangedHandler(DependencyProperty property, EventHandler handler)
+        protected void AddPropertyChangedHandler(DependencyProperty property, PropertyChangedCallback propertyChangedCallback)
         {
-            _dependencyPropertyChangedManager.AddEventHandler(AttachedFrameworkElement, property);
+            _dependencyPropertyChangedManager.AddEventHandler(AttachedFrameworkElement, property, propertyChangedCallback);
         }
 
         protected virtual void ChangeVisualState(bool useTransitions = true)
@@ -106,14 +104,8 @@ namespace Fluent.UI.Core
 
         protected virtual void OnLoaded(object sender, RoutedEventArgs args)
         {
-            if (IsLoaded)
-            {
-                return;
-            }
-
             OnApplyTemplate();
             ChangeVisualState(false);
-            IsLoaded = true;
         }
 
         protected virtual void OnUnloaded(object sender, RoutedEventArgs args)
@@ -152,8 +144,8 @@ namespace Fluent.UI.Core
 
         private void RegisterEvents()
         {
-            AddEventHandler<RoutedEventArgs>("Loaded", OnLoaded);
-            AddEventHandler<RoutedEventArgs>("Unloaded", OnLoaded);
+            //AddEventHandler<RoutedEventArgs>("Loaded", OnLoaded);
+            //AddEventHandler<RoutedEventArgs>("Unloaded", OnLoaded);
         }
 
         private void RemoveAttachedControl()

@@ -2,22 +2,26 @@
     x:Class="Fluent.UI.Demo.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Grid x:Name="Grid">
+    <Grid x:Name="Foo">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
         <Button
             x:Name="Button"
             Click="Button_Click"
             Content="Destroy me" />
+        <TabControl Grid.Row="1">
+            <TabItem Header="Buttons">
+                <StackPanel Margin="8">
+                    <Button Content="Button" />
+                    <Button Content="Button Disabled" IsEnabled="False" />
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Buttons" />
+            <TabItem Header="Buttons" />
+            <TabItem Header="Buttons" />
+            <TabItem Header="Buttons" />
+        </TabControl>
     </Grid>
-    <!--<TabControl>
-        <TabItem Header="Buttons">
-            <StackPanel Margin="8">
-                <Button Content="Button" />
-                <Button Content="Button Disabled" IsEnabled="False" />
-            </StackPanel>
-        </TabItem>
-        <TabItem Header="Buttons" />
-        <TabItem Header="Buttons" />
-        <TabItem Header="Buttons" />
-        <TabItem Header="Buttons" />
-    </TabControl>-->
 </Window>

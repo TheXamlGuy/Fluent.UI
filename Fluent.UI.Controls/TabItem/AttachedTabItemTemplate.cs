@@ -99,7 +99,7 @@ namespace Fluent.UI.Controls
             }
         }
 
-        private void OnPropertyChanged(object sender, EventArgs args)
+        private void OnPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
             ChangeVisualState(true);
         }
