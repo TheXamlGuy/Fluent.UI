@@ -1,4 +1,5 @@
 ﻿using Fluent.UI.Core;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -8,14 +9,17 @@ namespace Fluent.UI.Controls
     [DefaultStyleTarget(typeof(CheckBox))]
     public class AttachedCheckBoxTemplate : AttachedControlTemplate<CheckBox>
     {
-        protected override void DependencyPropertyChangedHandler(DependencyPropertyChangedHandler handler)
+        protected override void OnAttached()
         {
-            handler.Add(AttachedFrameworkElement, UIElement.IsEnabledProperty, () => ChangeVisualState(true));
-            handler.Add(AttachedFrameworkElement, ButtonBase.IsPressedProperty, () => ChangeVisualState(true));
-            handler.Add(AttachedFrameworkElement, UIElement.IsMouseOverProperty, () => ChangeVisualState(true));
-            handler.Add(AttachedFrameworkElement, ToggleButton.IsCheckedProperty, () => ChangeVisualState(true));
+            AddPropertyChangedHandler(UIElement.IsEnabledProperty, OnPropertyChanged);
+            AddPropertyChangedHandler(ButtonBase.IsPressedProperty, OnPropertyChanged);
+            AddPropertyChangedHandler(UIElement.IsMouseOverProperty, OnPropertyChanged);
+            AddPropertyChangedHandler(ToggleButton.IsCheckedProperty, OnPropertyChanged);
+        }
 
-            base.DependencyPropertyChangedHandler(handler);
+        private void OnPropertyChanged(object sender, EventArgs args)
+        {
+            ChangeVisualState(true);
         }
 
         protected override void ChangeVisualState(bool useTransitions = true)

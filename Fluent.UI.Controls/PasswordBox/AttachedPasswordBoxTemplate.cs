@@ -47,14 +47,6 @@ namespace Fluent.UI.Controls
             GoToVisualState(visualState, useTransitions);
         }
 
-        protected override void DependencyPropertyChangedHandler(DependencyPropertyChangedHandler handler)
-        {
-            handler.Add(AttachedFrameworkElement, UIElement.IsMouseOverProperty, () => ChangeVisualState(true));
-            handler.Add(AttachedFrameworkElement, UIElement.IsFocusedProperty, OnFocusedChanged);
-
-            base.DependencyPropertyChangedHandler(handler);
-        }
-
         protected override void OnApplyTemplate()
         {
             _deleteButton = GetTemplateChild<Button>("DeleteButton");

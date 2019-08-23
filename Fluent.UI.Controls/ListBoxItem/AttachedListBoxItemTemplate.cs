@@ -1,4 +1,5 @@
 ﻿using Fluent.UI.Core;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -50,28 +51,21 @@ namespace Fluent.UI.Controls
             GoToVisualState(visualState, useTransitions);
         }
 
-        protected override void DependencyPropertyChangedHandler(DependencyPropertyChangedHandler handler)
-        {
-            handler.Add(AttachedFrameworkElement, UIElement.IsEnabledProperty, () => ChangeVisualState(true));
-            handler.Add(AttachedFrameworkElement, UIElement.IsMouseOverProperty, () => ChangeVisualState(true));
-            handler.Add(AttachedFrameworkElement, ListBoxItem.IsSelectedProperty, () => ChangeVisualState(true));
-            handler.Add(AttachedFrameworkElement, UIElement.IsFocusedProperty, () => ChangeVisualState(true));
-
-            base.DependencyPropertyChangedHandler(handler);
-        }
-
         protected override void OnAttached()
         {
-            AttachedFrameworkElement.AddHandler(UIElement.PreviewMouseDownEvent, (MouseButtonEventHandler)OnPreviewMouseDown, true);
-            AttachedFrameworkElement.AddHandler(UIElement.MouseUpEvent, (MouseButtonEventHandler)OnMouseUp, true);
-            AttachedFrameworkElement.AddHandler(UIElement.MouseLeaveEvent, (RoutedEventHandler)OnMouseLeave, true);   
+            AddEventHandler<MouseButtonEventArgs>("PreviewMouseDown", OnPreviewMouseDown);
+            AddEventHandler<MouseButtonEventArgs>("MouseUp", OnMouseUp);
+            AddEventHandler<MouseButtonEventArgs>("MouseLeave", OnMouseLeave);
+
+            AddPropertyChangedHandler(UIElement.IsEnabledProperty, OnPropertyChanged);
+            AddPropertyChangedHandler(UIElement.IsMouseOverProperty, OnPropertyChanged);
+            AddPropertyChangedHandler(TabItem.IsSelectedProperty, OnPropertyChanged);
+            AddPropertyChangedHandler(UIElement.IsFocusedProperty, OnPropertyChanged);
         }
 
-        protected override void OnDetached()
+        private void OnPropertyChanged(object sender, EventArgs args)
         {
-            AttachedFrameworkElement.RemoveHandler(UIElement.PreviewMouseDownEvent, (MouseButtonEventHandler)OnPreviewMouseDown);
-            AttachedFrameworkElement.RemoveHandler(UIElement.MouseUpEvent, (MouseButtonEventHandler)OnMouseUp);
-            AttachedFrameworkElement.RemoveHandler(UIElement.MouseLeaveEvent, (RoutedEventHandler)OnMouseLeave);
+            ChangeVisualState(true);
         }
 
         private void OnMouseLeave(object sender, RoutedEventArgs args)

@@ -35,7 +35,7 @@ namespace Fluent.UI.Core.Extensions
             }
             else if (element is ItemsControl)
             {
-                foreach (var item in ((ItemsControl) element).Items)
+                foreach (var item in ((ItemsControl)element).Items)
                 {
                     var result = (item as FrameworkElement)?.FindChildByName(name);
                     if (result != null)
@@ -81,7 +81,7 @@ namespace Fluent.UI.Core.Extensions
             }
             else if (element is ItemsControl)
             {
-                foreach (var item in ((ItemsControl) element).Items)
+                foreach (var item in ((ItemsControl)element).Items)
                 {
                     var result = (item as FrameworkElement)?.FindChild<T>();
                     if (result != null)
@@ -136,7 +136,7 @@ namespace Fluent.UI.Core.Extensions
             }
             else if (element is ItemsControl)
             {
-                foreach (var item in ((ItemsControl) element).Items)
+                foreach (var item in ((ItemsControl)element).Items)
                 {
                     if (item is FrameworkElement childFrameworkElement)
                     {
@@ -181,6 +181,7 @@ namespace Fluent.UI.Core.Extensions
             {
                 case null:
                     return null;
+
                 case T _:
                     return element.Parent as T;
             }

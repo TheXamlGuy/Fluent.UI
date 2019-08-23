@@ -61,7 +61,7 @@ namespace Fluent.UI.Core
         internal static bool GetIsRequestedThemePropagated(DependencyObject dependencyObject) => (bool)dependencyObject.GetValue(IsRequestedThemePropagatedProperty);
 
         internal static void SetAttachedTemplate(DependencyObject dependencyObject, IAttachedFrameworkElementTemplate extension) => dependencyObject.SetValue(AttachedTemplatetProperty, extension);
-        
+
         internal static void SetIsRequestedTheme(DependencyObject dependencyObject, bool value) => dependencyObject.SetValue(IsRequestedThemeProperty, value);
 
         internal static void SetIsRequestedThemePropagated(DependencyObject dependencyObject, bool value) => dependencyObject.SetValue(IsRequestedThemePropagatedProperty, value);
@@ -126,7 +126,6 @@ namespace Fluent.UI.Core
                 }
                 else
                 {
-
                 }
             }
         }

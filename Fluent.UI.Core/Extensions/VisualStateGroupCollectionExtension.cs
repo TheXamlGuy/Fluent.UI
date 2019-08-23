@@ -22,6 +22,5 @@ namespace Fluent.UI.Core.Extensions
             }
             return keyFrames;
         }
-
     }
 }

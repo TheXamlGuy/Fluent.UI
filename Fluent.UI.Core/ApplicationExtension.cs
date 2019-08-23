@@ -1,6 +1,5 @@
 ﻿using Fluent.UI.Core.Extensions;
 using System;
-using System.Linq;
 using System.Reflection;
 using System.Windows;
 

@@ -1,4 +1,5 @@
 ﻿using Fluent.UI.Core;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -47,13 +48,27 @@ namespace Fluent.UI.Controls
             GoToVisualState(visualState, useTransitions);
         }
 
-        protected override void DependencyPropertyChangedHandler(DependencyPropertyChangedHandler handler)
+        protected override void OnAttached()
         {
-            handler.Add(AttachedFrameworkElement, UIElement.IsMouseOverProperty, () => ChangeVisualState(true));
-            handler.Add(AttachedFrameworkElement, UIElement.IsFocusedProperty, OnFocusedChanged);
-            handler.Add(AttachedFrameworkElement, TextBox.TextProperty, OnTextChanged);
+            AddPropertyChangedHandler(UIElement.IsMouseOverProperty, OnPropertyChanged);
+            AddPropertyChangedHandler(UIElement.IsFocusedProperty, OnIsFocusedPropertyChanged);
+            AddPropertyChangedHandler(TextBox.TextProperty, OnTextPropertyChanged);
+        }
 
-            base.DependencyPropertyChangedHandler(handler);
+        private void OnTextPropertyChanged(object sender, EventArgs args)
+        {
+            ChangePlaceholderVisualState();
+            ChangeDeleteButtonVisualState();
+        }
+
+        private void OnIsFocusedPropertyChanged(object sender, EventArgs args)
+        {
+            ChangeDeleteButtonVisualState(true);
+        }
+
+        private void OnPropertyChanged(object sender, EventArgs args)
+        {
+            ChangeVisualState(true);
         }
 
         protected override void OnApplyTemplate()
@@ -94,13 +109,5 @@ namespace Fluent.UI.Controls
         private void ChangePlaceholderVisualState(bool useTransitions = true) => VisualStateManager.GoToState(AttachedFrameworkElement, AttachedFrameworkElement.Text.Length > 0 ? CommonVisualState.PlaceholderCollapsed : CommonVisualState.PlaceholderVisible, useTransitions);
 
         private void OnDeleteButtonClick(object sender, RoutedEventArgs args) => AttachedFrameworkElement.Text = "";
-
-        private void OnFocusedChanged() => ChangeDeleteButtonVisualState();
-
-        private void OnTextChanged()
-        {
-            ChangePlaceholderVisualState();
-            ChangeDeleteButtonVisualState();
-        }
     }
 }

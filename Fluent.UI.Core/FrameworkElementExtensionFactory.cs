@@ -4,6 +4,7 @@
     {
         private static readonly object _lock = new object();
         private static FrameworkElementExtensionFactory _current = null;
+
         private FrameworkElementExtensionFactory()
         {
         }

@@ -1,4 +1,5 @@
 ﻿using Fluent.UI.Core;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -52,21 +53,16 @@ namespace Fluent.UI.Controls
             GoToVisualState(visualState, useTransitions);
         }
 
-        protected override void DependencyPropertyChangedHandler(DependencyPropertyChangedHandler handler)
-        {
-            handler.Add(AttachedFrameworkElement, UIElement.IsEnabledProperty, () => ChangeVisualState(true));
-            handler.Add(AttachedFrameworkElement, UIElement.IsMouseOverProperty, () => ChangeVisualState(true));
-            handler.Add(AttachedFrameworkElement, TabItem.IsSelectedProperty, () => ChangeVisualState(true));
-            handler.Add(AttachedFrameworkElement, UIElement.IsFocusedProperty, () => ChangeVisualState(true));
-
-            base.DependencyPropertyChangedHandler(handler);
-        }
-
         protected override void OnAttached()
         {
-            WeakEventManager<FrameworkElement, MouseButtonEventArgs>.AddHandler(AttachedFrameworkElement, "PreviewMouseDown", OnPreviewMouseDown);
-            WeakEventManager<FrameworkElement, MouseButtonEventArgs>.AddHandler(AttachedFrameworkElement, "MouseUp", OnMouseUp);
-            WeakEventManager<FrameworkElement, RoutedEventArgs>.AddHandler(AttachedFrameworkElement, "MouseLeave", OnMouseLeave);
+            AddEventHandler<MouseButtonEventArgs>("PreviewMouseDown", OnPreviewMouseDown);
+            AddEventHandler<MouseButtonEventArgs>("MouseUp", OnMouseUp);
+            AddEventHandler<RoutedEventArgs>("MouseLeave", OnMouseLeave);
+
+            AddPropertyChangedHandler(UIElement.IsEnabledProperty, OnPropertyChanged);
+            AddPropertyChangedHandler(UIElement.IsMouseOverProperty, OnPropertyChanged);
+            AddPropertyChangedHandler(TabItem.IsSelectedProperty, OnPropertyChanged);
+            AddPropertyChangedHandler(UIElement.IsFocusedProperty, OnPropertyChanged);
         }
 
         private void OnMouseLeave(object sender, RoutedEventArgs args)
@@ -101,6 +97,11 @@ namespace Fluent.UI.Controls
                 _isPressed = true;
                 ChangeVisualState(true);
             }
+        }
+
+        private void OnPropertyChanged(object sender, EventArgs args)
+        {
+            ChangeVisualState(true);
         }
     }
 }

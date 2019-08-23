@@ -7,7 +7,6 @@
             x:Name="Button"
             Click="Button_Click"
             Content="Destroy me" />
-
     </Grid>
     <!--<TabControl>
         <TabItem Header="Buttons">

@@ -254,8 +254,6 @@
                                 </VisualState>
                             </VisualStateGroup>
 
-
-
                             <!--<VisualStateGroup x:Name="IconStates">
                                 <VisualState x:Name="Icon" />
                                 <VisualState x:Name="NoIcon">

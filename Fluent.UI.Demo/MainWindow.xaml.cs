@@ -1,7 +1,4 @@
-﻿using Fluent.UI.Controls;
-using Fluent.UI.Core;
-using System.Windows;
-using System.Windows.Media;
+﻿using System.Windows;
 
 namespace Fluent.UI.Demo
 {

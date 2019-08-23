@@ -109,6 +109,7 @@ namespace Fluent.UI.Core.Extensions
             {
                 case null:
                     return null;
+
                 case T _:
                     return parent as T;
             }

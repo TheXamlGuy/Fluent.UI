@@ -40,7 +40,7 @@ namespace Fluent.UI.Controls
         public static ICommand GetAddTabButtonCommand(TabControl tabControl) => (ICommand)tabControl.GetValue(AddTabButtonCommandProperty);
 
         public static bool GetIsAddTabButtonVisible(TabControl tabControl) => (bool)tabControl.GetValue(IsAddTabButtonVisibleProperty);
-       
+
         public static object GetTabStripFooter(TabControl tabControl) => tabControl.GetValue(TabStripFooterProperty);
 
         public static DataTemplate GetTabStripFooterTemplate(TabControl tabControl) => (DataTemplate)tabControl.GetValue(TabStripFooterTemplateProperty);
@@ -54,13 +54,13 @@ namespace Fluent.UI.Controls
         public static void SetAddTabButtonCommand(TabControl tabControl, ICommand value) => tabControl.SetValue(AddTabButtonCommandProperty, value);
 
         public static void SetIsAddTabButtonVisible(TabControl tabControl, bool value) => tabControl.SetValue(IsAddTabButtonVisibleProperty, value);
-       
+
         public static void SetTabStripFooter(TabControl tabControl, object value) => tabControl.SetValue(TabStripFooterProperty, value);
-       
+
         public static void SetTabStripFooterTemplate(TabControl tabControl, DataTemplate value) => tabControl.SetValue(TabStripFooterTemplateProperty, value);
-       
+
         public static void SetTabStripHeader(TabControl tabControl, object value) => tabControl.SetValue(TabStripHeaderProperty, value);
-       
+
         public static void SetTabStripHeaderTemplate(TabControl tabControl, DataTemplate value) => tabControl.SetValue(TabStripHeaderTemplateProperty, value);
     }
 }

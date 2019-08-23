@@ -6,7 +6,7 @@ namespace Fluent.UI.Core
 {
     public class DependencyPropertyChangedSubscription : DependencyObject, IDisposable
     {
-        public static readonly DependencyProperty ValueProperty = 
+        public static readonly DependencyProperty ValueProperty =
             DependencyProperty.Register(nameof(Value), typeof(object),
                 typeof(DependencyPropertyChangedSubscription),
                 new PropertyMetadata(null, OnValueChanged));
@@ -74,7 +74,7 @@ namespace Fluent.UI.Core
 
         private static void OnValueChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
-            var sender  = dependencyObject as DependencyPropertyChangedSubscription;
+            var sender = dependencyObject as DependencyPropertyChangedSubscription;
             sender.ValueChanged?.Invoke(sender.PropertySource, EventArgs.Empty);
         }
     }
