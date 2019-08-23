@@ -9,15 +9,15 @@ using System.Windows.Data;
 
 namespace Fluent.UI.Core
 {
-    public static class Observe
+    public class DependencyPropertyChangedManager
     {
-        public static PropertyChangeNotifier PropertyChanged(this DependencyObject source, DependencyProperty property)
+        private readonly IList<DependencyPropertyChangeSubscription> _subscriptions = new List<DependencyPropertyChangeSubscription>();
+
+        public void AddEventHandler(DependencyObject source, DependencyProperty property)
         {
-            return new PropertyChangeNotifier(source, property);
+            _subscriptions.Add(new DependencyPropertyChangeSubscription(source, property));
         }
     }
-
-   
 
     public class DependencyPropertyChangedHandler
     {
@@ -56,21 +56,21 @@ namespace Fluent.UI.Core
         }
     }
 
-    public sealed class PropertyChangeNotifier : DependencyObject, IDisposable
+    public sealed class DependencyPropertyChangeSubscription : DependencyObject, IDisposable
     {
         private readonly WeakReference propertySource;
 
-        public PropertyChangeNotifier(DependencyObject propertySource, string path)
+        public DependencyPropertyChangeSubscription(DependencyObject propertySource, string path)
             : this(propertySource, new PropertyPath(path))
         {
         }
 
-        public PropertyChangeNotifier(DependencyObject propertySource, DependencyProperty property)
+        public DependencyPropertyChangeSubscription(DependencyObject propertySource, DependencyProperty property)
             : this(propertySource, new PropertyPath(property))
         {
         }
 
-        public PropertyChangeNotifier(DependencyObject propertySource, PropertyPath property)
+        public DependencyPropertyChangeSubscription(DependencyObject propertySource, PropertyPath property)
         {
             if (null == propertySource)
             {
@@ -109,7 +109,7 @@ namespace Fluent.UI.Core
         public static readonly DependencyProperty ValueProperty
             = DependencyProperty.Register(nameof(Value),
                                           typeof(object),
-                                          typeof(PropertyChangeNotifier),
+                                          typeof(DependencyPropertyChangeSubscription),
                                           new FrameworkPropertyMetadata(null, OnValueChanged));
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Fluent.UI.Core
 
         private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var notifier = (PropertyChangeNotifier)d;
+            var notifier = (DependencyPropertyChangeSubscription)d;
             if (notifier.RaiseValueChanged)
             {
                 notifier.ValueChanged?.Invoke(notifier.PropertySource, EventArgs.Empty);

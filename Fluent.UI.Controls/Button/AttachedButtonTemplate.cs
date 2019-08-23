@@ -31,11 +31,11 @@ namespace Fluent.UI.Controls
             GoToVisualState(visualState, useTransitions);
         }
 
-        private PropertyChangeNotifier borderThicknessChangeNotifier;
+        private DependencyPropertyChangeSubscription borderThicknessChangeNotifier;
 
         protected override void OnLoaded(object sender, RoutedEventArgs args)
         {
-             AttachedFrameworkElement.PropertyChanged(UIElement.IsMouseOverProperty);
+                d.AddEventHandler(AttachedFrameworkElement, UIElement.IsMouseOverProperty);
 
             //AttachedFrameworkElement.PropertyChanged(UIElement.IsMouseOverProperty, (_) => ChangeVisualState(true));
             //AttachedFrameworkElement.PropertyChanged(ButtonBase.IsPressedProperty, (_) => ChangeVisualState(true));

@@ -1,4 +1,6 @@
 ﻿using Fluent.UI.Core.Extensions;
+using System;
+using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace Fluent.UI.Core
@@ -6,6 +8,7 @@ namespace Fluent.UI.Core
     public class AttachedFrameworkElementTemplate<TFrameworkElement> : IAttachedFrameworkElementTemplate<TFrameworkElement> where TFrameworkElement : FrameworkElement
     {
         private DependencyPropertyChangedHandler _dependencyPropertyChangedHandler;
+        private DependencyPropertyChangedManager _dependencyPropertyChangedManager = new DependencyPropertyChangedManager();
 
         private bool _isRequestedTheme;
         private bool _isRequestedThemePropagated;
@@ -114,8 +117,9 @@ namespace Fluent.UI.Core
         {
 
         }
+
         private void PrepareRequestedTheme()
-        {            
+        {
             ElementTheme requestedTheme;
             if (_isRequestedThemePropagated)
             {
@@ -141,9 +145,19 @@ namespace Fluent.UI.Core
 
         private void RegisterEvents()
         {
-            WeakEventManager<FrameworkElement, RoutedEventArgs>.AddHandler(AttachedFrameworkElement, "Loaded", OnLoaded);
-            WeakEventManager<FrameworkElement, RoutedEventArgs>.AddHandler(AttachedFrameworkElement, "Unloaded", OnLoaded);
+            AddHandler<RoutedEventArgs>("Loaded", OnLoaded);
+            AddHandler<RoutedEventArgs>("Unloaded", OnLoaded);
         }
+
+        protected void AddHandler<TEventArgs>(string eventName, EventHandler<TEventArgs> handler) where TEventArgs : EventArgs
+        {
+            WeakEventManager<TFrameworkElement, TEventArgs>.AddHandler(AttachedFrameworkElement, eventName, handler);
+        }
+
+        //protected void AddHandler(DependencyProperty property, EventHandler<TEventArgs> handler)
+        //{
+        //    _dependencyPropertyChangedManager.AddEventHandler(AttachedFrameworkElement, property);
+        //}
 
         private void RemoveAttachedControl()
         {
