@@ -14,5 +14,16 @@ namespace Fluent.UI.Demo
             Button.Click -= Button_Click;
             Foo.Children.Clear();
         }
+
+        private void Button_Click1(object sender, RoutedEventArgs e)
+        {
+            XamlContentDialog.ShowAsync();
+        }
+
+        private void Button_Click2(object sender, RoutedEventArgs e)
+        {
+            Button.Click -= Button_Click;
+            Foo.Children.Clear();
+        }
     }
 }

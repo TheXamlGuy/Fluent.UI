@@ -10,6 +10,7 @@ using System.Windows.Media;
 
 namespace Fluent.UI.Controls
 {
+    [DefaultStyleTarget(typeof(ContentDialog))]
     public class ContentDialog : ContentControl
     {
         public static readonly DependencyProperty PopupBackgroundProperty =

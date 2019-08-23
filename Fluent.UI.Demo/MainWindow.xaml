@@ -111,6 +111,19 @@
                     </ListBox>
                 </WrapPanel>
             </TabItem>
+            <TabItem Header="Popups">
+                <StackPanel>
+                    <Button
+                        Margin="0,0,0,8"
+                        Click="Button_Click1"
+                        Content="Open ContentDialog in XAML" />
+                    <Button
+                        Margin="0,0,0,8"
+                        Click="Button_Click2"
+                        Content="Open ContentDialog CodeBehind" />
+                    <ContentDialog x:Name="XamlContentDialog" />
+                </StackPanel>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>
