@@ -13,10 +13,42 @@
             Content="Destroy me" />
         <TabControl Grid.Row="1">
             <TabItem Header="Commands">
-                <StackPanel Margin="8">
-                    <Button Margin="0,0,0,8" Content="Button" />
-                    <Button Content="Button Disabled" IsEnabled="False" />
-                </StackPanel>
+                <WrapPanel Margin="4">
+                    <StackPanel Margin="4">
+                        <Button Margin="0,0,0,8" Content="Button" />
+                        <Button
+                            Margin="0,0,0,8"
+                            Content="Button Disabled"
+                            IsEnabled="False" />
+                    </StackPanel>
+                    <StackPanel Margin="4">
+                        <CheckBox Margin="0,0,0,8" Content="Normal CheckBox" />
+                        <CheckBox
+                            Margin="0,0,0,8"
+                            Content="Disabled CheckBox"
+                            IsEnabled="False" />
+                        <CheckBox
+                            Margin="0,0,0,8"
+                            Content="Checked CheckBox"
+                            IsChecked="True" />
+                        <CheckBox
+                            Margin="0,0,0,8"
+                            Content="Checked Disabled CheckBox"
+                            IsChecked="True"
+                            IsEnabled="False" />
+                        <CheckBox
+                            Margin="0,0,0,8"
+                            Content="Tri-State Checked CheckBox"
+                            IsChecked="{x:Null}"
+                            IsThreeState="True" />
+                        <CheckBox
+                            Margin="0,0,0,8"
+                            Content="Disabled Tri-State Checked CheckBox"
+                            IsChecked="{x:Null}"
+                            IsEnabled="False"
+                            IsThreeState="True" />
+                    </StackPanel>
+                </WrapPanel>
             </TabItem>
             <TabItem Header="Inputs">
                 <StackPanel Margin="8">
