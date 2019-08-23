@@ -1,6 +1,6 @@
 ﻿using Fluent.UI.Core.Extensions;
-using Microsoft.Toolkit.Uwp.Helpers;
 using System;
+using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace Fluent.UI.Core
@@ -8,34 +8,22 @@ namespace Fluent.UI.Core
     public class AttachedFrameworkElementTemplate<TFrameworkElement> : IAttachedFrameworkElementTemplate<TFrameworkElement> where TFrameworkElement : FrameworkElement
     {
         private DependencyPropertyChangedHandler _dependencyPropertyChangedHandler;
+        private DependencyPropertyChangedManager _dependencyPropertyChangedManager = new DependencyPropertyChangedManager();
 
         private bool _isRequestedTheme;
         private bool _isRequestedThemePropagated;
         private ElementTheme _requestedTheme;
         private ElementTheme _requestedThemePropagated;
-        private WeakReference<TFrameworkElement> _weakFrameworkElement;
-        private WeakEventListener<AttachedFrameworkElementTemplate<TFrameworkElement>, object, RoutedEventArgs> _weakLoadedEventListener;
-        private WeakEventListener<AttachedFrameworkElementTemplate<TFrameworkElement>, object, RoutedEventArgs> _weakUnloadedEventListener;
+
         protected bool IsEnabled => AttachedFrameworkElement.IsEnabled;
         protected bool IsFocused => AttachedFrameworkElement.IsFocused;
         protected bool IsMouseOver => AttachedFrameworkElement.IsMouseOver;
-
-        protected TFrameworkElement AttachedFrameworkElement
-        {
-            get
-            {
-                if (_weakFrameworkElement.TryGetTarget(out TFrameworkElement target))
-                {
-                    return target;
-                }
-
-                return null;
-            }
-        }
+        protected TFrameworkElement AttachedFrameworkElement { get; private set; }
+        protected bool IsLoaded { get; private set; }
 
         public void SetAttachedControl(FrameworkElement frameworkElement)
         {
-            _weakFrameworkElement = new WeakReference<TFrameworkElement>(frameworkElement as TFrameworkElement);
+            AttachedFrameworkElement = frameworkElement as TFrameworkElement;
 
             UnregisterEvents();
             RegisterEvents();
@@ -92,11 +80,6 @@ namespace Fluent.UI.Core
 
         protected void GoToVisualState(string stateName, bool useTransitions = true) => VisualStateManager.GoToState(AttachedFrameworkElement, stateName, useTransitions);
 
-        protected virtual void OnApplyTemplate()
-        {
-
-        }
-
         protected virtual void OnAttached()
         {
 
@@ -109,8 +92,25 @@ namespace Fluent.UI.Core
 
         protected virtual void OnLoaded(object sender, RoutedEventArgs args)
         {
+            if (IsLoaded)
+            {
+                return;
+            }
+
             OnApplyTemplate();
             ChangeVisualState(false);
+            IsLoaded = true;
+        }
+
+        protected virtual void OnApplyTemplate()
+        {
+
+        }
+
+        protected virtual void OnUnloaded(object sender, RoutedEventArgs args)
+        {
+            UnregisterEvents();
+            OnDetached();
         }
 
         protected virtual void PrepareRequestedTheme(ElementTheme requestedTheme)
@@ -118,13 +118,8 @@ namespace Fluent.UI.Core
 
         }
 
-        private void OnUnloaded(object sender, RoutedEventArgs args)
-        {
-            OnDetached();
-        }
-
         private void PrepareRequestedTheme()
-        {            
+        {
             ElementTheme requestedTheme;
             if (_isRequestedThemePropagated)
             {
@@ -150,22 +145,18 @@ namespace Fluent.UI.Core
 
         private void RegisterEvents()
         {
-            WeakEventManager<FrameworkElement, RoutedEventArgs>.AddHandler(AttachedFrameworkElement, "Loaded", OnUnloaded);
-            //_weakLoadedEventListener = new WeakEventListener<AttachedFrameworkElementTemplate<TFrameworkElement>, object, RoutedEventArgs>(this)
-            //{.
-            //    OnEventAction = (instance, source, eventArgs) => instance.OnLoaded(source, eventArgs),
-            //    OnDetachAction = (weakEventListener) => AttachedFrameworkElement.Loaded -= weakEventListener.OnEvent
-            //};
+            AddEvent<RoutedEventArgs>("Loaded", OnLoaded);
+            AddEvent<RoutedEventArgs>("Unloaded", OnLoaded);
+        }
 
-            //AttachedFrameworkElement.Loaded += _weakLoadedEventListener.OnEvent;
+        protected void AddEvent<TEventArgs>(string eventName, EventHandler<TEventArgs> handler) where TEventArgs : EventArgs
+        {
+            WeakEventManager<TFrameworkElement, TEventArgs>.AddHandler(AttachedFrameworkElement, eventName, handler);
+        }
 
-            //_weakUnloadedEventListener = new WeakEventListener<AttachedFrameworkElementTemplate<TFrameworkElement>, object, RoutedEventArgs>(this)
-            //{
-            //    OnEventAction = (instance, source, eventArgs) => instance.OnUnloaded(source, eventArgs),
-            //    OnDetachAction = (weakEventListener) => AttachedFrameworkElement.Unloaded -= weakEventListener.OnEvent
-            //};
-
-            //AttachedFrameworkElement.Unloaded += _weakUnloadedEventListener.OnEvent;
+        protected void AddValueChanged(DependencyProperty property, EventHandler handler)
+        {
+            _dependencyPropertyChangedManager.AddEventHandler(AttachedFrameworkElement, property);
         }
 
         private void RemoveAttachedControl()
@@ -176,22 +167,13 @@ namespace Fluent.UI.Core
             _dependencyPropertyChangedHandler.Clear();
             _dependencyPropertyChangedHandler = null;
 
-            _weakFrameworkElement = null;
+            AttachedFrameworkElement = null;
         }
+
 
         private void UnregisterEvents()
         {
-            if ( _weakLoadedEventListener != null)
-            {
-                _weakLoadedEventListener.Detach();
-                _weakLoadedEventListener = null;
-            }
-
-            if (_weakUnloadedEventListener != null)
-            {
-                _weakUnloadedEventListener.Detach();
-                _weakUnloadedEventListener = null;
-            }
+ 
         }
     }
 }

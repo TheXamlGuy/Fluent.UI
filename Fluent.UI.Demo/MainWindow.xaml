@@ -3,79 +3,22 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Grid x:Name="Grid">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Button Click="Button_Click" Content="Remove me" />
-        <!--<TabControl x:Name="Tab" Grid.Row="1">
-            <TabItem Header="Commanding">
-                <StackPanel Margin="8">
-                    <Button
-                        x:Name="FooButton"
-                        Margin="0,0,0,8"
-                        Content="Button" />
-                    <Button Content="Button Disabled" IsEnabled="False" />
-                </StackPanel>
-            </TabItem>
-            <TabItem Header="Text">
-                --><!--<StackPanel Margin="8">
-                <TextBox
-                    Width="400"
-                    Margin="0,0,0,8"
-                    Text="TextBox" />
-                <TextBox
-                    Width="400"
-                    Margin="0,0,0,8"
-                    IsEnabled="False"
-                    Text="Disabled TextBox" />
-                <TextBox
-                    Width="400"
-                    Margin="0,0,0,8"
-                    Text="TextBox"
-                    TextBoxExtension.PlaceholderText="TextBox Placeholder" />
-                <TextBox
-                    Width="400"
-                    Margin="0,0,0,8"
-                    IsEnabled="False"
-                    TextBoxExtension.PlaceholderText="Disabled TextBox Placeholder" />
-                <TextBox
-                    Width="400"
-                    Margin="0,0,0,8"
-                    TextBoxExtension.Header="TextBox Header" />
-                <TextBox
-                    Width="400"
-                    Margin="0,0,0,8"
-                    IsEnabled="False"
-                    Text="Disabled TextBox"
-                    TextBoxExtension.Header="TextBox Header" />
-                <TextBox Width="400" Margin="0,0,0,8">
-                    <TextBoxExtension.HeaderTemplate>
-                        <DataTemplate>
-                            <TextBlock
-                                FontSize="16"
-                                Foreground="Green"
-                                Text="TextBox Header Template" />
-                        </DataTemplate>
-                    </TextBoxExtension.HeaderTemplate>
-                </TextBox>
-                <TextBox
-                    Width="400"
-                    Margin="0,0,0,8"
-                    IsEnabled="False"
-                    Text="Disabled TextBox">
-                    <TextBoxExtension.HeaderTemplate>
-                        <DataTemplate>
-                            <TextBlock
-                                FontSize="16"
-                                Foreground="Green"
-                                Text="TextBox Header Template" />
-                        </DataTemplate>
-                    </TextBoxExtension.HeaderTemplate>
-                </TextBox>
-            </StackPanel>--><!--
-            </TabItem>
-        </TabControl>-->
+        <Button
+            x:Name="Button"
+            Click="Button_Click"
+            Content="Destroy me" />
 
     </Grid>
+    <!--<TabControl>
+        <TabItem Header="Buttons">
+            <StackPanel Margin="8">
+                <Button Content="Button" />
+                <Button Content="Button Disabled" IsEnabled="False" />
+            </StackPanel>
+        </TabItem>
+        <TabItem Header="Buttons" />
+        <TabItem Header="Buttons" />
+        <TabItem Header="Buttons" />
+        <TabItem Header="Buttons" />
+    </TabControl>-->
 </Window>

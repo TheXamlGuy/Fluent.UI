@@ -1,5 +1,4 @@
 ﻿using Fluent.UI.Core;
-using Fluent.UI.Core.Extensions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -12,6 +11,8 @@ namespace Fluent.UI.Controls
         private bool _isPressed;
 
         //protected override IItemsControlExtensionHandler GetItemsControlHandler(ItemsControl itemsControl) { get; } /*=> FrameworkElementExtension<ListBox>.GetAttachedHandler(itemsControl) as IItemsControlExtensionHandler*/;
+
+        private bool focusable;
 
         protected override void ChangeVisualState(bool useTransitions = true)
         {
@@ -63,32 +64,23 @@ namespace Fluent.UI.Controls
 
         protected override void OnAttached()
         {
-            AttachedFrameworkElement.AddHandler(UIElement.PreviewMouseDownEvent, (MouseButtonEventHandler)OnPreviewMouseDown, true);
-            AttachedFrameworkElement.AddHandler(UIElement.MouseUpEvent, (MouseButtonEventHandler)OnMouseUp, true);
-            AttachedFrameworkElement.AddHandler(UIElement.MouseLeaveEvent, (RoutedEventHandler)OnMouseLeave, true);
-        }  
-
-        protected override void OnDetached()
-        {
-            AttachedFrameworkElement.RemoveHandler(UIElement.PreviewMouseDownEvent, (MouseButtonEventHandler)OnPreviewMouseDown);
-            AttachedFrameworkElement.RemoveHandler(UIElement.MouseUpEvent, (MouseButtonEventHandler)OnMouseUp);
-            AttachedFrameworkElement.RemoveHandler(UIElement.MouseLeaveEvent, (RoutedEventHandler)OnMouseLeave);
+            WeakEventManager<FrameworkElement, MouseButtonEventArgs>.AddHandler(AttachedFrameworkElement, "PreviewMouseDown", OnPreviewMouseDown);
+            WeakEventManager<FrameworkElement, MouseButtonEventArgs>.AddHandler(AttachedFrameworkElement, "MouseUp", OnMouseUp);
+            WeakEventManager<FrameworkElement, RoutedEventArgs>.AddHandler(AttachedFrameworkElement, "MouseLeave", OnMouseLeave);
         }
 
         private void OnMouseLeave(object sender, RoutedEventArgs args)
         {
-            OverrideFocusable(true);
-
             _isPressed = false;
             ChangeVisualState(true);
         }
 
         private void OnMouseUp(object sender, MouseButtonEventArgs args)
         {
+            AttachedFrameworkElement.SetCurrentValue(UIElement.FocusableProperty, focusable);
+
             if (_isPressed && args.ButtonState == MouseButtonState.Released)
             {
-                OverrideFocusable(true);
-
                 _isPressed = false;
                 ChangeVisualState(true);
 
@@ -96,20 +88,19 @@ namespace Fluent.UI.Controls
             }
         }
 
-        private void OverrideFocusable(bool value)
+        private void OnPreviewMouseDown(object sender, MouseButtonEventArgs args)
         {
             if (AttachedFrameworkElement.Focusable)
             {
-                AttachedFrameworkElement.SetCurrentValue(UIElement.FocusableProperty, value);
+                focusable = true;
+                AttachedFrameworkElement.SetCurrentValue(UIElement.FocusableProperty, false);
             }
-        }
 
-        private void OnPreviewMouseDown(object sender, MouseButtonEventArgs args)
-        {
-            OverrideFocusable(false);
-
-            _isPressed = true;
-            ChangeVisualState(true);
+            if (args.ButtonState == MouseButtonState.Pressed)
+            {
+                _isPressed = true;
+                ChangeVisualState(true);
+            }
         }
     }
 }

@@ -33,8 +33,7 @@ namespace Fluent.UI.Demo
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Grid.Children.Clear();
-            //Tab.Items.RemoveAt(0);
+            this.Grid.Children.Clear();
         }
     }
 }
