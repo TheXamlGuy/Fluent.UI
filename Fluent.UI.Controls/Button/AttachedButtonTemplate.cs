@@ -31,7 +31,7 @@ namespace Fluent.UI.Controls
             GoToVisualState(visualState, useTransitions);
         }
 
-        private DependencyPropertyChangeSubscription borderThicknessChangeNotifier;
+        private DependencyPropertyChangedSubscription borderThicknessChangeNotifier;
 
         protected override void OnLoaded(object sender, RoutedEventArgs args)
         {
