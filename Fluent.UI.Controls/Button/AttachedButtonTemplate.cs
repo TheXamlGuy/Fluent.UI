@@ -8,15 +8,6 @@ namespace Fluent.UI.Controls
     [DefaultStyleTarget(typeof(Button))]
     public class AttachedButtonTemplate : AttachedControlTemplate<Button>
     {
-        protected override void DependencyPropertyChangedHandler(DependencyPropertyChangedHandler handler)
-        {
-            handler.Add(AttachedFrameworkElement, UIElement.IsEnabledProperty, () => ChangeVisualState(true));
-            handler.Add(AttachedFrameworkElement, ButtonBase.IsPressedProperty, () => ChangeVisualState(true));
-            handler.Add(AttachedFrameworkElement, UIElement.IsMouseOverProperty, () => ChangeVisualState(true));
-
-            base.DependencyPropertyChangedHandler(handler);
-        }
-
         protected override void ChangeVisualState(bool useTransitions = true)
         {
             string visualState;
@@ -38,6 +29,25 @@ namespace Fluent.UI.Controls
             }
 
             GoToVisualState(visualState, useTransitions);
+        }
+
+        private PropertyChangeNotifier borderThicknessChangeNotifier;
+
+        protected override void OnLoaded(object sender, RoutedEventArgs args)
+        {
+             AttachedFrameworkElement.PropertyChanged(UIElement.IsMouseOverProperty);
+
+            //AttachedFrameworkElement.PropertyChanged(UIElement.IsMouseOverProperty, (_) => ChangeVisualState(true));
+            //AttachedFrameworkElement.PropertyChanged(ButtonBase.IsPressedProperty, (_) => ChangeVisualState(true));
+            //AttachedFrameworkElement.PropertyChanged(UIElement.IsEnabledProperty, (_) => ChangeVisualState(true));
+
+        }
+
+        protected override void OnAttached()
+        {
+            //AttachedFrameworkElement.PropertyChanged(new PropertyPath, (_) => ChangeVisualState(true));
+            //AttachedFrameworkElement.PropertyChanged(ButtonBase.IsPressedProperty, (_) => { });
+            //AttachedFrameworkElement.PropertyChanged(UIElement.IsEnabledProperty, (_) => ChangeVisualState(true));
         }
     }
 }

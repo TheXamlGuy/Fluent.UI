@@ -141,8 +141,8 @@ namespace Fluent.UI.Core
 
         private void RegisterEvents()
         {
-            AttachedFrameworkElement.Unloaded += OnUnloaded;
-            AttachedFrameworkElement.Loaded += OnLoaded;
+            WeakEventManager<FrameworkElement, RoutedEventArgs>.AddHandler(AttachedFrameworkElement, "Loaded", OnLoaded);
+            WeakEventManager<FrameworkElement, RoutedEventArgs>.AddHandler(AttachedFrameworkElement, "Unloaded", OnLoaded);
         }
 
         private void RemoveAttachedControl()
@@ -159,8 +159,7 @@ namespace Fluent.UI.Core
 
         private void UnregisterEvents()
         {
-            AttachedFrameworkElement.Unloaded -= OnUnloaded;
-            AttachedFrameworkElement.Loaded -= OnLoaded;
+ 
         }
     }
 }

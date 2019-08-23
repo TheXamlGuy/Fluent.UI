@@ -30,5 +30,10 @@ namespace Fluent.UI.Demo
             //FrameworkElementExtension.SetRequestedTheme(Border2, ElementTheme.Light);
             //Border2.Background = Brushes.Transparent;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Grid.Children.Clear();
+        }
     }
 }
