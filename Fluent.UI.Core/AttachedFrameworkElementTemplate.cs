@@ -144,8 +144,8 @@ namespace Fluent.UI.Core
 
         private void RegisterEvents()
         {
-            //AddEventHandler<RoutedEventArgs>("Loaded", OnLoaded);
-            //AddEventHandler<RoutedEventArgs>("Unloaded", OnLoaded);
+            AddEventHandler<RoutedEventArgs>("Loaded", OnLoaded);
+            AddEventHandler<RoutedEventArgs>("Unloaded", OnLoaded);
         }
 
         private void RemoveAttachedControl()

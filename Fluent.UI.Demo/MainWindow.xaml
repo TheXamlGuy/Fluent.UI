@@ -12,16 +12,45 @@
             Click="Button_Click"
             Content="Destroy me" />
         <TabControl Grid.Row="1">
-            <TabItem Header="Buttons">
+            <TabItem Header="Commands">
                 <StackPanel Margin="8">
-                    <Button Content="Button" />
+                    <Button Margin="0,0,0,8" Content="Button" />
                     <Button Content="Button Disabled" IsEnabled="False" />
                 </StackPanel>
             </TabItem>
-            <TabItem Header="Buttons" />
-            <TabItem Header="Buttons" />
-            <TabItem Header="Buttons" />
-            <TabItem Header="Buttons" />
+            <TabItem Header="Inputs">
+                <StackPanel Margin="8">
+                    <TextBox Margin="0,0,0,8" Text="TextBox" />
+                    <TextBox
+                        Margin="0,0,0,8"
+                        IsEnabled="False"
+                        Text="Disabled TextBox" />
+                    <TextBox Margin="0,0,0,8" TextBoxExtension.PlaceholderText="Placeholder text" />
+                    <TextBox
+                        Margin="0,0,0,8"
+                        IsEnabled="False"
+                        TextBoxExtension.PlaceholderText="Disabled Placeholder text" />
+                    <TextBox Margin="0,0,0,8" TextBoxExtension.Header="Header text" />
+                    <TextBox
+                        Margin="0,0,0,8"
+                        IsEnabled="False"
+                        TextBoxExtension.Header=" Disabled Header text" />
+                    <TextBox Margin="0,0,0,8">
+                        <TextBoxExtension.HeaderTemplate>
+                            <DataTemplate>
+                                <Button Content="Template Header" />
+                            </DataTemplate>
+                        </TextBoxExtension.HeaderTemplate>
+                    </TextBox>
+                    <TextBox Margin="0,0,0,8" IsEnabled="False">
+                        <TextBoxExtension.HeaderTemplate>
+                            <DataTemplate>
+                                <Button Content=" Disabled Template Header" />
+                            </DataTemplate>
+                        </TextBoxExtension.HeaderTemplate>
+                    </TextBox>
+                </StackPanel>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>
