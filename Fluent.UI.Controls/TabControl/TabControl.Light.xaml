@@ -33,7 +33,10 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="Border" Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}">
+                    <Border
+                        x:Name="Border"
+                        Padding="{TemplateBinding Padding}"
+                        Background="{TemplateBinding Background}">
                         <ContentPresenter
                             x:Name="ContentPresenter"
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"

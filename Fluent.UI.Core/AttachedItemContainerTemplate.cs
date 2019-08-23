@@ -20,17 +20,17 @@ namespace Fluent.UI.Core
             base.OnLoaded(sender, args);
         }
 
-        protected override void OnUnloaded(object sender, RoutedEventArgs args)
-        {
-            //if (_handler.IsItemContainerUpdating)
-            //{
-            //    _handler.IsItemContainerUpdating = true;
+        //protected override void OnUnloaded(object sender, RoutedEventArgs args)
+        //{
+        //    //if (_handler.IsItemContainerUpdating)
+        //    //{
+        //    //    _handler.IsItemContainerUpdating = true;
 
-            //    args.Handled = true;
-            //    return;
-            //}
+        //    //    args.Handled = true;
+        //    //    return;
+        //    //}
 
-            base.OnUnloaded(sender, args);
-        }
+        //    base.OnUnloaded(sender, args);
+        //}
     }
 }

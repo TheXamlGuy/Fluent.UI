@@ -6,16 +6,55 @@ using System.Windows;
 
 namespace Fluent.UI.Core
 {
+    public struct Subscription
+    {
+        public Subscription(WeakReference subscriber, DependencyProperty handler, Action action)
+        {
+            Subscriber = subscriber;
+            Handler = handler ?? throw new ArgumentNullException(nameof(handler));
+            Action = action
+        }
+
+        public readonly WeakReference Subscriber;
+        public readonly DependencyProperty Handler;
+        public readonly Action Action;
+    }
+
     public class DependencyPropertyChangedHandler
     {
-        private readonly IDictionary<Tuple<DependencyObject, DependencyProperty, Action>, EventHandler> _subscriptions = new Dictionary<Tuple<DependencyObject, DependencyProperty, Action>, EventHandler>();
+
+        readonly Dictionary<DependencyObject, List<Subscription>> _eventHandlers = new Dictionary<DependencyObject, List<Subscription>>();
 
         public void Add(DependencyObject propertySource, DependencyProperty property, Action actionDelegate)
         {
             void handler(object sender, EventArgs args) => actionDelegate.Invoke();
             TypeDescriptor.GetProperties(propertySource)[property.Name].AddValueChanged(propertySource, handler);
 
-            _subscriptions.Add(new Tuple<DependencyObject, DependencyProperty, Action>(propertySource, property, actionDelegate), handler);
+            if (!_eventHandlers.TryGetValue(propertySource, out List<Subscription> targets))
+            {
+                targets = new List<Subscription>();
+                _eventHandlers.Add(propertySource, targets);
+            }
+
+            targets.Add(new Subscription(new WeakReference(propertySource), property));
+        }
+
+        void AddEventHandler(string eventName, object handlerTarget, MethodInfo methodInfo)
+        {
+            if (!_eventHandlers.TryGetValue(eventName, out List<Subscription> targets))
+            {
+                targets = new List<Subscription>();
+                _eventHandlers.Add(eventName, targets);
+            }
+
+            if (handlerTarget == null)
+            {
+                // This event handler is a static method
+                targets.Add(new Subscription(null, methodInfo));
+                return;
+            }
+
+            targets.Add(new Subscription(new WeakReference(handlerTarget), methodInfo));
         }
 
         public void Remove(DependencyObject propertySource, DependencyProperty property, Action actionDelegate)

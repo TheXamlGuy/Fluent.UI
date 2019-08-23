@@ -1,4 +1,6 @@
 ﻿using Fluent.UI.Core.Extensions;
+using Microsoft.Toolkit.Uwp.Helpers;
+using System;
 using System.Windows;
 
 namespace Fluent.UI.Core
@@ -11,16 +13,29 @@ namespace Fluent.UI.Core
         private bool _isRequestedThemePropagated;
         private ElementTheme _requestedTheme;
         private ElementTheme _requestedThemePropagated;
-
+        private WeakReference<TFrameworkElement> _weakFrameworkElement;
+        private WeakEventListener<AttachedFrameworkElementTemplate<TFrameworkElement>, object, RoutedEventArgs> _weakLoadedEventListener;
+        private WeakEventListener<AttachedFrameworkElementTemplate<TFrameworkElement>, object, RoutedEventArgs> _weakUnloadedEventListener;
         protected bool IsEnabled => AttachedFrameworkElement.IsEnabled;
         protected bool IsFocused => AttachedFrameworkElement.IsFocused;
         protected bool IsMouseOver => AttachedFrameworkElement.IsMouseOver;
-        protected TFrameworkElement AttachedFrameworkElement { get; private set; }
-        protected bool IsLoaded { get; private set; }
+
+        protected TFrameworkElement AttachedFrameworkElement
+        {
+            get
+            {
+                if (_weakFrameworkElement.TryGetTarget(out TFrameworkElement target))
+                {
+                    return target;
+                }
+
+                return null;
+            }
+        }
 
         public void SetAttachedControl(FrameworkElement frameworkElement)
         {
-            AttachedFrameworkElement = frameworkElement as TFrameworkElement;
+            _weakFrameworkElement = new WeakReference<TFrameworkElement>(frameworkElement as TFrameworkElement);
 
             UnregisterEvents();
             RegisterEvents();
@@ -77,6 +92,11 @@ namespace Fluent.UI.Core
 
         protected void GoToVisualState(string stateName, bool useTransitions = true) => VisualStateManager.GoToState(AttachedFrameworkElement, stateName, useTransitions);
 
+        protected virtual void OnApplyTemplate()
+        {
+
+        }
+
         protected virtual void OnAttached()
         {
 
@@ -89,31 +109,20 @@ namespace Fluent.UI.Core
 
         protected virtual void OnLoaded(object sender, RoutedEventArgs args)
         {
-            if (IsLoaded)
-            {
-                return;
-            }
-
             OnApplyTemplate();
             ChangeVisualState(false);
-            IsLoaded = true;
-        }
-
-        protected virtual void OnApplyTemplate()
-        {
-
-        }
-
-        protected virtual void OnUnloaded(object sender, RoutedEventArgs args)
-        {
-            UnregisterEvents();
-            OnDetached();
         }
 
         protected virtual void PrepareRequestedTheme(ElementTheme requestedTheme)
         {
 
         }
+
+        private void OnUnloaded(object sender, RoutedEventArgs args)
+        {
+            OnDetached();
+        }
+
         private void PrepareRequestedTheme()
         {            
             ElementTheme requestedTheme;
@@ -141,8 +150,22 @@ namespace Fluent.UI.Core
 
         private void RegisterEvents()
         {
-            AttachedFrameworkElement.Unloaded += OnUnloaded;
-            AttachedFrameworkElement.Loaded += OnLoaded;
+            WeakEventManager<FrameworkElement, RoutedEventArgs>.AddHandler(AttachedFrameworkElement, "Loaded", OnUnloaded);
+            //_weakLoadedEventListener = new WeakEventListener<AttachedFrameworkElementTemplate<TFrameworkElement>, object, RoutedEventArgs>(this)
+            //{.
+            //    OnEventAction = (instance, source, eventArgs) => instance.OnLoaded(source, eventArgs),
+            //    OnDetachAction = (weakEventListener) => AttachedFrameworkElement.Loaded -= weakEventListener.OnEvent
+            //};
+
+            //AttachedFrameworkElement.Loaded += _weakLoadedEventListener.OnEvent;
+
+            //_weakUnloadedEventListener = new WeakEventListener<AttachedFrameworkElementTemplate<TFrameworkElement>, object, RoutedEventArgs>(this)
+            //{
+            //    OnEventAction = (instance, source, eventArgs) => instance.OnUnloaded(source, eventArgs),
+            //    OnDetachAction = (weakEventListener) => AttachedFrameworkElement.Unloaded -= weakEventListener.OnEvent
+            //};
+
+            //AttachedFrameworkElement.Unloaded += _weakUnloadedEventListener.OnEvent;
         }
 
         private void RemoveAttachedControl()
@@ -153,14 +176,22 @@ namespace Fluent.UI.Core
             _dependencyPropertyChangedHandler.Clear();
             _dependencyPropertyChangedHandler = null;
 
-            AttachedFrameworkElement = null;
+            _weakFrameworkElement = null;
         }
-
 
         private void UnregisterEvents()
         {
-            AttachedFrameworkElement.Unloaded -= OnUnloaded;
-            AttachedFrameworkElement.Loaded -= OnLoaded;
+            if ( _weakLoadedEventListener != null)
+            {
+                _weakLoadedEventListener.Detach();
+                _weakLoadedEventListener = null;
+            }
+
+            if (_weakUnloadedEventListener != null)
+            {
+                _weakUnloadedEventListener.Detach();
+                _weakUnloadedEventListener = null;
+            }
         }
     }
 }
