@@ -83,6 +83,34 @@
                     </TextBox>
                 </StackPanel>
             </TabItem>
+            <TabItem Header="Items">
+                <WrapPanel Margin="4">
+                    <ListBox Width="400" Margin="4">
+                        <ListBoxItem Content="Item1" />
+                        <ListBoxItem Content="Item2" />
+                        <ListBoxItem Content="Item3" />
+                    </ListBox>
+                    <ListBox Width="400" Margin="4">
+                        <ListBoxItem Content="Item1" />
+                        <ListBoxItem
+                            Content="Item2"
+                            IsEnabled="False"
+                            IsSelected="True" />
+                        <ListBoxItem Content="Item3" />
+                    </ListBox>
+                    <ListBox Width="400" Margin="4">
+                        <ListBoxItem>
+                            <Button Content="Button Item1" />
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <Button Content="Button Item2" />
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <Button Content="Button Item3" />
+                        </ListBoxItem>
+                    </ListBox>
+                </WrapPanel>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>

@@ -1,5 +1,6 @@
 ﻿using Fluent.UI.Core;
 using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -16,11 +17,7 @@ namespace Fluent.UI.Controls
         protected override void ChangeVisualState(bool useTransitions = true)
         {
             string visualState;
-            if (!IsEnabled)
-            {
-                visualState = CommonVisualState.Disabled;
-            }
-            else if (AttachedFrameworkElement.IsSelected)
+            if (AttachedFrameworkElement.IsSelected)
             {
                 if (!_isPressed && IsMouseOver)
                 {
@@ -35,19 +32,28 @@ namespace Fluent.UI.Controls
                     visualState = CommonVisualState.Selected;
                 }
             }
-            else if (_isPressed)
-            {
-                visualState = CommonVisualState.Pressed;
-            }
-            else if (IsMouseOver)
-            {
-                visualState = CommonVisualState.PointerOver;
-            }
             else
             {
-                visualState = CommonVisualState.Normal;
+                if (!AttachedFrameworkElement.IsEnabled)
+                {
+                    visualState = CommonVisualState.Disabled;
+                }
+                else if (_isPressed)
+                {
+                    visualState = CommonVisualState.Pressed;
+                }
+                else if (IsMouseOver)
+                {
+                    visualState = CommonVisualState.PointerOver;
+                }
+                else
+                {
+                    visualState = CommonVisualState.Normal;
+                }
             }
 
+
+            Debug.WriteLine(visualState);
             GoToVisualState(visualState, useTransitions);
         }
 
@@ -55,7 +61,7 @@ namespace Fluent.UI.Controls
         {
             AddEventHandler<MouseButtonEventArgs>("PreviewMouseDown", OnPreviewMouseDown);
             AddEventHandler<MouseButtonEventArgs>("MouseUp", OnMouseUp);
-            AddEventHandler<MouseButtonEventArgs>("MouseLeave", OnMouseLeave);
+            AddEventHandler<RoutedEventArgs>("MouseLeave", OnMouseLeave);
 
             AddPropertyChangedHandler(UIElement.IsEnabledProperty, OnPropertyChanged);
             AddPropertyChangedHandler(UIElement.IsMouseOverProperty, OnPropertyChanged);
@@ -70,6 +76,7 @@ namespace Fluent.UI.Controls
 
         private void OnMouseLeave(object sender, RoutedEventArgs args)
         {
+            OverrideFocusable(true);
             _isPressed = false;
             ChangeVisualState(true);
         }
@@ -78,21 +85,38 @@ namespace Fluent.UI.Controls
         {
             if (_isPressed && args.ButtonState == MouseButtonState.Released)
             {
-                _isPressed = false;
-                ChangeVisualState(true);
+                OverrideFocusable(true);
 
-                AttachedFrameworkElement.IsSelected = true;
+                if (AttachedFrameworkElement.IsEnabled)
+                {
+                    _isPressed = false;
+                    ChangeVisualState(true);
+
+                    AttachedFrameworkElement.IsSelected = true;
+                }
             }
         }
 
         private void OnPreviewMouseDown(object sender, MouseButtonEventArgs args)
         {
-            if (args.ButtonState == MouseButtonState.Pressed)
+            if (!IsEnabled)
             {
                 args.Handled = true;
-                _isPressed = true;
+            }
 
+            if (args.ButtonState == MouseButtonState.Pressed)
+            {
+                OverrideFocusable();
+                _isPressed = true;
                 ChangeVisualState(true);
+            }
+        }
+
+        private void OverrideFocusable(bool isFocusable = false)
+        {
+            if (AttachedFrameworkElement.Focusable)
+            {
+                AttachedFrameworkElement.SetCurrentValue(UIElement.FocusableProperty, isFocusable);
             }
         }
     }
