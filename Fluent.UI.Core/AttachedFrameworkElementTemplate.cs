@@ -145,19 +145,19 @@ namespace Fluent.UI.Core
 
         private void RegisterEvents()
         {
-            AddHandler<RoutedEventArgs>("Loaded", OnLoaded);
-            AddHandler<RoutedEventArgs>("Unloaded", OnLoaded);
+            AddEvent<RoutedEventArgs>("Loaded", OnLoaded);
+            AddEvent<RoutedEventArgs>("Unloaded", OnLoaded);
         }
 
-        protected void AddHandler<TEventArgs>(string eventName, EventHandler<TEventArgs> handler) where TEventArgs : EventArgs
+        protected void AddEvent<TEventArgs>(string eventName, EventHandler<TEventArgs> handler) where TEventArgs : EventArgs
         {
             WeakEventManager<TFrameworkElement, TEventArgs>.AddHandler(AttachedFrameworkElement, eventName, handler);
         }
 
-        //protected void AddHandler(DependencyProperty property, EventHandler<TEventArgs> handler)
-        //{
-        //    _dependencyPropertyChangedManager.AddEventHandler(AttachedFrameworkElement, property);
-        //}
+        protected void AddValueChanged(DependencyProperty property, EventHandler handler)
+        {
+            _dependencyPropertyChangedManager.AddEventHandler(AttachedFrameworkElement, property);
+        }
 
         private void RemoveAttachedControl()
         {
