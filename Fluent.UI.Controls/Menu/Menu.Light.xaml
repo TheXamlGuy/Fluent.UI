@@ -1,0 +1,34 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+    <ResourceDictionary.MergedDictionaries>
+        <SharedResourceDictionary Source="pack://application:,,,/Fluent.UI.Controls;component/Themes/ThemeResources.Light.xaml" />
+        <SharedResourceDictionary>
+            <StaticResource x:Key="MenuBarBackground" ResourceKey="SystemControlTransparentBrush" />
+        </SharedResourceDictionary>
+    </ResourceDictionary.MergedDictionaries>
+    <system:Double x:Key="MenuBarHeight">40</system:Double>
+    <Style TargetType="Menu">
+        <Setter Property="Background" Value="{StaticResource MenuBarBackground}" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Height" Value="{StaticResource MenuBarHeight}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Menu">
+                    <Grid
+                        x:Name="LayoutRoot"
+                        HorizontalAlignment="Stretch"
+                        Background="{TemplateBinding Background}">
+                        <StackPanel
+                            x:Name="ContentRoot"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Stretch"
+                            IsItemsHost="True"
+                            Orientation="Horizontal" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

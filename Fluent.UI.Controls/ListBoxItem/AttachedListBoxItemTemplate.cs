@@ -11,8 +11,6 @@ namespace Fluent.UI.Controls
     {
         private bool _isPressed;
 
-        //protected override IItemsControlExtensionHandler GetItemsControlHandler(ItemsControl itemsControl) { get; } /*=> FrameworkElementExtension<ListBox>.GetAttachedHandler(itemsControl) as IItemsControlExtensionHandler*/;
-
         protected override void ChangeVisualState(bool useTransitions = true)
         {
             string visualState;
@@ -51,7 +49,6 @@ namespace Fluent.UI.Controls
                 }
             }
 
-            Debug.WriteLine(visualState);
             GoToVisualState(visualState, useTransitions);
         }
 
@@ -67,10 +64,7 @@ namespace Fluent.UI.Controls
             AddPropertyChangedHandler(UIElement.IsFocusedProperty, OnPropertyChanged);
         }
 
-        private void OnPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
-        {
-            ChangeVisualState(true);
-        }
+        private void OnPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeVisualState(true);
 
         private void OnMouseLeave(object sender, RoutedEventArgs args)
         {
