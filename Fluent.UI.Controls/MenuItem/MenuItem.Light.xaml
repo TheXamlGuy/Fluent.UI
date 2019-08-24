@@ -6,17 +6,23 @@
     <ResourceDictionary.MergedDictionaries>
         <SharedResourceDictionary Source="pack://application:,,,/Fluent.UI.Controls;component/Themes/ThemeResources.Light.xaml" />
         <SharedResourceDictionary>
-            <StaticResource x:Key="MenuItemBackground" ResourceKey="SystemControlTransparentBrush" />
-            <StaticResource x:Key="MenuItemBackgroundPointerOver" ResourceKey="SystemControlBackgroundListLowBrush" />
-            <StaticResource x:Key="MenuItemBackgroundPressed" ResourceKey="SystemControlBackgroundListMediumBrush" />
-            <StaticResource x:Key="MenuItemBackgroundSelected" ResourceKey="SystemControlBackgroundListMediumBrush" />
+            <StaticResource x:Key="MenuItemBackgroundBrush" ResourceKey="SystemControlTransparentBrush" />
+            <StaticResource x:Key="MenuItemBackgroundPointerOverBrush" ResourceKey="SystemControlBackgroundListLowBrush" />
+            <StaticResource x:Key="MenuItemBackgroundPressedBrush" ResourceKey="SystemControlBackgroundListMediumBrush" />
+            <StaticResource x:Key="MenuItemBackgroundSelectedBrush" ResourceKey="SystemControlBackgroundListMediumBrush" />
             <StaticResource x:Key="MenuItemBorderBrush" ResourceKey="SystemControlForegroundBaseMediumLowBrush" />
-            <StaticResource x:Key="MenuItemBorderBrushPointerOver" ResourceKey="SystemControlHighlightBaseMediumBrush" />
-            <StaticResource x:Key="MenuItemBorderBrushPressed" ResourceKey="SystemControlHighlightBaseMediumLowBrush" />
-            <StaticResource x:Key="MenuItemBorderBrushSelected" ResourceKey="SystemControlHighlightBaseMediumLowBrush" />
-            <StaticResource x:Key="MenuItemForeground" ResourceKey="SystemControlForegroundBaseHighBrush" />
-            <StaticResource x:Key="MenuPopupBackground" ResourceKey="SystemControlBackgroundChromeMediumLowBrush" />
-            <StaticResource x:Key="MenuPopupBorderBrush" ResourceKey="SystemControlForegroundChromeHighBrush" />
+            <StaticResource x:Key="MenuItemBorderBrushPointerOverBrush" ResourceKey="SystemControlHighlightBaseMediumBrush" />
+            <StaticResource x:Key="MenuItemBorderBrushPressedBrush" ResourceKey="SystemControlHighlightBaseMediumLowBrush" />
+            <StaticResource x:Key="MenuItemBorderBrushSelectedBrush" ResourceKey="SystemControlHighlightBaseMediumLowBrush" />
+            <StaticResource x:Key="MenuItemForegroundBrush" ResourceKey="SystemControlForegroundBaseHighBrush" />
+            <StaticResource x:Key="MenuPopupBackgroundBrush" ResourceKey="SystemControlBackgroundChromeMediumLowBrush" />
+            <StaticResource x:Key="MenuPopupBorderBrushBrush" ResourceKey="SystemControlForegroundChromeHighBrush" />
+            <StaticResource x:Key="MenuItemChevronForegroundBrush" ResourceKey="SystemControlForegroundBaseMediumHighBrush" />
+            <StaticResource x:Key="MenuItemBackgroundDisabledBrush" ResourceKey="SystemControlTransparentBrush" />
+            <StaticResource x:Key="MenuItemBorderBrushDisabledBrush" ResourceKey="SystemControlTransparentBrush" />
+            <StaticResource x:Key="MenuItemForegroundDisabledBrush" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
+            <StaticResource x:Key="MenuItemIconForegroundDisabledBrush" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
+            <StaticResource x:Key="MenuItemChevronDisabledBrush" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
         </SharedResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
     <Thickness x:Key="MenuItemBorderThickness">0</Thickness>
@@ -27,9 +33,10 @@
     <system:Double x:Key="MenuPopupMinWidth">96</system:Double>
     <Thickness x:Key="MenuPopupThickness">1</Thickness>
     <Thickness x:Key="MenuPopupPadding">1,4,1,4</Thickness>
+    <Thickness x:Key="MenuItemChevronMargin">24,0,0,0</Thickness>
     <Style TargetType="MenuItem">
-        <Setter Property="Background" Value="{StaticResource MenuItemBackground}" />
-        <Setter Property="Foreground" Value="{StaticResource MenuItemForeground}" />
+        <Setter Property="Background" Value="{StaticResource MenuItemBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource MenuItemForegroundBrush}" />
         <Setter Property="Padding" Value="{StaticResource MenuItemPadding}" />
         <Setter Property="FontSize" Value="{StaticResource ControlContentThemeFontSize}" />
         <Setter Property="FontSize" Value="{StaticResource ControlContentThemeFontSize}" />
@@ -63,22 +70,23 @@
                                     <ContentPresenter x:Name="IconContent" Content="{TemplateBinding Icon}" />
                                 </Viewbox>
                                 <ContentPresenter
-                                    x:Name="HeaderHost"
+                                    x:Name="ContentPresenter"
                                     Grid.Column="0"
                                     HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                     Content="{TemplateBinding Header}"
                                     RecognizesAccessKey="True"
                                     TextBlock.Foreground="{TemplateBinding Foreground}" />
-
-                                <!--<TextBlock
-                                x:Name="SubItemChevron"
-                                Grid.Column="1"
-                                Margin="{StaticResource MenuFlyoutItemChevronMargin}"
-                                FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                FontSize="12"
-                                Foreground="{StaticResource MenuFlyoutSubItemChevron}"
-                                Text="&#xE0E3;" />-->
+                                <TextBlock
+                                    x:Name="ChevronGlyph"
+                                    Grid.Column="1"
+                                    Margin="{StaticResource MenuItemChevronMargin}"
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                    FontSize="12"
+                                    Foreground="{StaticResource MenuItemChevronForegroundBrush}"
+                                    Text="&#xE0E3;" />
                             </Grid>
                             <Popup
                                 x:Name="Popup"
@@ -92,8 +100,8 @@
                                     MaxWidth="{StaticResource MenuPopupMaxWidth}"
                                     MaxHeight="{StaticResource MenuPopupMaxHeight}"
                                     Padding="{StaticResource MenuPopupPadding}"
-                                    Background="{StaticResource MenuPopupBackground}"
-                                    BorderBrush="{StaticResource SystemControlForegroundChromeHighBrush}"
+                                    Background="{StaticResource MenuPopupBackgroundBrush}"
+                                    BorderBrush="{StaticResource MenuPopupBorderBrushBrush}"
                                     BorderThickness="{StaticResource MenuPopupThickness}">
                                     <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
                                 </Border>
@@ -102,33 +110,49 @@
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal" />
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="Background">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MenuItemBackgroundDisabledBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="BorderBrush">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MenuItemBorderBrushDisabledBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(TextBlock.Foreground)">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MenuItemForegroundDisabledBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ChevronGlyph" Storyboard.TargetProperty="(TextBlock.Foreground)">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MenuItemChevronDisabledBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
                                 <VisualState x:Name="PointerOver">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MenuItemBackgroundPointerOver}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MenuItemBackgroundPointerOverBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="BorderBrush">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MenuItemBorderBrushPointerOver}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MenuItemBorderBrushPointerOverBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MenuItemBackgroundPressed}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MenuItemBackgroundPressedBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="BorderBrush">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MenuItemBorderBrushPressed}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MenuItemBorderBrushPressedBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Selected">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MenuItemBackgroundSelected}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MenuItemBackgroundSelectedBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="BorderBrush">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MenuItemBorderBrushSelected}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MenuItemBorderBrushSelectedBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
@@ -138,6 +162,16 @@
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Popup" Storyboard.TargetProperty="Placement">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static PlacementMode.Bottom}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ChevronGlyph" Storyboard.TargetProperty="(UIElement.Visibility)">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Collapsed}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="SubmenuItem">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ChevronGlyph" Storyboard.TargetProperty="(UIElement.Visibility)">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Collapsed}" />
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>

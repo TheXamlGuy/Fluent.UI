@@ -51,7 +51,11 @@ namespace Fluent.UI.Controls
             {
                 visualState = "TopLevelHeader";
             }
-
+            else if (AttachedFrameworkElement.Role == MenuItemRole.SubmenuItem)
+            {
+                visualState = "SubmenuItem";
+            }
+            
             GoToVisualState(visualState, useTransitions);
         }
 

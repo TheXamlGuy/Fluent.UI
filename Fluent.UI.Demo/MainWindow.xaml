@@ -103,7 +103,7 @@
                         <Menu>
                             <MenuItem Header="_File">
                                 <MenuItem Header="_New" />
-                                <MenuItem Header="_Open" />
+                                <MenuItem Header="_Open" IsEnabled="False" />
                                 <MenuItem Header="_Save">
                                     <MenuItem Header="Test" />
                                     <MenuItem Header="Test">
@@ -113,7 +113,12 @@
                                         <MenuItem Header="Test" />
                                     </MenuItem>
                                     <MenuItem Header="Test" />
-                                    <MenuItem Header="Test" />
+                                    <MenuItem Header="Test" IsEnabled="False">
+                                        <MenuItem Header="Test" />
+                                        <MenuItem Header="Test" />
+                                        <MenuItem Header="Test" />
+                                        <MenuItem Header="Test" />
+                                    </MenuItem>
                                 </MenuItem>
                                 <Separator />
                                 <MenuItem Header="_Exit" />
