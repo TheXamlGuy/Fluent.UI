@@ -11,8 +11,6 @@ namespace Fluent.UI.Controls
     {
         private bool _isPressed;
 
-        //protected override IItemsControlExtensionHandler GetItemsControlHandler(ItemsControl itemsControl) { get; } /*=> FrameworkElementExtension<ListBox>.GetAttachedHandler(itemsControl) as IItemsControlExtensionHandler*/;
-
         private bool focusable;
 
         protected override void ChangeVisualState(bool useTransitions = true)

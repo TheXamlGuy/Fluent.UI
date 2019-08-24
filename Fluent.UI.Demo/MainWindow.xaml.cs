@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using Fluent.UI.Core;
+using System.Windows;
+using System.Windows.Media;
 
 namespace Fluent.UI.Demo
 {
@@ -9,21 +11,10 @@ namespace Fluent.UI.Demo
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void OnThemeChecked(object sender, RoutedEventArgs args)
         {
-            Button.Click -= Button_Click;
-            Foo.Children.Clear();
-        }
-
-        private void Button_Click1(object sender, RoutedEventArgs e)
-        {
-            XamlContentDialog.ShowAsync();
-        }
-
-        private void Button_Click2(object sender, RoutedEventArgs e)
-        {
-            Button.Click -= Button_Click;
-            Foo.Children.Clear();
+            RootBorder.Background = Brushes.Black;
+            FrameworkElementExtension.SetRequestedTheme(RootBorder, ElementTheme.Dark);
         }
     }
 }

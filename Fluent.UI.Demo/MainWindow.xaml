@@ -7,123 +7,126 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Button
-            x:Name="Button"
-            Click="Button_Click"
-            Content="Destroy me" />
-        <TabControl Grid.Row="1">
-            <TabItem Header="Commands">
-                <WrapPanel Margin="4">
-                    <StackPanel Margin="4">
-                        <Button Margin="0,0,0,8" Content="Button" />
+        <StackPanel Margin="8" Orientation="Horizontal">
+            <Button
+                x:Name="Button"
+                Margin="0,0,6,0"
+                Content="GC Test" />
+            <CheckBox Checked="OnThemeChecked" Content="Switch to default theme" />
+        </StackPanel>
+        <Border x:Name="RootBorder" Grid.Row="1">
+            <TabControl>
+                <TabItem Header="Commands">
+                    <WrapPanel Margin="4">
+                        <StackPanel Margin="4">
+                            <Button Margin="0,0,0,8" Content="Button" />
+                            <Button
+                                Margin="0,0,0,8"
+                                Content="Button Disabled"
+                                IsEnabled="False" />
+                        </StackPanel>
+                        <StackPanel Margin="4">
+                            <CheckBox Margin="0,0,0,8" Content="Normal CheckBox" />
+                            <CheckBox
+                                Margin="0,0,0,8"
+                                Content="Disabled CheckBox"
+                                IsEnabled="False" />
+                            <CheckBox
+                                Margin="0,0,0,8"
+                                Content="Checked CheckBox"
+                                IsChecked="True" />
+                            <CheckBox
+                                Margin="0,0,0,8"
+                                Content="Checked Disabled CheckBox"
+                                IsChecked="True"
+                                IsEnabled="False" />
+                            <CheckBox
+                                Margin="0,0,0,8"
+                                Content="Tri-State Checked CheckBox"
+                                IsChecked="{x:Null}"
+                                IsThreeState="True" />
+                            <CheckBox
+                                Margin="0,0,0,8"
+                                Content="Disabled Tri-State Checked CheckBox"
+                                IsChecked="{x:Null}"
+                                IsEnabled="False"
+                                IsThreeState="True" />
+                        </StackPanel>
+                    </WrapPanel>
+                </TabItem>
+                <TabItem Header="Inputs">
+                    <StackPanel Margin="8">
+                        <TextBox Margin="0,0,0,8" Text="TextBox" />
+                        <TextBox
+                            Margin="0,0,0,8"
+                            IsEnabled="False"
+                            Text="Disabled TextBox" />
+                        <TextBox Margin="0,0,0,8" TextBoxExtension.PlaceholderText="Placeholder text" />
+                        <TextBox
+                            Margin="0,0,0,8"
+                            IsEnabled="False"
+                            TextBoxExtension.PlaceholderText="Disabled Placeholder text" />
+                        <TextBox Margin="0,0,0,8" TextBoxExtension.Header="Header text" />
+                        <TextBox
+                            Margin="0,0,0,8"
+                            IsEnabled="False"
+                            TextBoxExtension.Header=" Disabled Header text" />
+                        <TextBox Margin="0,0,0,8">
+                            <TextBoxExtension.HeaderTemplate>
+                                <DataTemplate>
+                                    <Button Content="Template Header" />
+                                </DataTemplate>
+                            </TextBoxExtension.HeaderTemplate>
+                        </TextBox>
+                        <TextBox Margin="0,0,0,8" IsEnabled="False">
+                            <TextBoxExtension.HeaderTemplate>
+                                <DataTemplate>
+                                    <Button Content=" Disabled Template Header" />
+                                </DataTemplate>
+                            </TextBoxExtension.HeaderTemplate>
+                        </TextBox>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Items">
+                    <WrapPanel Margin="4">
+                        <ListBox Width="400" Margin="4">
+                            <ListBoxItem Content="Item1" />
+                            <ListBoxItem Content="Item2" />
+                            <ListBoxItem Content="Item3" />
+                        </ListBox>
+                        <ListBox Width="400" Margin="4">
+                            <ListBoxItem Content="Item1" />
+                            <ListBoxItem
+                                Content="Item2"
+                                IsEnabled="False"
+                                IsSelected="True" />
+                            <ListBoxItem Content="Item3" />
+                        </ListBox>
+                        <ListBox Width="400" Margin="4">
+                            <ListBoxItem x:Name="ThisChild">
+                                <Button Content="Button Item1" />
+                            </ListBoxItem>
+                            <ListBoxItem>
+                                <Button Content="Button Item2" />
+                            </ListBoxItem>
+                            <ListBoxItem>
+                                <Button Content="Button Item3" />
+                            </ListBoxItem>
+                        </ListBox>
+                    </WrapPanel>
+                </TabItem>
+                <TabItem Header="Popups">
+                    <StackPanel>
                         <Button
                             Margin="0,0,0,8"
-                            Content="Button Disabled"
-                            IsEnabled="False" />
+                            Content="Open ContentDialog in XAML" />
+                        <Button
+                            Margin="0,0,0,8"
+                            Content="Open ContentDialog CodeBehind" />
+                        <ContentDialog x:Name="XamlContentDialog" />
                     </StackPanel>
-                    <StackPanel Margin="4">
-                        <CheckBox Margin="0,0,0,8" Content="Normal CheckBox" />
-                        <CheckBox
-                            Margin="0,0,0,8"
-                            Content="Disabled CheckBox"
-                            IsEnabled="False" />
-                        <CheckBox
-                            Margin="0,0,0,8"
-                            Content="Checked CheckBox"
-                            IsChecked="True" />
-                        <CheckBox
-                            Margin="0,0,0,8"
-                            Content="Checked Disabled CheckBox"
-                            IsChecked="True"
-                            IsEnabled="False" />
-                        <CheckBox
-                            Margin="0,0,0,8"
-                            Content="Tri-State Checked CheckBox"
-                            IsChecked="{x:Null}"
-                            IsThreeState="True" />
-                        <CheckBox
-                            Margin="0,0,0,8"
-                            Content="Disabled Tri-State Checked CheckBox"
-                            IsChecked="{x:Null}"
-                            IsEnabled="False"
-                            IsThreeState="True" />
-                    </StackPanel>
-                </WrapPanel>
-            </TabItem>
-            <TabItem Header="Inputs">
-                <StackPanel Margin="8">
-                    <TextBox Margin="0,0,0,8" Text="TextBox" />
-                    <TextBox
-                        Margin="0,0,0,8"
-                        IsEnabled="False"
-                        Text="Disabled TextBox" />
-                    <TextBox Margin="0,0,0,8" TextBoxExtension.PlaceholderText="Placeholder text" />
-                    <TextBox
-                        Margin="0,0,0,8"
-                        IsEnabled="False"
-                        TextBoxExtension.PlaceholderText="Disabled Placeholder text" />
-                    <TextBox Margin="0,0,0,8" TextBoxExtension.Header="Header text" />
-                    <TextBox
-                        Margin="0,0,0,8"
-                        IsEnabled="False"
-                        TextBoxExtension.Header=" Disabled Header text" />
-                    <TextBox Margin="0,0,0,8">
-                        <TextBoxExtension.HeaderTemplate>
-                            <DataTemplate>
-                                <Button Content="Template Header" />
-                            </DataTemplate>
-                        </TextBoxExtension.HeaderTemplate>
-                    </TextBox>
-                    <TextBox Margin="0,0,0,8" IsEnabled="False">
-                        <TextBoxExtension.HeaderTemplate>
-                            <DataTemplate>
-                                <Button Content=" Disabled Template Header" />
-                            </DataTemplate>
-                        </TextBoxExtension.HeaderTemplate>
-                    </TextBox>
-                </StackPanel>
-            </TabItem>
-            <TabItem Header="Items">
-                <WrapPanel Margin="4">
-                    <ListBox Width="400" Margin="4">
-                        <ListBoxItem Content="Item1" />
-                        <ListBoxItem Content="Item2" />
-                        <ListBoxItem Content="Item3" />
-                    </ListBox>
-                    <ListBox Width="400" Margin="4">
-                        <ListBoxItem Content="Item1" />
-                        <ListBoxItem
-                            Content="Item2"
-                            IsEnabled="False"
-                            IsSelected="True" />
-                        <ListBoxItem Content="Item3" />
-                    </ListBox>
-                    <ListBox Width="400" Margin="4">
-                        <ListBoxItem>
-                            <Button Content="Button Item1" />
-                        </ListBoxItem>
-                        <ListBoxItem>
-                            <Button Content="Button Item2" />
-                        </ListBoxItem>
-                        <ListBoxItem>
-                            <Button Content="Button Item3" />
-                        </ListBoxItem>
-                    </ListBox>
-                </WrapPanel>
-            </TabItem>
-            <TabItem Header="Popups">
-                <StackPanel>
-                    <Button
-                        Margin="0,0,0,8"
-                        Click="Button_Click1"
-                        Content="Open ContentDialog in XAML" />
-                    <Button
-                        Margin="0,0,0,8"
-                        Click="Button_Click2"
-                        Content="Open ContentDialog CodeBehind" />
-                    <ContentDialog x:Name="XamlContentDialog" />
-                </StackPanel>
-            </TabItem>
-        </TabControl>
+                </TabItem>
+            </TabControl>
+        </Border>
     </Grid>
 </Window>

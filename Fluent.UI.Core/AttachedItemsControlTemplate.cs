@@ -14,17 +14,6 @@ namespace Fluent.UI.Core
             return null;
         }
 
-        protected override void PrepareRequestedTheme(ElementTheme requestedTheme)
-        {
-            if (AttachedFrameworkElement.TryIsThemeRequestSupported(out Type supportedType))
-            {
-                if (supportedType == typeof(ItemsControl))
-                {
-                    PrepareItemsContainerRequestedTheme(requestedTheme);
-                }
-            }
-        }
-
         protected override void OnAttached()
         {
             AttachedFrameworkElement.LayoutUpdated -= OnItemsControlLayoutUpdated;

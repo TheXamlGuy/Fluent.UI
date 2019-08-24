@@ -7,16 +7,7 @@ namespace Fluent.UI.Core
     public class AttachedFrameworkElementTemplate<TFrameworkElement> : IAttachedFrameworkElementTemplate<TFrameworkElement> where TFrameworkElement : FrameworkElement
     {
         private DependencyPropertyChangedManager _dependencyPropertyChangedManager;
-
-        private bool _isRequestedTheme;
-        private bool _isRequestedThemePropagated;
-        private ElementTheme _requestedTheme;
-        private ElementTheme _requestedThemePropagated;
-
         private WeakReference<TFrameworkElement> _weakFrameworkElement;
-        protected bool IsEnabled => AttachedFrameworkElement.IsEnabled;
-        protected bool IsFocused => AttachedFrameworkElement.IsFocused;
-        protected bool IsMouseOver => AttachedFrameworkElement.IsMouseOver;
 
         public TFrameworkElement AttachedFrameworkElement
         {
@@ -31,6 +22,20 @@ namespace Fluent.UI.Core
             }
         }
 
+        protected bool IsEnabled => AttachedFrameworkElement.IsEnabled;
+        protected bool IsFocused => AttachedFrameworkElement.IsFocused;
+        protected bool IsMouseOver => AttachedFrameworkElement.IsMouseOver;
+
+        public void ApplyRequestedTheme(ElementTheme requestedTheme)
+        {
+            OnApplyRequestedTheme(requestedTheme);
+        }
+
+        public virtual void OnApplyRequestedTheme(ElementTheme requestedTheme)
+        {
+
+        }
+
         public void SetAttachedControl(FrameworkElement frameworkElement)
         {
             _weakFrameworkElement = new WeakReference<TFrameworkElement>(frameworkElement as TFrameworkElement);
@@ -40,36 +45,12 @@ namespace Fluent.UI.Core
             OnAttached();
         }
 
-        public void SetRequestedTheme(ElementTheme requestedTheme)
+        private void OnRequestedTheme(object sender, RequestedThemeEventArgs args)
         {
-            _isRequestedThemePropagated = false;
-            _isRequestedTheme = true;
-            _requestedTheme = requestedTheme;
-
-            if (!AttachedFrameworkElement.IsLoaded)
+            if (AttachedFrameworkElement.IsChildOf(sender as FrameworkElement))
             {
-                return;
+                ApplyRequestedTheme(args.RequestedTheme);
             }
-
-            PrepareRequestedTheme();
-        }
-
-        public void SetRequestedThemePropagated(ElementTheme requestedTheme)
-        {
-            _isRequestedThemePropagated = true;
-            _requestedThemePropagated = requestedTheme;
-
-            if (!AttachedFrameworkElement.IsLoaded)
-            {
-                return;
-            }
-
-            PrepareRequestedTheme();
-        }
-
-        internal void PropagateRequestedTheme(ElementTheme requestedTheme)
-        {
-            PrepareRequestedTheme(requestedTheme);
         }
 
         protected void AddEventHandler<TEventArgs>(string eventName, EventHandler<TEventArgs> handler) where TEventArgs : EventArgs
@@ -102,48 +83,21 @@ namespace Fluent.UI.Core
         {
         }
 
-        protected virtual void OnLoaded(object sender, RoutedEventArgs args)
+        private void OnLoaded(object sender, RoutedEventArgs args)
         {
             OnApplyTemplate();
             ChangeVisualState(false);
         }
 
-        protected virtual void OnUnloaded(object sender, RoutedEventArgs args)
+        private void OnUnloaded(object sender, RoutedEventArgs args)
         {
             OnDetached();
         }
 
-        protected virtual void PrepareRequestedTheme(ElementTheme requestedTheme)
-        {
-        }
-
-        private void PrepareRequestedTheme()
-        {
-            ElementTheme requestedTheme;
-            if (_isRequestedThemePropagated)
-            {
-                requestedTheme = _requestedThemePropagated;
-            }
-            else
-            {
-                if (!_isRequestedTheme)
-                {
-                    return;
-                }
-
-                var requestedApplicationTheme = ApplicationExtension.RequestedTheme;
-                if (!_isRequestedTheme && ((int)_requestedTheme == (int)requestedApplicationTheme))
-                {
-                    return;
-                }
-                requestedTheme = _requestedTheme;
-            }
-
-            PrepareRequestedTheme(requestedTheme);
-        }
-
         private void RegisterEvents()
         {
+            RequestedThemeMessageBus.Current.Subscribe(AttachedFrameworkElement, OnRequestedTheme);
+
             AddEventHandler<RoutedEventArgs>("Loaded", OnLoaded);
             AddEventHandler<RoutedEventArgs>("Unloaded", OnLoaded);
         }

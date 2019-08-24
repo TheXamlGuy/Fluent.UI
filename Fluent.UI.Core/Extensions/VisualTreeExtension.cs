@@ -100,6 +100,24 @@ namespace Fluent.UI.Core.Extensions
             return parent.FindAscendantByName(name);
         }
 
+        public static bool IsChildOf(this FrameworkElement child, FrameworkElement parent)
+        {
+            if (!(child.Parent is FrameworkElement parentObject))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(parent, parentObject))
+            {
+                return true;
+            }
+            else
+            {
+                return IsChildOf(parentObject, parent);
+            }
+        }
+
+
         public static T FindAscendant<T>(this DependencyObject element)
             where T : DependencyObject
         {
