@@ -96,7 +96,7 @@ namespace Fluent.UI.Core
         {
             if ((ElementTheme)args.NewValue != (ElementTheme)args.OldValue)
             {
-                RequestedThemeMessageBus.Current.Publish(dependencyObject as FrameworkElement, new RequestedThemeEventArgs((ElementTheme)args.NewValue));
+                EventAggregator.Current.Publish(new RequestedThemeEventArgs(dependencyObject as FrameworkElement, (ElementTheme)args.NewValue));
             }
         }
     }

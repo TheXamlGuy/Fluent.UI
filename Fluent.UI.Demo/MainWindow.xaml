@@ -94,7 +94,7 @@
                             <ListBoxItem Content="Item2" />
                             <ListBoxItem Content="Item3" />
                         </ListBox>
-                        <ListBox Width="400" Margin="4">
+                        <!--<ListBox Width="400" Margin="4">
                             <ListBoxItem Content="Item1" />
                             <ListBoxItem
                                 Content="Item2"
@@ -856,7 +856,7 @@
                             <ListBoxItem>
                                 <Button Content="Button Item3" />
                             </ListBoxItem>
-                        </ListBox>
+                        </ListBox>-->
                     </WrapPanel>
                 </TabItem>
                 <TabItem Header="Popups">
@@ -867,7 +867,7 @@
                         <Button
                             Margin="0,0,0,8"
                             Content="Open ContentDialog CodeBehind" />
-                        <ContentDialog x:Name="XamlContentDialog" />
+                        <!--<ContentDialog x:Name="XamlContentDialog" />-->
                     </StackPanel>
                 </TabItem>
             </TabControl>

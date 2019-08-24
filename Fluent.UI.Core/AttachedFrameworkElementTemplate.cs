@@ -44,12 +44,15 @@ namespace Fluent.UI.Core
             OnAttached();
         }
 
-        private void OnRequestedTheme(object sender, RequestedThemeEventArgs args)
+        private void OnRequestedTheme(RequestedThemeEventArgs args)
         {
-            if (AttachedFrameworkElement.IsChildOf(sender as FrameworkElement))
+            if (args.Source.TryGetTarget(out FrameworkElement source))
             {
-                ApplyRequestedTheme(args.RequestedTheme);
-            }
+                if (AttachedFrameworkElement.IsChildOf(source))
+                {
+                    ApplyRequestedTheme(args.RequestedTheme);
+                }
+           }
         }
 
         protected void AddEventHandler<TEventArgs>(string eventName, EventHandler<TEventArgs> handler) where TEventArgs : EventArgs
@@ -95,7 +98,7 @@ namespace Fluent.UI.Core
 
         private void RegisterEvents()
         {
-            RequestedThemeMessageBus.Current.Subscribe(AttachedFrameworkElement, OnRequestedTheme);
+            EventAggregator.Current.Subscribe<RequestedThemeEventArgs>(OnRequestedTheme);
 
             AddEventHandler<RoutedEventArgs>("Loaded", OnLoaded);
             AddEventHandler<RoutedEventArgs>("Unloaded", OnLoaded);
