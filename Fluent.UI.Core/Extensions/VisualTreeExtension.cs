@@ -102,6 +102,11 @@ namespace Fluent.UI.Core.Extensions
 
         public static bool IsChildOf(this FrameworkElement child, FrameworkElement parent)
         {
+            if (child == null)
+            {
+                return false;
+            }
+
             if (!(child.Parent is FrameworkElement parentObject))
             {
                 return false;

@@ -11,6 +11,8 @@ namespace Fluent.UI.Core
 
         private Uri _sourceUri;
 
+        private static object _lock = new object();
+
         public new Uri Source
         {
             get
@@ -47,15 +49,19 @@ namespace Fluent.UI.Core
                     // nothing
                 }
 
-                if (!_sharedDictionaries.ContainsKey(value))
+                lock (_lock)
                 {
-                    base.Source = value;
-                    _sharedDictionaries.Add(value, this);
+                    if (!_sharedDictionaries.ContainsKey(value))
+                    {
+                        base.Source = value;
+                        _sharedDictionaries.Add(value, this);
+                    }
+                    else
+                    {
+                        MergedDictionaries.Add(_sharedDictionaries[value]);
+                    }
                 }
-                else
-                {
-                    MergedDictionaries.Add(_sharedDictionaries[value]);
-                }
+   
             }
         }
 

@@ -26,9 +26,9 @@ namespace Fluent.UI.Core
         protected bool IsFocused => AttachedFrameworkElement.IsFocused;
         protected bool IsMouseOver => AttachedFrameworkElement.IsMouseOver;
 
-        public void ApplyRequestedTheme(ElementTheme requestedTheme)
+        public void ApplyRequestedTheme()
         {
-            OnApplyRequestedTheme(requestedTheme);
+            OnApplyRequestedTheme(_requestedTheme);
         }
 
         public virtual void OnApplyRequestedTheme(ElementTheme requestedTheme)
@@ -44,13 +44,16 @@ namespace Fluent.UI.Core
             OnAttached();
         }
 
+        private ElementTheme _requestedTheme;
+
         private void OnRequestedTheme(RequestedThemeEventArgs args)
         {
             if (args.Source.TryGetTarget(out FrameworkElement source))
             {
                 if (AttachedFrameworkElement.IsChildOf(source))
                 {
-                    ApplyRequestedTheme(args.RequestedTheme);
+                    _requestedTheme = args.RequestedTheme;
+                    ApplyRequestedTheme();
                 }
            }
         }
