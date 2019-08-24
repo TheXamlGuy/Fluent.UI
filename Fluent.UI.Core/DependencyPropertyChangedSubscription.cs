@@ -15,7 +15,6 @@ namespace Fluent.UI.Core
 
         public DependencyPropertyChangedSubscription(DependencyObject propertySource, string path, PropertyChangedCallback propertyChangedCallback) : this(propertySource, new PropertyPath(path), propertyChangedCallback)
         {
-
         }
 
         public DependencyPropertyChangedSubscription(DependencyObject propertySource, DependencyProperty property, PropertyChangedCallback propertyChangedCallback) : this(propertySource, new PropertyPath(property), propertyChangedCallback)

@@ -1,5 +1,4 @@
-﻿using Fluent.UI.Core.Extensions;
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
 

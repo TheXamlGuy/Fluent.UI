@@ -6,5 +6,4 @@
         <SharedResourceDictionary Source="/Fluent.UI.Controls;component/Themes/ThemeResources.Default.xaml" />
         <SharedResourceDictionary Source="/Fluent.UI.Controls;component/ContentDialog/ContentDialog.Default.xaml" />
     </ResourceDictionary.MergedDictionaries>
-
 </ResourceDictionary>

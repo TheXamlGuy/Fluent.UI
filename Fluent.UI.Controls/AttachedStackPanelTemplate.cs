@@ -5,6 +5,5 @@ namespace Fluent.UI.Controls
 {
     public class AttachedStackPanelTemplate : AttachedPanelTemplate<StackPanel>
     {
-
     }
 }

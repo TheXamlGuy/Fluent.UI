@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Media;
 
 namespace Fluent.UI.Core
 {
@@ -9,20 +8,16 @@ namespace Fluent.UI.Core
     {
         public RequestedThemeEventArgs(ElementTheme requestedTheme)
         {
-
             RequestedTheme = requestedTheme;
-
         }
 
         public ElementTheme RequestedTheme { get; }
-
     }
 
     public class RequestedThemeMessageBus
     {
         private static readonly Lazy<RequestedThemeMessageBus> _lazyBus = new Lazy<RequestedThemeMessageBus>(() => new RequestedThemeMessageBus());
         private ConditionalWeakTable<FrameworkElement, EventHandler<RequestedThemeEventArgs>> _subscriptions = new ConditionalWeakTable<FrameworkElement, EventHandler<RequestedThemeEventArgs>>();
-
 
         public void Subscribe(FrameworkElement key, EventHandler<RequestedThemeEventArgs> handler)
         {

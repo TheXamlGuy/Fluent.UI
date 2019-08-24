@@ -117,7 +117,6 @@ namespace Fluent.UI.Core.Extensions
             }
         }
 
-
         public static T FindAscendant<T>(this DependencyObject element)
             where T : DependencyObject
         {

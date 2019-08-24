@@ -33,7 +33,6 @@ namespace Fluent.UI.Core
 
         public virtual void OnApplyRequestedTheme(ElementTheme requestedTheme)
         {
-
         }
 
         public void SetAttachedControl(FrameworkElement frameworkElement)

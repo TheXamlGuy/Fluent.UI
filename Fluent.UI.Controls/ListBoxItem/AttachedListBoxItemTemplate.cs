@@ -1,5 +1,4 @@
 ﻿using Fluent.UI.Core;
-using System;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
@@ -51,7 +50,6 @@ namespace Fluent.UI.Controls
                     visualState = CommonVisualState.Normal;
                 }
             }
-
 
             Debug.WriteLine(visualState);
             GoToVisualState(visualState, useTransitions);

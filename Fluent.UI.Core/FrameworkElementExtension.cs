@@ -1,5 +1,4 @@
-﻿using Fluent.UI.Core.Extensions;
-using System.Windows;
+﻿using System.Windows;
 
 namespace Fluent.UI.Core
 {

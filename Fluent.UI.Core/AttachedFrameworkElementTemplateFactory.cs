@@ -7,11 +7,10 @@ namespace Fluent.UI.Core
 {
     internal class AttachedFrameworkElementTemplateFactory
     {
-        private static readonly Lazy<AttachedFrameworkElementTemplateFactory> _lazyFactory =  new Lazy<AttachedFrameworkElementTemplateFactory> (() => new AttachedFrameworkElementTemplateFactory());
+        private static readonly Lazy<AttachedFrameworkElementTemplateFactory> _lazyFactory = new Lazy<AttachedFrameworkElementTemplateFactory>(() => new AttachedFrameworkElementTemplateFactory());
 
         private AttachedFrameworkElementTemplateFactory()
         {
-
         }
 
         public static AttachedFrameworkElementTemplateFactory Current => _lazyFactory.Value;
