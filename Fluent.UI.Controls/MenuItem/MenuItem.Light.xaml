@@ -18,19 +18,10 @@
             <StaticResource x:Key="MenuPopupBackgroundBrush" ResourceKey="SystemControlBackgroundChromeMediumLowBrush" />
             <StaticResource x:Key="MenuPopupBorderBrushBrush" ResourceKey="SystemControlForegroundChromeHighBrush" />
             <StaticResource x:Key="MenuItemChevronBrush" ResourceKey="SystemControlForegroundBaseMediumHighBrush" />
-
             <StaticResource x:Key="MenuItemChevronPressedBrush" ResourceKey="SystemControlHighlightAltBaseHighBrush" />
-
             <StaticResource x:Key="MenuItemForegroundPressedBrush" ResourceKey="SystemControlHighlightAltBaseHighBrush" />
-
-
-
             <StaticResource x:Key="MenuItemChevronPointerOverBrush" ResourceKey="SystemControlHighlightAltBaseHighBrush" />
-
             <StaticResource x:Key="MenuItemForegroundPointerOverBrush" ResourceKey="SystemControlHighlightAltBaseHighBrush" />
-
-
-
             <StaticResource x:Key="MenuItemBackgroundDisabledBrush" ResourceKey="SystemControlTransparentBrush" />
             <StaticResource x:Key="MenuItemBorderBrushDisabledBrush" ResourceKey="SystemControlTransparentBrush" />
             <StaticResource x:Key="MenuItemForegroundDisabledBrush" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
@@ -40,8 +31,6 @@
             <StaticResource x:Key="MenuSubItemBorderSubMenuOpenedBrush" ResourceKey="SystemControlTransparentBrush" />
             <StaticResource x:Key="MenuSubItemForegroundSubMenuOpenedBrush" ResourceKey="SystemControlHighlightAltBaseHighBrush" />
             <StaticResource x:Key="MenuSubItemChevronSubMenuOpenedBrush" ResourceKey="SystemControlHighlightAltBaseHighBrush" />
-
-
         </SharedResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
     <Thickness x:Key="MenuItemBorderThickness">0</Thickness>
@@ -53,6 +42,7 @@
     <Thickness x:Key="MenuPopupThickness">1</Thickness>
     <Thickness x:Key="MenuPopupPadding">1,4,1,4</Thickness>
     <Thickness x:Key="MenuItemChevronMargin">24,0,0,0</Thickness>
+    <Thickness x:Key="MenuItemPlaceholderThickness">28,0,0,0</Thickness>
     <Style TargetType="MenuItem">
         <Setter Property="Background" Value="{StaticResource MenuItemBackgroundBrush}" />
         <Setter Property="Foreground" Value="{StaticResource MenuItemForegroundBrush}" />
@@ -81,11 +71,10 @@
                                 <Viewbox
                                     x:Name="IconRoot"
                                     Grid.Column="0"
-                                    Width="32"
-                                    Height="32"
+                                    Width="16"
+                                    Height="16"
                                     HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Visibility="Collapsed">
+                                    VerticalAlignment="Center">
                                     <ContentPresenter x:Name="IconContent" Content="{TemplateBinding Icon}" />
                                 </Viewbox>
                                 <ContentPresenter
@@ -191,8 +180,6 @@
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ChevronGlyph" Storyboard.TargetProperty="(TextBlock.Foreground)">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MenuSubItemChevronSubMenuOpenedBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
-
-
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Selected">
@@ -225,6 +212,37 @@
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
+                            <VisualStateGroup x:Name="CheckPlaceholderStates">
+                                <VisualState x:Name="NoPlaceholder" />
+                                <VisualState x:Name="CheckPlaceholder">
+                                    <Storyboard>
+                                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(FrameworkElement.Margin)">
+                                            <EasingThicknessKeyFrame KeyTime="0" Value="{StaticResource MenuItemPlaceholderThickness}" />
+                                        </ThicknessAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="IconPlaceholder">
+                                    <Storyboard>
+                                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(FrameworkElement.Margin)">
+                                            <EasingThicknessKeyFrame KeyTime="0" Value="{StaticResource MenuItemPlaceholderThickness}" />
+                                        </ThicknessAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="IconRoot" Storyboard.TargetProperty="(UIElement.Visibility)">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+
+                                </VisualState>
+                                <!--<VisualState x:Name="CheckAndIconPlaceholder">
+                                -->
+                                <!--<VisualState.Setters>
+                                            <Setter Target="TextBlock.Margin" Value="{ThemeResource MenuFlyoutItemDoublePlaceholderThemeThickness}" />
+                                            <Setter Target="IconRoot.Margin" Value="{ThemeResource MenuFlyoutItemPlaceholderThemeThickness}" />
+                                            <Setter Target="IconRoot.Visibility" Value="Visible" />
+                                        </VisualState.Setters>-->
+                                <!--
+                                    </VisualState>-->
+                            </VisualStateGroup>
+
                         </VisualStateManager.VisualStateGroups>
                     </Border>
                 </ControlTemplate>

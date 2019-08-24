@@ -1,7 +1,7 @@
 ﻿using Fluent.UI.Core;
+using Fluent.UI.Core.Extensions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 
 namespace Fluent.UI.Controls
 {
@@ -46,6 +46,42 @@ namespace Fluent.UI.Controls
         protected override void OnApplyTemplate()
         {
             ChangePlacementVisualState(false);
+            ChangeCheckAndIconPlaceholderVisualState(false);
+        }
+
+        protected override void OnAttached()
+        {
+            AddPropertyChangedHandler(MenuItem.IconProperty, OnIsCheckablePropertyChanged);
+            AddPropertyChangedHandler(MenuItem.IsCheckableProperty, OnIconPropertyChanged);
+            AddPropertyChangedHandler(MenuItem.IsSubmenuOpenProperty, OnPropertyChanged);
+            AddPropertyChangedHandler(MenuItem.IsPressedProperty, OnPropertyChanged);
+            AddPropertyChangedHandler(UIElement.IsEnabledProperty, OnPropertyChanged);
+            AddPropertyChangedHandler(UIElement.IsMouseOverProperty, OnPropertyChanged);
+            AddPropertyChangedHandler(MenuItem.RoleProperty, OnRolePropertyChanged);
+        }
+
+        private void ChangeCheckAndIconPlaceholderVisualState(bool useTransitions = true)
+        {
+            string visualState;
+            if (AttachedFrameworkElement.Icon != null && AttachedFrameworkElement.IsCheckable)
+            {
+                visualState = "CheckAndIconPlaceholder";
+            }
+            else if (AttachedFrameworkElement.IsCheckable)
+            {
+                visualState = "CheckPlaceholder";
+            }
+            else if (AttachedFrameworkElement.Icon != null)
+            {
+                visualState = "IconPlaceholder";
+            }
+            else
+            {
+                visualState = "NoPlaceholder";
+
+            }
+
+            GoToVisualState(visualState, useTransitions);
         }
 
         private void ChangePlacementVisualState(bool useTransitions = true)
@@ -59,22 +95,16 @@ namespace Fluent.UI.Controls
             {
                 visualState = "SubmenuItem";
             }
-            
+
             GoToVisualState(visualState, useTransitions);
         }
 
-        protected override void OnAttached()
-        {
-            AddPropertyChangedHandler(MenuItem.IsSubmenuOpenProperty, OnPropertyChanged);
-            AddPropertyChangedHandler(MenuItem.IsPressedProperty, OnPropertyChanged);
-            AddPropertyChangedHandler(UIElement.IsEnabledProperty, OnPropertyChanged);
-            AddPropertyChangedHandler(UIElement.IsMouseOverProperty, OnPropertyChanged);
-            AddPropertyChangedHandler(MenuItem.RoleProperty, OnRolePropertyChanged);
-        }
+        private void OnIconPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeCheckAndIconPlaceholderVisualState(true);
+
+        private void OnIsCheckablePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeCheckAndIconPlaceholderVisualState(true);
+        private void OnPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeVisualState(true);
 
         private void OnRolePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangePlacementVisualState(true);
-
-        private void OnPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeVisualState(true);
     }
 }
 
