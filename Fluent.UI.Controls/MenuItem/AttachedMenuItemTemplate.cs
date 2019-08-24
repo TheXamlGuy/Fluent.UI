@@ -12,9 +12,13 @@ namespace Fluent.UI.Controls
         {
             string visualState;
 
-            if (AttachedFrameworkElement.IsSubmenuOpen)
+            if (AttachedFrameworkElement.Role == MenuItemRole.TopLevelHeader && AttachedFrameworkElement.IsSubmenuOpen)
             {
                 visualState = CommonVisualState.Selected;
+            }
+            else if (AttachedFrameworkElement.IsSubmenuOpen)
+            {
+                visualState = "SubMenuOpened";
             }
             else
             {
