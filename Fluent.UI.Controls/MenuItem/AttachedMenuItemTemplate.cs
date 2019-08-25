@@ -13,9 +13,8 @@ namespace Fluent.UI.Controls
     [DefaultStyleTarget(typeof(MenuItem))]
     public class AttachedMenuItemTemplate : AttachedItemContainerTemplate<MenuItem>
     {
-        private string _groupName;
         internal bool IsRadioCheckable;
-
+        private string _groupName;
         internal void SetGroupName(string groupName)
         {
             _groupName = groupName;
@@ -130,17 +129,6 @@ namespace Fluent.UI.Controls
             }
         }
 
-        private IEnumerable<MenuItem> GetSiblings()
-        {
-            if (VisualTreeHelper.GetParent(AttachedFrameworkElement) is FrameworkElement parent)
-            {
-                foreach (var child in parent.FindChildren<MenuItem>())
-                {
-                    yield return child;
-                }
-            }
-        }
-
         private void ChangeCheckedVisualState(bool useTransitions = true)
         {
             string visualState;
@@ -173,6 +161,17 @@ namespace Fluent.UI.Controls
             }
 
             GoToVisualState(visualState, useTransitions);
+        }
+
+        private IEnumerable<MenuItem> GetSiblings()
+        {
+            if (VisualTreeHelper.GetParent(AttachedFrameworkElement) is FrameworkElement parent)
+            {
+                foreach (var child in parent.FindChildren<MenuItem>())
+                {
+                    yield return child;
+                }
+            }
         }
 
         private void OnClick(object sender, RoutedEventArgs args)
