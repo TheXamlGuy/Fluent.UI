@@ -1,0 +1,39 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+    <ResourceDictionary.MergedDictionaries>
+        <SharedResourceDictionary Source="pack://application:,,,/Fluent.UI.Controls;component/Themes/ThemeResources.Light.xaml" />
+        <SharedResourceDictionary>
+            <StaticResource x:Key="MenuPopupBackgroundBrush" ResourceKey="SystemControlBackgroundChromeMediumLowBrush" />
+            <StaticResource x:Key="MenuPopupBorderBrushBrush" ResourceKey="SystemControlForegroundChromeHighBrush" />
+        </SharedResourceDictionary>
+    </ResourceDictionary.MergedDictionaries>
+    <system:Double x:Key="MenuPopupMaxHeight">758</system:Double>
+    <system:Double x:Key="MenuPopupMaxWidth">456</system:Double>
+    <system:Double x:Key="MenuPopupMinHeight">40</system:Double>
+    <system:Double x:Key="MenuPopupMinWidth">96</system:Double>
+    <Thickness x:Key="MenuPopupThickness">1</Thickness>
+    <Thickness x:Key="MenuPopupPadding">1,4,1,4</Thickness>
+    <Style TargetType="ContextMenu">
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContextMenu">
+                    <Border
+                        MinWidth="{StaticResource MenuPopupMinWidth}"
+                        MinHeight="{StaticResource MenuPopupMinHeight}"
+                        MaxWidth="{StaticResource MenuPopupMaxWidth}"
+                        MaxHeight="{StaticResource MenuPopupMaxHeight}"
+                        Padding="{StaticResource MenuPopupPadding}"
+                        Background="{StaticResource MenuPopupBackgroundBrush}"
+                        BorderBrush="{StaticResource MenuPopupBorderBrushBrush}"
+                        BorderThickness="{StaticResource MenuPopupThickness}">
+                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

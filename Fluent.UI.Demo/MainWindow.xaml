@@ -145,7 +145,11 @@
                                 <MenuItem Header="_Exit" />
                             </MenuItem>
                         </Menu>
-                        <Separator />
+                        <StackPanel.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="sdsd" />
+                            </ContextMenu>
+                        </StackPanel.ContextMenu>
                         <!--<ContentDialog x:Name="XamlContentDialog" />-->
                     </StackPanel>
                 </TabItem>
