@@ -67,25 +67,6 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}">
-                        <Border.Resources>
-                            <Style TargetType="Separator">
-
-                                <Setter Property="Template">
-
-                                    <Setter.Value>
-
-                                        <ControlTemplate TargetType="Separator">
-
-                                            <Button />
-
-                                        </ControlTemplate>
-
-                                    </Setter.Value>
-
-                                </Setter>
-
-                            </Style>
-                        </Border.Resources>
                         <Grid>
                             <Grid Margin="{TemplateBinding Padding}">
                                 <Grid.ColumnDefinitions>
