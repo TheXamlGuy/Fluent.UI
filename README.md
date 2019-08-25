@@ -20,8 +20,8 @@ Consider Fluent UI to be in serious alpha state right now. It is missing a lot o
 - [ ] ListView
 - [ ] ListViewItem
 - [ ] ContextMenu
-- [ ] Menu
-- [ ] MenuItem
+- [x] Menu
+- [x] MenuItem
 - [ ] DataGrid
 - [ ] ListView
 - [ ] TreeView
