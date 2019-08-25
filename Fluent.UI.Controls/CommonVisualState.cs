@@ -16,5 +16,7 @@
         internal const string SelectedPressed = "SelectedPressed";
         internal const string SelectedPointerOver = "SelectedPointerOver";
         internal const string Selected = "Selected";
+        internal const string Checked = "Checked";
+        internal const string Unchecked = "Unchecked";
     }
 }

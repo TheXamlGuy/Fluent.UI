@@ -113,12 +113,24 @@
                                 </MenuItem>
                                 <MenuItem Header="_Open" IsEnabled="False" />
                                 <MenuItem Header="_Save">
-                                    <MenuItem Header="Test" />
+                                    <MenuItem Header="Test" IsCheckable="True" />
                                     <MenuItem Header="Test">
-                                        <MenuItem Header="Test" IsCheckable="True"/>
-                                        <MenuItem Header="Test" IsCheckable="True"/>
-                                        <MenuItem Header="Test" IsCheckable="True"/>
-                                        <MenuItem Header="Test" IsCheckable="True"/>
+                                        <MenuItem
+                                            Header="Test"
+                                            IsCheckable="True"
+                                            MenuItemExtension.GroupName="Group" />
+                                        <MenuItem
+                                            Header="Test"
+                                            IsCheckable="True"
+                                            MenuItemExtension.GroupName="Group" />
+                                        <MenuItem
+                                            Header="Test"
+                                            IsCheckable="True"
+                                            MenuItemExtension.GroupName="Group" />
+                                        <MenuItem
+                                            Header="Test"
+                                            IsCheckable="True"
+                                            MenuItemExtension.GroupName="Group" />
                                     </MenuItem>
                                     <MenuItem Header="Test" />
                                     <MenuItem Header="Test" IsEnabled="False">
@@ -128,7 +140,7 @@
                                         <MenuItem Header="Test" />
                                     </MenuItem>
                                 </MenuItem>
-                               
+
                                 <Separator />
                                 <MenuItem Header="_Exit" />
                             </MenuItem>

@@ -27,10 +27,14 @@
             <StaticResource x:Key="MenuItemForegroundDisabledBrush" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
             <StaticResource x:Key="MenuItemIconForegroundDisabledBrush" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
             <StaticResource x:Key="MenuItemChevronDisabledBrush" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
-            <StaticResource x:Key="MenuSubItemBackgroundSubMenuOpenedBrush" ResourceKey="SystemControlBackgroundAccentLight3Brush" />
-            <StaticResource x:Key="MenuSubItemBorderSubMenuOpenedBrush" ResourceKey="SystemControlTransparentBrush" />
-            <StaticResource x:Key="MenuSubItemForegroundSubMenuOpenedBrush" ResourceKey="SystemControlHighlightAltBaseHighBrush" />
-            <StaticResource x:Key="MenuSubItemChevronSubMenuOpenedBrush" ResourceKey="SystemControlHighlightAltBaseHighBrush" />
+            <StaticResource x:Key="MenuItemBackgroundSubMenuOpenedBrush" ResourceKey="SystemControlBackgroundAccentLight3Brush" />
+            <StaticResource x:Key="MenuItemBorderSubMenuOpenedBrush" ResourceKey="SystemControlTransparentBrush" />
+            <StaticResource x:Key="MenuItemForegroundSubMenuOpenedBrush" ResourceKey="SystemControlHighlightAltBaseHighBrush" />
+            <StaticResource x:Key="MenuItemChevronSubMenuOpenedBrush" ResourceKey="SystemControlHighlightAltBaseHighBrush" />
+            <StaticResource x:Key="MenuItemCheckGlyphForeground" ResourceKey="SystemControlForegroundBaseMediumHighBrush" />
+            <StaticResource x:Key="MenuItemCheckGlyphForegroundPointerOver" ResourceKey="SystemControlHighlightAltBaseHighBrush" />
+            <StaticResource x:Key="MenuItemCheckGlyphForegroundPressed" ResourceKey="SystemControlHighlightAltBaseHighBrush" />
+            <StaticResource x:Key="MenuItemCheckGlyphForegroundDisabled" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
         </SharedResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
     <Thickness x:Key="MenuItemBorderThickness">0</Thickness>
@@ -43,6 +47,7 @@
     <Thickness x:Key="MenuPopupPadding">1,4,1,4</Thickness>
     <Thickness x:Key="MenuItemChevronMargin">24,0,0,0</Thickness>
     <Thickness x:Key="MenuItemPlaceholderThickness">28,0,0,0</Thickness>
+    <Thickness x:Key="MenuItemDoublePlaceholderThemeThickness">56,0,0,0</Thickness>
     <Style TargetType="MenuItem">
         <Setter Property="Background" Value="{StaticResource MenuItemBackgroundBrush}" />
         <Setter Property="Foreground" Value="{StaticResource MenuItemForegroundBrush}" />
@@ -87,13 +92,26 @@
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    x:Name="CheckGlyph"
+                                    Grid.Column="0"
+                                    Width="16"
+                                    Height="16"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                    FontSize="16"
+                                    Foreground="{StaticResource SystemControlForegroundBaseMediumHighBrush}"
+                                    Text="&#xE008;"
+                                    Visibility="Collapsed" />
                                 <Viewbox
                                     x:Name="IconRoot"
                                     Grid.Column="0"
                                     Width="16"
                                     Height="16"
                                     HorizontalAlignment="Left"
-                                    VerticalAlignment="Center">
+                                    VerticalAlignment="Center"
+                                    Visibility="Collapsed">
                                     <ContentPresenter x:Name="IconContent" Content="{TemplateBinding Icon}" />
                                 </Viewbox>
                                 <ContentPresenter
@@ -106,14 +124,15 @@
                                     TextBlock.Foreground="{TemplateBinding Foreground}" />
                                 <TextBlock
                                     x:Name="ChevronGlyph"
-                                    Grid.Column="1"
+                                    Grid.Column="2"
                                     Margin="{StaticResource MenuItemChevronMargin}"
                                     HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                     FontFamily="{StaticResource SymbolThemeFontFamily}"
                                     FontSize="12"
                                     Foreground="{StaticResource MenuItemChevronBrush}"
-                                    Text="&#xE0E3;" />
+                                    Text="&#xE0E3;"
+                                    Visibility="Collapsed" />
                             </Grid>
                             <Popup
                                 x:Name="Popup"
@@ -188,26 +207,16 @@
                                 <VisualState x:Name="SubMenuOpened">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MenuSubItemBackgroundSubMenuOpenedBrush}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MenuItemBackgroundSubMenuOpenedBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="BorderBrush">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MenuSubItemBorderSubMenuOpenedBrush}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MenuItemBorderSubMenuOpenedBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(TextBlock.Foreground)">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MenuSubItemForegroundSubMenuOpenedBrush}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MenuItemForegroundSubMenuOpenedBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ChevronGlyph" Storyboard.TargetProperty="(TextBlock.Foreground)">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MenuSubItemChevronSubMenuOpenedBrush}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Selected">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MenuItemBackgroundSelectedBrush}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="BorderBrush">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MenuItemBorderBrushSelectedBrush}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MenuItemChevronSubMenuOpenedBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
@@ -217,6 +226,9 @@
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Popup" Storyboard.TargetProperty="Placement">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static PlacementMode.Bottom}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="(UIElement.Visibility)">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Collapsed}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ChevronGlyph" Storyboard.TargetProperty="(UIElement.Visibility)">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Collapsed}" />
@@ -230,6 +242,13 @@
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
+                                <VisualState x:Name="SubmenuHeader">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ChevronGlyph" Storyboard.TargetProperty="(UIElement.Visibility)">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="CheckPlaceholderStates">
                                 <VisualState x:Name="NoPlaceholder" />
@@ -238,6 +257,19 @@
                                         <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(FrameworkElement.Margin)">
                                             <EasingThicknessKeyFrame KeyTime="0" Value="{StaticResource MenuItemPlaceholderThickness}" />
                                         </ThicknessAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="Text">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="&#xE008;" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="RadioCheckPlaceholder">
+                                    <Storyboard>
+                                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(FrameworkElement.Margin)">
+                                            <EasingThicknessKeyFrame KeyTime="0" Value="{StaticResource MenuItemPlaceholderThickness}" />
+                                        </ThicknessAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="Text">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="&#xE915;" />
+                                        </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="IconPlaceholder">
@@ -250,17 +282,43 @@
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
-                                <!--<VisualState x:Name="CheckAndIconPlaceholder">
-                                -->
-                                <!--<VisualState.Setters>
-                                            <Setter Target="TextBlock.Margin" Value="{ThemeResource MenuFlyoutItemDoublePlaceholderThemeThickness}" />
-                                            <Setter Target="IconRoot.Margin" Value="{ThemeResource MenuFlyoutItemPlaceholderThemeThickness}" />
-                                            <Setter Target="IconRoot.Visibility" Value="Visible" />
-                                        </VisualState.Setters>-->
-                                <!--
-                                    </VisualState>-->
+                                <VisualState x:Name="CheckAndIconPlaceholder">
+                                    <Storyboard>
+                                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(FrameworkElement.Margin)">
+                                            <EasingThicknessKeyFrame KeyTime="0" Value="{StaticResource MenuItemDoublePlaceholderThemeThickness}" />
+                                        </ThicknessAnimationUsingKeyFrames>
+                                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="IconRoot" Storyboard.TargetProperty="(FrameworkElement.Margin)">
+                                            <EasingThicknessKeyFrame KeyTime="0" Value="{StaticResource MenuItemPlaceholderThickness}" />
+                                        </ThicknessAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="IconRoot" Storyboard.TargetProperty="(UIElement.Visibility)">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="RadioCheckAndIconPlaceholder">
+                                    <Storyboard>
+                                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(FrameworkElement.Margin)">
+                                            <EasingThicknessKeyFrame KeyTime="0" Value="{StaticResource MenuItemDoublePlaceholderThemeThickness}" />
+                                        </ThicknessAnimationUsingKeyFrames>
+                                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="IconRoot" Storyboard.TargetProperty="(FrameworkElement.Margin)">
+                                            <EasingThicknessKeyFrame KeyTime="0" Value="{StaticResource MenuItemPlaceholderThickness}" />
+                                        </ThicknessAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="Text">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="&#xE915;" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
                             </VisualStateGroup>
-
+                            <VisualStateGroup x:Name="CheckedStates">
+                                <VisualState x:Name="Unchecked" />
+                                <VisualState x:Name="Checked">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckGlyph" Storyboard.TargetProperty="(UIElement.Visibility)">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                     </Border>
                 </ControlTemplate>

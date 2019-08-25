@@ -10,7 +10,7 @@ namespace Fluent.UI.Controls
         {
             if (TryAttachTemplate(dependencyObject as TextBox, out AttachedTextBoxTemplate attachedTemplate))
             {
-                attachedTemplate?.SetHeader((object)args.NewValue);
+                attachedTemplate?.SetHeader(args.NewValue);
             }
         }
 
