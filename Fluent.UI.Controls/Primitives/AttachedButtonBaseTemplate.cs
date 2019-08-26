@@ -6,7 +6,7 @@ namespace Fluent.UI.Controls
 {
     public class AttachedButtonBaseTemplate<TButtonBase> : AttachedControlTemplate<TButtonBase> where TButtonBase : ButtonBase
     {
-        protected bool IsPressed => AttachedFrameworkElement.IsPressed;
+        protected new bool IsPressed => AttachedFrameworkElement.IsPressed;
 
         protected override void ChangeVisualState(bool useTransitions = true)
         {
