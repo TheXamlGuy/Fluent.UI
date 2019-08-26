@@ -8,25 +8,25 @@ namespace Fluent.UI.Controls
     {
         public static readonly DependencyProperty DescriptionProperty =
             DependencyProperty.RegisterAttached("Description",
-                typeof(object), typeof(TextBoxExtension));
+                typeof(object), typeof(InputControlExtension));
 
         public static readonly DependencyProperty HeaderProperty =
             DependencyProperty.RegisterAttached("Header",
-                typeof(object), typeof(TextBoxExtension),
+                typeof(object), typeof(InputControlExtension),
                 new PropertyMetadata(null, OnHeaderPropertyChanged));
 
         public static readonly DependencyProperty HeaderTemplateProperty =
             DependencyProperty.RegisterAttached("HeaderTemplate",
-                typeof(DataTemplate), typeof(TextBoxExtension),
+                typeof(DataTemplate), typeof(InputControlExtension),
                 new PropertyMetadata(null, OnHeaderTemplatePropertyChanged));
 
         public static readonly DependencyProperty PlaceholderForegroundProperty =
             DependencyProperty.RegisterAttached("PlaceholderForeground",
-                typeof(Brush), typeof(TextBoxExtension));
+                typeof(Brush), typeof(InputControlExtension));
 
         public static readonly DependencyProperty PlaceholderTextProperty =
             DependencyProperty.RegisterAttached("PlaceholderText",
-                typeof(string), typeof(TextBoxExtension));
+                typeof(string), typeof(InputControlExtension));
 
         public static object GetDescription(DependencyObject dependencyObject) => dependencyObject.GetValue(DescriptionProperty);
 
