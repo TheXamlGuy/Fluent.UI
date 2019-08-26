@@ -53,7 +53,13 @@
                                 IsThreeState="True" />
                         </StackPanel>
                         <StackPanel Margin="4">
-                            <RadioButton />
+                            <RadioButton Content="Radio Button" />
+                            <RadioButton Content="Radio Button" />
+                            <RadioButton Content="Disabled Radio Button" IsEnabled="False" />
+                            <RadioButton Content="Radio Button" />
+                            <RadioButton Content="Radio Button" />
+                            <RadioButton Content="Radio Button" />
+
                         </StackPanel>
                     </WrapPanel>
                 </TabItem>

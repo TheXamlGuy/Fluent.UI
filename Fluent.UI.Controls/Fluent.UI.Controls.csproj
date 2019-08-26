@@ -70,6 +70,9 @@
     <Page Update="MenuItem\MenuItem.Light.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="RadioButton\RadioButton.Default.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="TabControl\TabControl.Default.xaml">
       <SubType>Designer</SubType>
     </Page>

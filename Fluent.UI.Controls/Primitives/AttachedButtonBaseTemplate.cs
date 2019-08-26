@@ -6,6 +6,8 @@ namespace Fluent.UI.Controls
 {
     public class AttachedButtonBaseTemplate<TButtonBase> : AttachedControlTemplate<TButtonBase> where TButtonBase : ButtonBase
     {
+        internal bool IsPressed => AttachedFrameworkElement.IsPressed;
+
         protected override void ChangeVisualState(bool useTransitions = true)
         {
             string visualState;
@@ -13,7 +15,7 @@ namespace Fluent.UI.Controls
             {
                 visualState = CommonVisualState.Disabled;
             }
-            else if (AttachedFrameworkElement.IsPressed)
+            else if (IsPressed)
             {
                 visualState = CommonVisualState.Pressed;
             }

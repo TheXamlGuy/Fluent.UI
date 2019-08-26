@@ -1,85 +1,37 @@
-﻿using System.Windows;
+﻿using Fluent.UI.Core;
+using System.Windows;
 using System.Windows.Controls.Primitives;
 
 namespace Fluent.UI.Controls
 {
     public class AttachedToggleButtonTemplate<TToggleButton> : AttachedButtonBaseTemplate<TToggleButton> where TToggleButton : ToggleButton
     {
+        internal bool? IsChecked => AttachedFrameworkElement.IsChecked;
+
         protected override void OnAttached()
         {
             base.OnAttached();
-            AddPropertyChangedHandler(ToggleButton.IsCheckedProperty, OnPropertyChanged);
+            AddPropertyChangedHandler(ToggleButton.IsCheckedProperty, OnIsCheckedPropertyChanged);
         }
 
-        private void OnPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        private void ChangeCheckedVisualState(bool useTransitions = true)
         {
-            ChangeVisualState(true);
-        }
-
-        protected override void ChangeVisualState(bool useTransitions = true)
-        {
-            string visualState = "";
-            if (AttachedFrameworkElement.IsChecked == true)
+            string visualState;
+            if (IsChecked == true)
             {
-                if (!IsEnabled)
-                {
-                    visualState = "CheckedDisabled";
-                }
-                else if (AttachedFrameworkElement.IsPressed)
-                {
-                    visualState = "CheckedPressed";
-                }
-                else if (IsMouseOver)
-                {
-                    visualState = "CheckedPointerOver";
-                }
-                else
-                {
-                    visualState = "CheckedNormal";
-                }
+                visualState = CommonVisualState.Checked;
             }
-
-            if (AttachedFrameworkElement.IsChecked == null)
+            else
             {
-                if (!IsEnabled)
-                {
-                    visualState = "IndeterminateDisabled";
-                }
-                else if (AttachedFrameworkElement.IsPressed)
-                {
-                    visualState = "IndeterminatePressed";
-                }
-                else if (IsMouseOver)
-                {
-                    visualState = "IndeterminatePointerOver";
-                }
-                else
-                {
-                    visualState = "IndeterminateNormal";
-                }
-            }
-
-            if (AttachedFrameworkElement.IsChecked == false)
-            {
-                if (!IsEnabled)
-                {
-                    visualState = "UncheckedDisabled";
-                }
-                else if (AttachedFrameworkElement.IsPressed)
-                {
-                    visualState = "UncheckedPressed";
-                }
-                else if (IsMouseOver)
-                {
-                    visualState = "UncheckedPointerOver";
-                }
-                else
-                {
-                    visualState = "UncheckedNormal";
-                }
+                visualState = CommonVisualState.Unchecked;
             }
 
             GoToVisualState(visualState, useTransitions);
+        }
+
+        protected virtual void OnIsCheckedPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        {
+            ChangeCheckedVisualState(true);
         }
     }
 }
