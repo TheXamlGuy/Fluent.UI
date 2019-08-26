@@ -13,7 +13,7 @@ Consider Fluent UI to be in serious alpha state right now. It is missing a lot o
 - [x] TextBox
 - [ ] PasswordBox
 - [x] CheckBox
-- [ ] RadioButton
+- [x] RadioButton
 - [x] TabControl
 - [x] ListBox
 - [x] ListBoxItem
