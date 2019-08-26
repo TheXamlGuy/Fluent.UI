@@ -16,7 +16,7 @@ namespace Fluent.UI.Controls
             string visualState;
             if (AttachedFrameworkElement.IsSelected)
             {
-                if (!_isPressed && IsMouseOver)
+                if (!_isPressed && IsPointerOver)
                 {
                     visualState = CommonVisualState.SelectedPointerOver;
                 }
@@ -39,7 +39,7 @@ namespace Fluent.UI.Controls
                 {
                     visualState = CommonVisualState.Pressed;
                 }
-                else if (IsMouseOver)
+                else if (IsPointerOver)
                 {
                     visualState = CommonVisualState.PointerOver;
                 }
@@ -56,17 +56,13 @@ namespace Fluent.UI.Controls
         {
             AddEventHandler<MouseButtonEventArgs>("PreviewMouseDown", OnPreviewMouseDown);
             AddEventHandler<MouseButtonEventArgs>("MouseUp", OnMouseUp);
-            AddEventHandler<RoutedEventArgs>("MouseLeave", OnMouseLeave);
-
-            AddPropertyChangedHandler(UIElement.IsEnabledProperty, OnPropertyChanged);
-            AddPropertyChangedHandler(UIElement.IsMouseOverProperty, OnPropertyChanged);
+            
             AddPropertyChangedHandler(TabItem.IsSelectedProperty, OnPropertyChanged);
-            AddPropertyChangedHandler(UIElement.IsFocusedProperty, OnPropertyChanged);
         }
 
         private void OnPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeVisualState(true);
 
-        private void OnMouseLeave(object sender, RoutedEventArgs args)
+        protected override void OnPointerLeave(object sender, RoutedEventArgs args)
         {
             OverrideFocusable(true);
             _isPressed = false;

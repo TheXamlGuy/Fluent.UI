@@ -6,7 +6,8 @@ namespace Fluent.UI.Controls
 {
     public class AttachedButtonBaseTemplate<TButtonBase> : AttachedControlTemplate<TButtonBase> where TButtonBase : ButtonBase
     {
-        internal bool IsPressed => AttachedFrameworkElement.IsPressed;
+        // ButtonBase already has its own impl, so we'll use that here
+        protected new bool IsPressed => AttachedFrameworkElement.IsPressed;
 
         protected override void ChangeVisualState(bool useTransitions = true)
         {
@@ -19,7 +20,7 @@ namespace Fluent.UI.Controls
             {
                 visualState = CommonVisualState.Pressed;
             }
-            else if (IsMouseOver)
+            else if (IsPointerOver)
             {
                 visualState = CommonVisualState.PointerOver;
             }
@@ -31,16 +32,8 @@ namespace Fluent.UI.Controls
             GoToVisualState(visualState, useTransitions);
         }
 
-        protected override void OnAttached()
-        {
-            AddPropertyChangedHandler(UIElement.IsEnabledProperty, OnPropertyChanged);
-            AddPropertyChangedHandler(ButtonBase.IsPressedProperty, OnPropertyChanged);
-            AddPropertyChangedHandler(UIElement.IsMouseOverProperty, OnPropertyChanged);
-        }
+        protected override void OnAttached() => AddPropertyChangedHandler(ButtonBase.IsPressedProperty, OnIsPressedPropertyChanged);
 
-        private void OnPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
-        {
-            ChangeVisualState(true);
-        }
+        protected virtual void OnIsPressedPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeVisualState(true);
     }
 }

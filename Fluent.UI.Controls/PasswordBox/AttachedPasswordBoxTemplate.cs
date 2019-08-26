@@ -35,7 +35,7 @@ namespace Fluent.UI.Controls
             {
                 visualState = CommonVisualState.Focused;
             }
-            else if (IsMouseOver)
+            else if (IsPointerOver)
             {
                 visualState = CommonVisualState.PointerOver;
             }

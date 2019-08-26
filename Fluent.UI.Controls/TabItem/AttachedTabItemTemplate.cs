@@ -21,7 +21,7 @@ namespace Fluent.UI.Controls
             }
             else if (AttachedFrameworkElement.IsSelected)
             {
-                if (!_isPressed && IsMouseOver)
+                if (!_isPressed && IsPointerOver)
                 {
                     visualState = CommonVisualState.SelectedPointerOver;
                 }
@@ -38,7 +38,7 @@ namespace Fluent.UI.Controls
             {
                 visualState = CommonVisualState.Pressed;
             }
-            else if (IsMouseOver)
+            else if (IsPointerOver)
             {
                 visualState = CommonVisualState.PointerOver;
             }

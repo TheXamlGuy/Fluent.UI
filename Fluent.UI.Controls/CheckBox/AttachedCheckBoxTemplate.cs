@@ -20,7 +20,7 @@ namespace Fluent.UI.Controls
                 {
                     visualState = "CheckedPressed";
                 }
-                else if (IsMouseOver)
+                else if (IsPointerOver)
                 {
                     visualState = "CheckedPointerOver";
                 }
@@ -40,7 +40,7 @@ namespace Fluent.UI.Controls
                 {
                     visualState = "IndeterminatePressed";
                 }
-                else if (IsMouseOver)
+                else if (IsPointerOver)
                 {
                     visualState = "IndeterminatePointerOver";
                 }
@@ -60,7 +60,7 @@ namespace Fluent.UI.Controls
                 {
                     visualState = "UncheckedPressed";
                 }
-                else if (IsMouseOver)
+                else if (IsPointerOver)
                 {
                     visualState = "UncheckedPointerOver";
                 }

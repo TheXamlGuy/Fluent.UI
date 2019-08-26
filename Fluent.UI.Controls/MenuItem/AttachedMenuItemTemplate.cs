@@ -35,7 +35,7 @@ namespace Fluent.UI.Controls
             }
             else
             {
-                if (!AttachedFrameworkElement.IsEnabled)
+                if (!IsEnabled)
                 {
                     visualState = CommonVisualState.Disabled;
                 }
@@ -43,7 +43,7 @@ namespace Fluent.UI.Controls
                 {
                     visualState = CommonVisualState.Pressed;
                 }
-                else if (IsMouseOver)
+                else if (IsPointerOver)
                 {
                     visualState = CommonVisualState.PointerOver;
                 }
@@ -71,8 +71,6 @@ namespace Fluent.UI.Controls
             AddPropertyChangedHandler(MenuItem.IsCheckableProperty, OnIsCheckablePropertyChanged);
             AddPropertyChangedHandler(MenuItem.IsSubmenuOpenProperty, OnPropertyChanged);
             AddPropertyChangedHandler(MenuItem.IsPressedProperty, OnPropertyChanged);
-            AddPropertyChangedHandler(UIElement.IsEnabledProperty, OnPropertyChanged);
-            AddPropertyChangedHandler(UIElement.IsMouseOverProperty, OnPropertyChanged);
             AddPropertyChangedHandler(MenuItem.RoleProperty, OnRolePropertyChanged);
         }
 

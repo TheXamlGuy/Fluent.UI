@@ -35,7 +35,7 @@ namespace Fluent.UI.Controls
             {
                 visualState = CommonVisualState.Focused;
             }
-            else if (IsMouseOver)
+            else if (IsPointerOver)
             {
                 visualState = CommonVisualState.PointerOver;
             }
@@ -49,8 +49,6 @@ namespace Fluent.UI.Controls
 
         protected override void OnAttached()
         {
-            AddPropertyChangedHandler(UIElement.IsMouseOverProperty, OnPropertyChanged);
-            AddPropertyChangedHandler(UIElement.IsFocusedProperty, OnIsFocusedPropertyChanged);
             AddPropertyChangedHandler(TextBox.TextProperty, OnTextPropertyChanged);
         }
 
@@ -58,16 +56,6 @@ namespace Fluent.UI.Controls
         {
             ChangePlaceholderVisualState();
             ChangeDeleteButtonVisualState();
-        }
-
-        private void OnIsFocusedPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
-        {
-            ChangeDeleteButtonVisualState(true);
-        }
-
-        private void OnPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
-        {
-            ChangeVisualState(true);
         }
 
         protected override void OnApplyTemplate()
