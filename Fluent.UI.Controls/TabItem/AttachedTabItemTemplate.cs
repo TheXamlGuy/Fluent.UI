@@ -62,7 +62,7 @@ namespace Fluent.UI.Controls
             ChangeVisualState(true);
         }
 
-        protected override void OnPointerUp(object sender, MouseButtonEventArgs args)
+        protected override void OnPointerReleased(object sender, MouseButtonEventArgs args)
         {
             AttachedFrameworkElement.SetCurrentValue(UIElement.FocusableProperty, focusable);
 
