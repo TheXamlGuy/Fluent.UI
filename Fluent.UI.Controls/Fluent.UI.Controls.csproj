@@ -34,7 +34,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Page Remove="RadioButton\RadioButton.Light.xaml" />
     <Page Remove="Themes\ThemeResources.Default.xaml" />
     <Page Remove="Themes\ThemeResources.Light.xaml" />
   </ItemGroup>
@@ -78,6 +77,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="TabItem\TabItem.Light.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="RadioButton\RadioButton.Light.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

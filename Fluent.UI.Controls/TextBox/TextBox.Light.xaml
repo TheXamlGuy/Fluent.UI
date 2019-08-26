@@ -6,34 +6,34 @@
     <ResourceDictionary.MergedDictionaries>
         <SharedResourceDictionary Source="pack://application:,,,/Fluent.UI.Controls;component/Themes/ThemeResources.Light.xaml" />
         <SharedResourceDictionary>
-            <StaticResource x:Key="TextBoxPlaceholderDisabledForegroundBrush" ResourceKey="SystemControlDisabledChromeDisabledLowBrush" />
-            <StaticResource x:Key="TextBoxPlaceholderPointerOverForegroundBrush" ResourceKey="SystemControlPageTextBaseMediumBrush" />
-            <StaticResource x:Key="TextBoxPlaceholderFocusedForegroundBrush" ResourceKey="SystemControlPageTextChromeBlackMediumLowBrush" />
-            <StaticResource x:Key="TextBoxHeaderForegroundBrush" ResourceKey="SystemControlForegroundBaseHighBrush" />
-            <StaticResource x:Key="TextBoxHeaderDisabledForegroundBrush" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
-            <StaticResource x:Key="TextBoxPlaceholderForegroundBrush" ResourceKey="SystemControlPageTextBaseMediumBrush" />
-            <StaticResource x:Key="TextBoxBackgroundBrush" ResourceKey="SystemControlBackgroundAltMediumLowBrush" />
+            <StaticResource x:Key="TextBoxPlaceholderDisabledForeground" ResourceKey="SystemControlDisabledChromeDisabledLowBrush" />
+            <StaticResource x:Key="TextBoxPlaceholderPointerOverForeground" ResourceKey="SystemControlPageTextBaseMediumBrush" />
+            <StaticResource x:Key="TextBoxPlaceholderFocusedForeground" ResourceKey="SystemControlPageTextChromeBlackMediumLowBrush" />
+            <StaticResource x:Key="TextBoxHeaderForeground" ResourceKey="SystemControlForegroundBaseHighBrush" />
+            <StaticResource x:Key="TextBoxHeaderDisabledForeground" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
+            <StaticResource x:Key="TextBoxPlaceholderForeground" ResourceKey="SystemControlPageTextBaseMediumBrush" />
+            <StaticResource x:Key="TextBoxBackground" ResourceKey="SystemControlBackgroundAltMediumLowBrush" />
             <StaticResource x:Key="TextBoxBorderBrush" ResourceKey="SystemControlForegroundBaseMediumLowBrush" />
-            <StaticResource x:Key="TextBoxButtonBackgroundBrush" ResourceKey="SystemControlTransparentBrush" />
+            <StaticResource x:Key="TextBoxButtonBackground" ResourceKey="SystemControlTransparentBrush" />
             <StaticResource x:Key="TextBoxButtonBorderBrush" ResourceKey="SystemControlTransparentBrush" />
-            <StaticResource x:Key="TextBoxButtonForegroundBrush" ResourceKey="SystemControlForegroundChromeBlackMediumBrush" />
-            <StaticResource x:Key="TextBoxButtonPointerOverBackgroundBrush" ResourceKey="SystemControlTransparentBrush" />
+            <StaticResource x:Key="TextBoxButtonForeground" ResourceKey="SystemControlForegroundChromeBlackMediumBrush" />
+            <StaticResource x:Key="TextBoxButtonPointerOverBackground" ResourceKey="SystemControlTransparentBrush" />
             <StaticResource x:Key="TextBoxButtonPointerOverBorderBrush" ResourceKey="SystemControlTransparentBrush" />
-            <StaticResource x:Key="TextBoxButtonPointerOverForegroundBrush" ResourceKey="SystemControlHighlightAccentBrush" />
-            <StaticResource x:Key="TextBoxButtonPressedBackgroundBrush" ResourceKey="SystemControlHighlightAccentBrush" />
+            <StaticResource x:Key="TextBoxButtonPointerOverForeground" ResourceKey="SystemControlHighlightAccentBrush" />
+            <StaticResource x:Key="TextBoxButtonPressedBackground" ResourceKey="SystemControlHighlightAccentBrush" />
             <StaticResource x:Key="TextBoxButtonPressedBorderBrush" ResourceKey="SystemControlTransparentBrush" />
-            <StaticResource x:Key="TextBoxButtonPressedForegroundBrush" ResourceKey="SystemControlHighlightAltChromeWhiteBrush" />
-            <StaticResource x:Key="TextBoxDisabledBackgroundBrush" ResourceKey="SystemControlBackgroundBaseLowBrush" />
+            <StaticResource x:Key="TextBoxButtonPressedForeground" ResourceKey="SystemControlHighlightAltChromeWhiteBrush" />
+            <StaticResource x:Key="TextBoxDisabledBackground" ResourceKey="SystemControlBackgroundBaseLowBrush" />
             <StaticResource x:Key="TextBoxDisabledBorderBrush" ResourceKey="SystemControlDisabledBaseLowBrush" />
-            <StaticResource x:Key="TextBoxDisabledForegroundBrush" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
-            <StaticResource x:Key="TextBoxForegroundBrush" ResourceKey="SystemControlForegroundBaseHighBrush" />
+            <StaticResource x:Key="TextBoxDisabledForeground" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
+            <StaticResource x:Key="TextBoxForeground" ResourceKey="SystemControlForegroundBaseHighBrush" />
             <StaticResource x:Key="TextBoxSelectionBrush" ResourceKey="SystemControlHighlightAccentBrush" />
-            <StaticResource x:Key="TextBoxPointerOverBackgroundBrush" ResourceKey="SystemControlBackgroundAltMediumBrush" />
+            <StaticResource x:Key="TextBoxPointerOverBackground" ResourceKey="SystemControlBackgroundAltMediumBrush" />
             <StaticResource x:Key="TextBoxPointerOverBorderBrush" ResourceKey="SystemControlHighlightBaseMediumBrush" />
-            <StaticResource x:Key="TextBoxPointerOverForegroundBrush" ResourceKey="SystemControlForegroundBaseHighBrush" />
-            <StaticResource x:Key="TextBoxFocusedBackgroundBrush" ResourceKey="SystemControlBackgroundChromeWhiteBrush" />
+            <StaticResource x:Key="TextBoxPointerOverForeground" ResourceKey="SystemControlForegroundBaseHighBrush" />
+            <StaticResource x:Key="TextBoxFocusedBackground" ResourceKey="SystemControlBackgroundChromeWhiteBrush" />
             <StaticResource x:Key="TextBoxFocusedBorderBrush" ResourceKey="SystemControlHighlightAccentBrush" />
-            <StaticResource x:Key="TextBoxFocusedForegroundBrush" ResourceKey="SystemControlForegroundChromeBlackHighBrush" />
+            <StaticResource x:Key="TextBoxFocusedForeground" ResourceKey="SystemControlForegroundChromeBlackHighBrush" />
         </SharedResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
     <Thickness x:Key="TextBoxThemePadding">10,5,6,6</Thickness>
@@ -44,8 +44,8 @@
     <Thickness x:Key="TextBoxTopHeaderMargin">0,0,0,4</Thickness>
     <Thickness x:Key="HelperButtonThemePadding">0,0,0,0</Thickness>
     <Style TargetType="TextBox">
-        <Setter Property="Foreground" Value="{StaticResource TextBoxForegroundBrush}" />
-        <Setter Property="Background" Value="{StaticResource TextBoxBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource TextBoxForeground}" />
+        <Setter Property="Background" Value="{StaticResource TextBoxBackground}" />
         <Setter Property="BorderBrush" Value="{StaticResource TextBoxBorderBrush}" />
         <Setter Property="SelectionBrush" Value="{StaticResource TextBoxSelectionBrush}" />
         <Setter Property="BorderThickness" Value="{StaticResource TextBoxBorderThemeThickness}" />
@@ -79,7 +79,7 @@
                                         <ControlTemplate TargetType="Button">
                                             <Border
                                                 x:Name="ButtonLayoutGrid"
-                                                Background="{StaticResource TextBoxButtonBackgroundBrush}"
+                                                Background="{StaticResource TextBoxButtonBackground}"
                                                 BorderBrush="{StaticResource TextBoxButtonBorderBrush}"
                                                 BorderThickness="{TemplateBinding BorderThickness}">
                                                 <TextBlock
@@ -89,7 +89,7 @@
                                                     FontFamily="{StaticResource SymbolThemeFontFamily}"
                                                     FontSize="12"
                                                     FontStyle="Normal"
-                                                    Foreground="{StaticResource TextBoxButtonForegroundBrush}"
+                                                    Foreground="{StaticResource TextBoxButtonForeground}"
                                                     Text="&#xE10A;" />
                                                 <VisualStateManager.VisualStateGroups>
                                                     <VisualStateGroup x:Name="CommonStates">
@@ -97,26 +97,26 @@
                                                         <VisualState x:Name="PointerOver">
                                                             <Storyboard>
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonLayoutGrid" Storyboard.TargetProperty="Background">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxButtonPointerOverBackgroundBrush}" />
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxButtonPointerOverBackground}" />
                                                                 </ObjectAnimationUsingKeyFrames>
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonLayoutGrid" Storyboard.TargetProperty="BorderBrush">
                                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxButtonPointerOverBorderBrush}" />
                                                                 </ObjectAnimationUsingKeyFrames>
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="GlyphElement" Storyboard.TargetProperty="Foreground">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxButtonPointerOverForegroundBrush}" />
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxButtonPointerOverForeground}" />
                                                                 </ObjectAnimationUsingKeyFrames>
                                                             </Storyboard>
                                                         </VisualState>
                                                         <VisualState x:Name="Pressed">
                                                             <Storyboard>
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonLayoutGrid" Storyboard.TargetProperty="Background">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxButtonPressedBackgroundBrush}" />
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxButtonPressedBackground}" />
                                                                 </ObjectAnimationUsingKeyFrames>
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonLayoutGrid" Storyboard.TargetProperty="BorderBrush">
                                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxButtonPressedBorderBrush}" />
                                                                 </ObjectAnimationUsingKeyFrames>
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="GlyphElement" Storyboard.TargetProperty="Foreground">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxButtonPressedForegroundBrush}" />
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxButtonPressedForeground}" />
                                                                 </ObjectAnimationUsingKeyFrames>
                                                             </Storyboard>
                                                         </VisualState>
@@ -147,7 +147,7 @@
                             Content="{Binding Path=(controls:TextBoxExtension.Header), RelativeSource={RelativeSource TemplatedParent}}"
                             ContentTemplate="{Binding Path=(controls:TextBoxExtension.HeaderTemplate), RelativeSource={RelativeSource TemplatedParent}}"
                             TextBlock.FontWeight="Normal"
-                            TextBlock.Foreground="{StaticResource TextBoxHeaderForegroundBrush}"
+                            TextBlock.Foreground="{StaticResource TextBoxHeaderForeground}"
                             Visibility="Collapsed" />
                         <Border
                             x:Name="BorderElement"
@@ -181,7 +181,7 @@
                             IsHitTestVisible="False"
                             Text="{Binding Path=(controls:TextBoxExtension.PlaceholderText), RelativeSource={RelativeSource TemplatedParent}}"
                             TextAlignment="{TemplateBinding TextAlignment}"
-                            TextBlock.Foreground="{StaticResource TextBoxPlaceholderForegroundBrush}"
+                            TextBlock.Foreground="{StaticResource TextBoxPlaceholderForeground}"
                             TextWrapping="{TemplateBinding TextWrapping}"
                             Visibility="Visible" />
                         <Button
@@ -209,26 +209,26 @@
                                 <VisualState x:Name="Normal">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_ContentHost" Storyboard.TargetProperty="Foreground">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxForegroundBrush}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxForeground}" />
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HeaderContentPresenter" Storyboard.TargetProperty="(TextBlock.Foreground)">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxHeaderDisabledForegroundBrush}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxHeaderDisabledForeground}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxDisabledBackgroundBrush}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxDisabledBackground}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="BorderBrush">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxDisabledBorderBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_ContentHost" Storyboard.TargetProperty="Foreground">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxDisabledForegroundBrush}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxDisabledForeground}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlaceholderTextContentPresenter" Storyboard.TargetProperty="(TextBlock.Foreground)">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxPlaceholderDisabledForegroundBrush}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxPlaceholderDisabledForeground}" />
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
@@ -238,23 +238,23 @@
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxPointerOverBorderBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxPointerOverBackgroundBrush}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxPointerOverBackground}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlaceholderTextContentPresenter" Storyboard.TargetProperty="(TextBlock.Foreground)">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxPlaceholderPointerOverForegroundBrush}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxPlaceholderPointerOverForeground}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_ContentHost" Storyboard.TargetProperty="Foreground">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxPointerOverForegroundBrush}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxPointerOverForeground}" />
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Focused">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PlaceholderTextContentPresenter" Storyboard.TargetProperty="(TextBlock.Foreground)">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxPlaceholderFocusedForegroundBrush}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxPlaceholderFocusedForeground}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxFocusedBackgroundBrush}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxFocusedBackground}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BorderElement" Storyboard.TargetProperty="BorderBrush">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxFocusedBorderBrush}" />
@@ -263,7 +263,7 @@
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxBorderThemeThicknessFocused}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_ContentHost" Storyboard.TargetProperty="Foreground">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxFocusedForegroundBrush}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource TextBoxFocusedForeground}" />
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
