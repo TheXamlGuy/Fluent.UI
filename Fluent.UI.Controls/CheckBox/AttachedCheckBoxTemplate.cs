@@ -1,4 +1,5 @@
 ﻿using Fluent.UI.Core;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Fluent.UI.Controls
@@ -71,5 +72,7 @@ namespace Fluent.UI.Controls
 
             GoToVisualState(visualState, useTransitions);
         }
+
+        protected override void OnIsCheckedPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeVisualState(true);
     }
 }
