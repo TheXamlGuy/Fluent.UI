@@ -1,12 +1,10 @@
 ﻿using Fluent.UI.Core;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
 namespace Fluent.UI.Controls
 {
-    [DefaultStyleTarget(typeof(Button))]
-    public class AttachedButtonTemplate : AttachedButtonBaseTemplate<Button>
+    public class AttachedButtonBaseTemplate<TButtonBase> : AttachedControlTemplate<TButtonBase> where TButtonBase : ButtonBase
     {
         protected override void ChangeVisualState(bool useTransitions = true)
         {
