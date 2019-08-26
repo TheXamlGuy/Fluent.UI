@@ -78,20 +78,20 @@
             <StaticResource x:Key="CheckBoxCheckGlyphForegroundIndeterminatePointerOver" ResourceKey="SystemControlForegroundBaseHighBrush" />
             <StaticResource x:Key="CheckBoxCheckGlyphForegroundIndeterminatePressed" ResourceKey="SystemControlForegroundBaseMediumBrush" />
             <StaticResource x:Key="CheckBoxCheckGlyphForegroundIndeterminateDisabled" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
-            <SolidColorBrush x:Key="CheckBoxBackgroundThemeBrush" Color="#CCFFFFFF" />
-            <SolidColorBrush x:Key="CheckBoxBorderThemeBrush" Color="#45000000" />
-            <SolidColorBrush x:Key="CheckBoxContentDisabledForegroundThemeBrush" Color="#66000000" />
-            <SolidColorBrush x:Key="CheckBoxContentForegroundThemeBrush" Color="#FF000000" />
-            <SolidColorBrush x:Key="CheckBoxDisabledBackgroundThemeBrush" Color="#66CACACA" />
-            <SolidColorBrush x:Key="CheckBoxDisabledBorderThemeBrush" Color="#26000000" />
-            <SolidColorBrush x:Key="CheckBoxDisabledForegroundThemeBrush" Color="#66000000" />
-            <SolidColorBrush x:Key="CheckBoxForegroundThemeBrush" Color="#FF000000" />
-            <SolidColorBrush x:Key="CheckBoxPointerOverBackgroundThemeBrush" Color="#DEFFFFFF" />
-            <SolidColorBrush x:Key="CheckBoxPointerOverForegroundThemeBrush" Color="#FF000000" />
-            <SolidColorBrush x:Key="CheckBoxPointerOverBorderThemeBrush" Color="#70000000" />
-            <SolidColorBrush x:Key="CheckBoxPressedBackgroundThemeBrush" Color="#FF000000" />
-            <SolidColorBrush x:Key="CheckBoxPressedBorderThemeBrush" Color="#FF000000" />
-            <SolidColorBrush x:Key="CheckBoxPressedForegroundThemeBrush" Color="#FFFFFFFF" />
+            <SolidColorBrush x:Key="CheckBoxBackgroundBrush" Color="#CCFFFFFF" />
+            <SolidColorBrush x:Key="CheckBoxBorderBrush" Color="#45000000" />
+            <SolidColorBrush x:Key="CheckBoxContentDisabledForegroundBrush" Color="#66000000" />
+            <SolidColorBrush x:Key="CheckBoxContentForegroundBrush" Color="#FF000000" />
+            <SolidColorBrush x:Key="CheckBoxDisabledBackgroundBrush" Color="#66CACACA" />
+            <SolidColorBrush x:Key="CheckBoxDisabledBorderBrush" Color="#26000000" />
+            <SolidColorBrush x:Key="CheckBoxDisabledForegroundBrush" Color="#66000000" />
+            <SolidColorBrush x:Key="CheckBoxForegroundBrush" Color="#FF000000" />
+            <SolidColorBrush x:Key="CheckBoxPointerOverBackgroundBrush" Color="#DEFFFFFF" />
+            <SolidColorBrush x:Key="CheckBoxPointerOverForegroundBrush" Color="#FF000000" />
+            <SolidColorBrush x:Key="CheckBoxPointerOverBorderBrush" Color="#70000000" />
+            <SolidColorBrush x:Key="CheckBoxPressedBackgroundBrush" Color="#FF000000" />
+            <SolidColorBrush x:Key="CheckBoxPressedBorderBrush" Color="#FF000000" />
+            <SolidColorBrush x:Key="CheckBoxPressedForegroundBrush" Color="#FFFFFFFF" />
         </SharedResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
     <system:Double x:Key="CheckBoxBorderThemeThickness">1</system:Double>

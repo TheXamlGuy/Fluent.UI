@@ -5,16 +5,16 @@
     <ResourceDictionary.MergedDictionaries>
         <SharedResourceDictionary Source="pack://application:,,,/Fluent.UI.Controls;component/Themes/ThemeResources.Light.xaml" />
         <SharedResourceDictionary>
-            <StaticResource x:Key="ListBoxBackgroundThemeBrush" ResourceKey="SystemControlBackgroundChromeMediumLowBrush" />
-            <StaticResource x:Key="ListBoxBorderThemeBrush" ResourceKey="SystemControlForegroundBaseHighBrush" />
-            <StaticResource x:Key="ListBoxForegroundThemeBrush" ResourceKey="SystemControlForegroundBaseHighBrush" />
+            <StaticResource x:Key="ListBoxBackgroundBrush" ResourceKey="SystemControlBackgroundChromeMediumLowBrush" />
+            <StaticResource x:Key="ListBoxBorderBrush" ResourceKey="SystemControlForegroundBaseHighBrush" />
+            <StaticResource x:Key="ListBoxForegroundBrush" ResourceKey="SystemControlForegroundBaseHighBrush" />
         </SharedResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
     <Thickness x:Key="ListBoxBorderThemeThickness">0</Thickness>
     <Style TargetType="ListBox">
-        <Setter Property="Foreground" Value="{StaticResource ListBoxForegroundThemeBrush}" />
-        <Setter Property="Background" Value="{StaticResource ListBoxBackgroundThemeBrush}" />
-        <Setter Property="BorderBrush" Value="{StaticResource ListBoxBorderThemeBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource ListBoxForegroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource ListBoxBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ListBoxBorderBrush}" />
         <Setter Property="BorderThickness" Value="{StaticResource ListBoxBorderThemeThickness}" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />

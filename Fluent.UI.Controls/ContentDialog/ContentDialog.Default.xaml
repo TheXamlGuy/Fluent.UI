@@ -6,14 +6,10 @@
     <ResourceDictionary.MergedDictionaries>
         <SharedResourceDictionary Source="pack://application:,,,/Fluent.UI.Controls;component/Themes/ThemeResources.Default.xaml" />
         <SharedResourceDictionary>
-            <SolidColorBrush x:Key="ContentDialogForeground" Color="#FFFFFFFF" />
-            <SolidColorBrush x:Key="ContentDialogBackground" Color="#FF000000" />
-            <SolidColorBrush x:Key="ContentDialogBorderBrush" Color="#33FFFFFF" />
-            <SolidColorBrush x:Key="ContentDialogLightDismissOverlayBackground" Color="#99000000" />
-            <SolidColorBrush x:Key="ContentDialogBackgroundThemeBrush" Color="LightGray" />
-            <SolidColorBrush x:Key="ContentDialogBorderThemeBrush" Color="Blue" />
-            <SolidColorBrush x:Key="ContentDialogContentForegroundBrush" Color="Black" />
-            <SolidColorBrush x:Key="ContentDialogDimmingThemeBrush" Color="#99FFFFFF" />
+            <StaticResource x:Key="ContentDialogForegroundBrush" ResourceKey="SystemControlPageTextBaseHighBrush" />
+            <StaticResource x:Key="ContentDialogBackgroundBrush" ResourceKey="SystemControlPageBackgroundAltHighBrush" />
+            <StaticResource x:Key="ContentDialogBorderBrush" ResourceKey="SystemControlBackgroundBaseLowBrush" />
+            <StaticResource x:Key="ContentDialogDimmingBrush" ResourceKey="SystemControlPageBackgroundMediumAltMediumBrush" />
         </SharedResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
     <system:Double x:Key="ContentDialogMinWidth">320</system:Double>
@@ -36,10 +32,10 @@
     <Style TargetType="controls:ContentDialog">
         <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}" />
         <Setter Property="FontSize" Value="{StaticResource ControlContentThemeFontSize}" />
-        <Setter Property="Foreground" Value="{StaticResource SystemControlPageTextBaseHighBrush}" />
-        <Setter Property="Background" Value="{StaticResource SystemControlBackgroundAltHighBrush}" />
-        <Setter Property="BorderBrush" Value="{StaticResource ContentDialogBorderThemeBrush}" />
-        <Setter Property="PopupBackground" Value="{StaticResource SystemControlPageBackgroundMediumAltMediumBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource ContentDialogForegroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource ContentDialogBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ContentDialogBorderBrush}" />
+        <Setter Property="PopupBackground" Value="{StaticResource ContentDialogDimmingBrush}" />
         <Setter Property="KeyboardNavigation.ControlTabNavigation" Value="Cycle" />
         <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Cycle" />
         <Setter Property="KeyboardNavigation.TabNavigation" Value="Cycle" />

@@ -52,6 +52,9 @@
                                 IsEnabled="False"
                                 IsThreeState="True" />
                         </StackPanel>
+                        <StackPanel Margin="4">
+                            <RadioButton />
+                        </StackPanel>
                     </WrapPanel>
                 </TabItem>
                 <TabItem Header="Inputs">
