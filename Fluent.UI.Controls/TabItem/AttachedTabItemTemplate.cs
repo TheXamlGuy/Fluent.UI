@@ -53,22 +53,16 @@ namespace Fluent.UI.Controls
         protected override void OnAttached()
         {
             AddEventHandler<MouseButtonEventArgs>("PreviewMouseDown", OnPreviewMouseDown);
-            AddEventHandler<MouseButtonEventArgs>("MouseUp", OnMouseUp);
-            AddEventHandler<RoutedEventArgs>("MouseLeave", OnMouseLeave);
-
-            AddPropertyChangedHandler(UIElement.IsEnabledProperty, OnPropertyChanged);
-            AddPropertyChangedHandler(UIElement.IsMouseOverProperty, OnPropertyChanged);
             AddPropertyChangedHandler(TabItem.IsSelectedProperty, OnPropertyChanged);
-            AddPropertyChangedHandler(UIElement.IsFocusedProperty, OnPropertyChanged);
         }
 
-        private void OnMouseLeave(object sender, RoutedEventArgs args)
+        protected override void OnPointerLeave(object sender, RoutedEventArgs args)
         {
             _isPressed = false;
             ChangeVisualState(true);
         }
 
-        private void OnMouseUp(object sender, MouseButtonEventArgs args)
+        protected override void OnPointerUp(object sender, MouseButtonEventArgs args)
         {
             AttachedFrameworkElement.SetCurrentValue(UIElement.FocusableProperty, focusable);
 
