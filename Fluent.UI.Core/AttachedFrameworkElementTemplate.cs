@@ -21,8 +21,6 @@ namespace Fluent.UI.Core
 
         private WeakReference<TFrameworkElement> _weakFrameworkElement;
 
-        private bool IsSpaceKeyDown;
-
         protected bool IsEnabled => AttachedFrameworkElement.IsEnabled;
 
         protected bool IsFocused => AttachedFrameworkElement.IsFocused;
@@ -48,8 +46,6 @@ namespace Fluent.UI.Core
 
         protected bool IsPointerOver => AttachedFrameworkElement.IsMouseOver;
 
-        private bool IsInMainFocusScope => !(FocusManager.GetFocusScope(AttachedFrameworkElement) is Visual focusScope) || VisualTreeHelper.GetParent(focusScope) == null;
-
         public void ApplyRequestedTheme()
         {
             OnApplyRequestedTheme(_requestedTheme);
@@ -64,8 +60,9 @@ namespace Fluent.UI.Core
             _weakFrameworkElement = new WeakReference<TFrameworkElement>(frameworkElement as TFrameworkElement);
             _dependencyPropertyChangedManager = new DependencyPropertyChangedManager();
 
-            RegisterRequiredEvents();
-            RegisterEvents();
+            WeakEventManager<FrameworkElement, RoutedEventArgs>.AddHandler(AttachedFrameworkElement, "Loaded", OnLoaded);
+            WeakEventManager<FrameworkElement, RoutedEventArgs>.AddHandler(AttachedFrameworkElement, "Unloaded", OnUnloaded);
+
             OnAttached();
         }
 
@@ -97,35 +94,30 @@ namespace Fluent.UI.Core
         {
         }
 
-        protected virtual void OnIsEnabledPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeVisualState(true);
+        protected virtual void OnIsEnabledPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeVisualState();
 
-        protected virtual void OnIsFocusedPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeVisualState(true);
+        protected virtual void OnIsFocusedPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeVisualState();
 
-        protected virtual void OnIsPointerOverPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeVisualState(true);
+        protected virtual void OnIsPointerOverPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeVisualState();
 
-        protected virtual void OnIsPressedPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs) => ChangeVisualState(true);
+        protected virtual void OnIsPressedPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeVisualState();
 
         protected virtual void OnLostMouseCapture(object sender, MouseEventArgs args)
         {
-            if ((args.OriginalSource == AttachedFrameworkElement) && !IsSpaceKeyDown)
-            {
-                if (AttachedFrameworkElement.IsKeyboardFocused && !IsInMainFocusScope)
-                {
-                    Keyboard.Focus(null);
-                }
 
-                SetIsPressed(false);
-            }
         }
 
         protected virtual void OnPointerLeave(object sender, RoutedEventArgs args)
         {
-
+            if (Mouse.PrimaryDevice.LeftButton == MouseButtonState.Pressed)
+            {
+                UpdateIsPressed();
+            }
         }
 
         protected virtual void OnPointerMove(object sender, RoutedEventArgs args)
         {
-            if (AttachedFrameworkElement.IsMouseCaptured && (Mouse.PrimaryDevice.LeftButton == MouseButtonState.Pressed) && !IsSpaceKeyDown)
+            if (Mouse.PrimaryDevice.LeftButton == MouseButtonState.Pressed)
             {
                 UpdateIsPressed();
             }
@@ -133,33 +125,23 @@ namespace Fluent.UI.Core
 
         protected virtual void OnPointerPressed(object sender, MouseButtonEventArgs args)
         {
-            AttachedFrameworkElement.Focus();
-
             if (args.ButtonState == MouseButtonState.Pressed)
             {
-                AttachedFrameworkElement.CaptureMouse();
-                if (AttachedFrameworkElement.IsMouseCaptured)
+                if (!IsPressed)
                 {
-                    if (args.ButtonState == MouseButtonState.Pressed)
-                    {
-                        if (!IsPressed)
-                        {
-                            SetIsPressed(true);
-                        }
-                    }
-                    else
-                    {
-                        AttachedFrameworkElement.ReleaseMouseCapture();
-                    }
+                    SetIsPressed(true);
                 }
             }
         }
 
         protected virtual void OnPointerReleased(object sender, MouseButtonEventArgs args)
         {
-            if (AttachedFrameworkElement.IsMouseCaptured && !IsSpaceKeyDown)
+            if (args.ButtonState == MouseButtonState.Released)
             {
-                AttachedFrameworkElement.ReleaseMouseCapture();
+                if (IsPressed)
+                {
+                    SetIsPressed(false);
+                }
             }
         }
 
@@ -186,6 +168,9 @@ namespace Fluent.UI.Core
 
         private void OnLoaded(object sender, RoutedEventArgs args)
         {
+            RegisterRequiredEvents();
+            RegisterEvents();
+
             OnApplyTemplate();
             ChangeVisualState(false);
         }
@@ -236,20 +221,21 @@ namespace Fluent.UI.Core
                 ClearValue(IsPressedPropertyKey);
             }
         }
+
         private void UnregisterRequiredEvents()
         {
             //  EventAggregator.Current.<RequestedThemeEventArgs>(OnRequestedTheme);
 
-            //RemoveEventHandler<RoutedEventHandler>(FrameworkElement.LoadedEvent, OnLoaded);
-            //RemoveEventHandler<RoutedEventHandler>(FrameworkElement.UnloadedEvent, OnUnloaded);
-            //RemoveEventHandler<MouseEventHandler>(UIElement.LostMouseCaptureEvent, OnLostMouseCapture);
-            //RemoveEventHandler<RoutedEventHandler>(FrameworkElement.LoadedEvent, OnLoaded);
-            //RemoveEventHandler<RoutedEventHandler>(FrameworkElement.UnloadedEvent, OnUnloaded);
-            //RemoveEventHandler<MouseEventHandler>(UIElement.LostMouseCaptureEvent, OnLostMouseCapture);
-            //RemoveEventHandler<MouseButtonEventHandler>(UIElement.MouseLeftButtonDownEvent, OnPointerPressed);
-            //RemoveEventHandler<MouseButtonEventHandler>(UIElement.MouseLeftButtonUpEvent, OnPointerReleased);
-            //RemoveEventHandler<RoutedEventHandler>(UIElement.MouseLeaveEvent, OnPointerLeave);
-            //RemoveEventHandler<RoutedEventHandler>(UIElement.MouseMoveEvent, OnPointerMove);
+            RemoveEventHandler<RoutedEventHandler>(FrameworkElement.LoadedEvent, OnLoaded);
+            RemoveEventHandler<RoutedEventHandler>(FrameworkElement.UnloadedEvent, OnUnloaded);
+            RemoveEventHandler<MouseEventHandler>(UIElement.LostMouseCaptureEvent, OnLostMouseCapture);
+            RemoveEventHandler<RoutedEventHandler>(FrameworkElement.LoadedEvent, OnLoaded);
+            RemoveEventHandler<RoutedEventHandler>(FrameworkElement.UnloadedEvent, OnUnloaded);
+            RemoveEventHandler<MouseEventHandler>(UIElement.LostMouseCaptureEvent, OnLostMouseCapture);
+            RemoveEventHandler<MouseButtonEventHandler>(UIElement.MouseLeftButtonDownEvent, OnPointerPressed);
+            RemoveEventHandler<MouseButtonEventHandler>(UIElement.MouseLeftButtonUpEvent, OnPointerReleased);
+            RemoveEventHandler<RoutedEventHandler>(UIElement.MouseLeaveEvent, OnPointerLeave);
+            RemoveEventHandler<RoutedEventHandler>(UIElement.MouseMoveEvent, OnPointerMove);
         }
 
         private void UpdateIsPressed()

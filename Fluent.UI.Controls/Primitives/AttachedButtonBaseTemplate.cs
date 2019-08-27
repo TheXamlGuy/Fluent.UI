@@ -1,4 +1,5 @@
 ﻿using Fluent.UI.Core;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
@@ -29,6 +30,7 @@ namespace Fluent.UI.Controls
                 visualState = CommonVisualState.Normal;
             }
 
+            Debug.WriteLine(visualState);
             GoToVisualState(visualState, useTransitions);
         }
 
