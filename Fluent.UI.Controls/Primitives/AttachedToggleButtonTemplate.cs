@@ -8,9 +8,10 @@ namespace Fluent.UI.Controls
     {
         internal bool? IsChecked => AttachedFrameworkElement.IsChecked;
 
-        protected override void OnAttached()
+        protected virtual void OnIsCheckedPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeCheckedVisualState(true);
+
+        protected override void RegisterEvents()
         {
-            base.OnAttached();
             AddPropertyChangedHandler(ToggleButton.IsCheckedProperty, OnIsCheckedPropertyChanged);
         }
 
@@ -28,7 +29,5 @@ namespace Fluent.UI.Controls
 
             GoToVisualState(visualState, useTransitions);
         }
-
-        protected virtual void OnIsCheckedPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeCheckedVisualState(true);
     }
 }

@@ -8,9 +8,11 @@ namespace Fluent.UI.Controls
     [DefaultStyleTarget(typeof(TabItem))]
     public class AttachedTabItemTemplate : AttachedItemContainerTemplate<TabItem>
     {
-        private bool _isPressed;
-
-        private bool focusable;
+        private Border _tabContainer;
+        protected override void OnApplyTemplate()
+        {
+            _tabContainer = GetTemplateChild<Border>("TabContainer");
+        }
 
         protected override void ChangeVisualState(bool useTransitions = true)
         {
@@ -21,11 +23,11 @@ namespace Fluent.UI.Controls
             }
             else if (AttachedFrameworkElement.IsSelected)
             {
-                if (!_isPressed && IsPointerOver)
+                if (!IsPressed && IsPointerOver)
                 {
                     visualState = CommonVisualState.SelectedPointerOver;
                 }
-                else if (_isPressed)
+                else if (IsPressed)
                 {
                     visualState = CommonVisualState.SelectedPressed;
                 }
@@ -34,7 +36,7 @@ namespace Fluent.UI.Controls
                     visualState = CommonVisualState.Selected;
                 }
             }
-            else if (_isPressed)
+            else if (IsPressed)
             {
                 visualState = CommonVisualState.Pressed;
             }
@@ -50,45 +52,29 @@ namespace Fluent.UI.Controls
             GoToVisualState(visualState, useTransitions);
         }
 
-        protected override void OnAttached()
+        protected override void RegisterEvents()
         {
+            AttachedFrameworkElement.SetCurrentValue(UIElement.FocusableProperty, false);
             AddPropertyChangedHandler(TabItem.IsSelectedProperty, OnPropertyChanged);
-        }
-
-        protected override void OnPointerLeave(object sender, RoutedEventArgs args)
-        {
-            _isPressed = false;
-            ChangeVisualState(true);
-        }
-
-        protected override void OnPointerReleased(object sender, MouseButtonEventArgs args)
-        {
-            AttachedFrameworkElement.SetCurrentValue(UIElement.FocusableProperty, focusable);
-
-            if (_isPressed && args.ButtonState == MouseButtonState.Released)
-            {
-                _isPressed = false;
-                ChangeVisualState(true);
-
-                AttachedFrameworkElement.IsSelected = true;
-            }
         }
 
         protected override void OnPointerPressed(object sender, MouseButtonEventArgs args)
         {
-            if (AttachedFrameworkElement.Focusable)
+            if (args.Source is TabItem)
             {
-                focusable = true;
-                AttachedFrameworkElement.SetCurrentValue(UIElement.FocusableProperty, false);
-            }
-
-            if (args.ButtonState == MouseButtonState.Pressed)
-            {
-                _isPressed = true;
-                ChangeVisualState(true);
+                base.OnPointerPressed(sender, args);
             }
         }
 
+        protected override void OnPointerReleased(object sender, MouseButtonEventArgs args)
+        {
+            if (args.Source is TabItem)
+            {
+                AttachedFrameworkElement.IsSelected = true;
+                base.OnPointerReleased(sender, args);
+            }
+        }
+        
         private void OnPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
             ChangeVisualState(true);

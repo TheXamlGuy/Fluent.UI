@@ -14,6 +14,7 @@ namespace Fluent.UI.Controls
     {
         internal bool IsRadioCheckable;
         private string _groupName;
+
         internal void SetGroupName(string groupName)
         {
             _groupName = groupName;
@@ -65,7 +66,7 @@ namespace Fluent.UI.Controls
 
         protected override void OnAttached()
         {
-            AddEventHandler<RoutedEventArgs>("Click", OnClick);
+           // AddEventHandler<RoutedEventArgs>(MenuItem.ClickEvent, OnClick);
             AddPropertyChangedHandler(MenuItem.IsCheckedProperty, OnIsCheckedPropertyChanged);
             AddPropertyChangedHandler(MenuItem.IconProperty, OnIconPropertyChanged);
             AddPropertyChangedHandler(MenuItem.IsCheckableProperty, OnIsCheckablePropertyChanged);

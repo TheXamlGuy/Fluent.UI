@@ -1,12 +1,13 @@
 ﻿using Fluent.UI.Core;
 using System.Windows;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 
 namespace Fluent.UI.Controls
 {
     public class AttachedButtonBaseTemplate<TButtonBase> : AttachedControlTemplate<TButtonBase> where TButtonBase : ButtonBase
     {
-        protected new bool IsPressed => AttachedFrameworkElement.IsPressed;
+    //    protected new bool IsPressed => AttachedFrameworkElement.IsPressed;
 
         protected override void ChangeVisualState(bool useTransitions = true)
         {
@@ -31,10 +32,26 @@ namespace Fluent.UI.Controls
             GoToVisualState(visualState, useTransitions);
         }
 
-        protected override void OnAttached()
+        protected override void RegisterEvents()
         {
-            AddPropertyChangedHandler(ButtonBase.IsPressedProperty, OnIsPressedPropertyChanged);
-            base.OnAttached();
+           // AddPropertyChangedHandler(ButtonBase.IsPressedProperty, OnIsPressedPropertyChanged1);
         }
+
+        //protected override void OnPointerLeave(object sender, RoutedEventArgs args)
+        //{
+        //}
+
+        //protected override void OnPointerReleased(object sender, MouseButtonEventArgs args)
+        //{
+        //}
+
+        //protected override void OnLostMouseCapture(object sender, MouseEventArgs args)
+        //{
+        //}
+
+        //protected virtual void OnIsPressedPropertyChanged1(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        //{
+        //    ChangeVisualState(true);
+        //}
     }
 }

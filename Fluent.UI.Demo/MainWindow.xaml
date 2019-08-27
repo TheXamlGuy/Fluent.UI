@@ -14,19 +14,8 @@
                 Content="GC Test" />
             <CheckBox Checked="OnThemeChecked" Content="Switch to default theme" />
         </StackPanel>
-        <StackPanel x:Name="RootBorder" Grid.Row="1">
-            <ComboBox />
-            <ComboBox />
-
-            <ComboBox />
-
-            <ComboBox />
-            <ComboBox />
-            <ComboBox />
-            <ComboBox />
-            <ComboBox />
-
-            <!--<TabControl>
+        <Border x:Name="RootBorder" Grid.Row="1">
+            <TabControl>
                 <TabItem Header="Commands">
                     <WrapPanel Margin="4">
                         <StackPanel Margin="4">
@@ -182,12 +171,9 @@
                                 <MenuItem Header="sdsd" />
                             </ContextMenu>
                         </StackPanel.ContextMenu>
-            -->
-            <!--<ContentDialog x:Name="XamlContentDialog" />-->
-            <!--
                     </StackPanel>
                 </TabItem>
-            </TabControl>-->
-        </StackPanel>
+            </TabControl>
+        </Border>
     </Grid>
 </Window>

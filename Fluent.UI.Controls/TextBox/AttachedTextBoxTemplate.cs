@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 
 namespace Fluent.UI.Controls
 {
@@ -70,10 +71,9 @@ namespace Fluent.UI.Controls
             ChangePlaceholderVisualState(false);
         }
 
-        protected override void OnAttached()
+        protected override void RegisterEvents()
         {
             AddPropertyChangedHandler(TextBox.TextProperty, OnTextPropertyChanged);
-            base.OnAttached();
         }
 
         protected override void OnDetached()
