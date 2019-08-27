@@ -64,15 +64,20 @@ namespace Fluent.UI.Controls
             ChangeCheckedVisualState(false);
         }
 
-        protected override void OnAttached()
+        protected override void RegisterEvents()
         {
-           // AddEventHandler<RoutedEventArgs>(MenuItem.ClickEvent, OnClick);
+            AddEventHandler<RoutedEventHandler>(MenuItem.ClickEvent, OnClick);
             AddPropertyChangedHandler(MenuItem.IsCheckedProperty, OnIsCheckedPropertyChanged);
             AddPropertyChangedHandler(MenuItem.IconProperty, OnIconPropertyChanged);
             AddPropertyChangedHandler(MenuItem.IsCheckableProperty, OnIsCheckablePropertyChanged);
             AddPropertyChangedHandler(MenuItem.IsSubmenuOpenProperty, OnPropertyChanged);
             AddPropertyChangedHandler(MenuItem.IsPressedProperty, OnPropertyChanged);
             AddPropertyChangedHandler(MenuItem.RoleProperty, OnRolePropertyChanged);
+        }
+
+        protected override void UnregisterEvents()
+        {
+            RemoveEventHandler<RoutedEventHandler>(MenuItem.ClickEvent, OnClick);
         }
 
         private void ChangeCheckAndIconPlaceholderVisualState(bool useTransitions = true, bool once = false)

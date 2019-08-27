@@ -109,18 +109,12 @@ namespace Fluent.UI.Core
 
         protected virtual void OnPointerLeave(object sender, RoutedEventArgs args)
         {
-            if (Mouse.PrimaryDevice.LeftButton == MouseButtonState.Pressed)
-            {
-                UpdateIsPressed();
-            }
+  
         }
 
         protected virtual void OnPointerMove(object sender, RoutedEventArgs args)
         {
-            if (Mouse.PrimaryDevice.LeftButton == MouseButtonState.Pressed)
-            {
-                UpdateIsPressed();
-            }
+        
         }
 
         protected virtual void OnPointerPressed(object sender, MouseButtonEventArgs args)

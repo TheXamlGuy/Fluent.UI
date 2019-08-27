@@ -14,12 +14,13 @@ namespace Fluent.UI.Demo
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Foo.Children.Clear();
+            Button.Click -= Button_Click;
+
+            RootBorder.Child = null;
         }
 
         private void OnThemeChecked(object sender, RoutedEventArgs args)
         {
-            Button.Click -= Button_Click;
 
             RootBorder.Background = Brushes.Black;
             FrameworkElementExtension.SetRequestedTheme(RootBorder, ElementTheme.Dark);
