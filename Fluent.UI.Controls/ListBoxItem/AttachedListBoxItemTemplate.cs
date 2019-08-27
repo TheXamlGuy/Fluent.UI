@@ -9,18 +9,16 @@ namespace Fluent.UI.Controls
     [DefaultStyleTarget(typeof(ListBoxItem))]
     public class AttachedListBoxItemTemplate : AttachedItemContainerTemplate<ListBoxItem>
     {
-        private bool _isPressed;
-
         protected override void ChangeVisualState(bool useTransitions = true)
         {
             string visualState;
             if (AttachedFrameworkElement.IsSelected)
             {
-                if (!_isPressed && IsPointerOver)
+                if (!IsPressed && IsPointerOver)
                 {
                     visualState = CommonVisualState.SelectedPointerOver;
                 }
-                else if (_isPressed)
+                else if (IsPressed)
                 {
                     visualState = CommonVisualState.SelectedPressed;
                 }
@@ -35,7 +33,7 @@ namespace Fluent.UI.Controls
                 {
                     visualState = CommonVisualState.Disabled;
                 }
-                else if (_isPressed)
+                else if (IsPressed)
                 {
                     visualState = CommonVisualState.Pressed;
                 }
@@ -54,9 +52,6 @@ namespace Fluent.UI.Controls
 
         protected override void OnAttached()
         {
-            AddEventHandler<MouseButtonEventArgs>("PreviewMouseDown", OnPreviewMouseDown);
-            AddEventHandler<MouseButtonEventArgs>("MouseUp", OnMouseUp);
-            
             AddPropertyChangedHandler(TabItem.IsSelectedProperty, OnPropertyChanged);
         }
 
@@ -65,19 +60,19 @@ namespace Fluent.UI.Controls
         protected override void OnPointerLeave(object sender, RoutedEventArgs args)
         {
             OverrideFocusable(true);
-            _isPressed = false;
+            base.OnPointerLeave(sender, args);
             ChangeVisualState(true);
         }
 
-        private void OnMouseUp(object sender, MouseButtonEventArgs args)
+        protected override void OnPointerReleased(object sender, MouseButtonEventArgs args)
         {
-            if (_isPressed && args.ButtonState == MouseButtonState.Released)
+            if (args.ButtonState == MouseButtonState.Released)
             {
                 OverrideFocusable(true);
 
                 if (AttachedFrameworkElement.IsEnabled)
                 {
-                    _isPressed = false;
+                    base.OnPointerReleased(sender, args);
                     ChangeVisualState(true);
 
                     AttachedFrameworkElement.IsSelected = true;
@@ -85,7 +80,7 @@ namespace Fluent.UI.Controls
             }
         }
 
-        private void OnPreviewMouseDown(object sender, MouseButtonEventArgs args)
+        protected override void OnPointerPressed(object sender, MouseButtonEventArgs args)
         {
             if (!IsEnabled)
             {
@@ -95,7 +90,7 @@ namespace Fluent.UI.Controls
             if (args.ButtonState == MouseButtonState.Pressed)
             {
                 OverrideFocusable();
-                _isPressed = true;
+                base.OnPointerPressed(sender, args);
                 ChangeVisualState(true);
             }
         }

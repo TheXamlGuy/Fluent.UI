@@ -72,7 +72,7 @@ namespace Fluent.UI.Controls
 
             GoToVisualState(visualState, useTransitions);
         }
-
+        
         protected override void OnIsCheckedPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeVisualState(true);
     }
 }

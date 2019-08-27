@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Fluent.UI.Core
 {
@@ -42,6 +43,25 @@ namespace Fluent.UI.Core
         private void OnItemsControlLayoutUpdated(object sender, EventArgs args)
         {
             IsItemContainerUpdating = true;
+        }
+
+        protected override void OnPointerPressed(object sender, MouseButtonEventArgs args)
+        {
+
+        }
+
+        protected override void OnPointerReleased(object sender, MouseButtonEventArgs args)
+        {
+
+        }
+
+        protected override void OnPointerMove(object sender, RoutedEventArgs args)
+        {
+        }
+
+        protected override void OnPointerLeave(object sender, RoutedEventArgs args)
+        {
+
         }
     }
 }

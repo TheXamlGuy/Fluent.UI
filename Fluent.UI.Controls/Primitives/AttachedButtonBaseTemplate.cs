@@ -31,8 +31,10 @@ namespace Fluent.UI.Controls
             GoToVisualState(visualState, useTransitions);
         }
 
-        protected override void OnAttached() => AddPropertyChangedHandler(ButtonBase.IsPressedProperty, OnIsPressedPropertyChanged);
-
-        protected virtual void OnIsPressedPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeVisualState(true);
+        protected override void OnAttached()
+        {
+            AddPropertyChangedHandler(ButtonBase.IsPressedProperty, OnIsPressedPropertyChanged);
+            base.OnAttached();
+        }
     }
 }

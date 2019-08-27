@@ -52,7 +52,6 @@ namespace Fluent.UI.Controls
 
         protected override void OnAttached()
         {
-            AddEventHandler<MouseButtonEventArgs>("PreviewMouseDown", OnPreviewMouseDown);
             AddPropertyChangedHandler(TabItem.IsSelectedProperty, OnPropertyChanged);
         }
 
@@ -75,7 +74,7 @@ namespace Fluent.UI.Controls
             }
         }
 
-        private void OnPreviewMouseDown(object sender, MouseButtonEventArgs args)
+        protected override void OnPointerPressed(object sender, MouseButtonEventArgs args)
         {
             if (AttachedFrameworkElement.Focusable)
             {

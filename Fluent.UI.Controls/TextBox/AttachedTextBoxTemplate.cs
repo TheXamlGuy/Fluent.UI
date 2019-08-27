@@ -70,7 +70,11 @@ namespace Fluent.UI.Controls
             ChangePlaceholderVisualState(false);
         }
 
-        protected override void OnAttached() => AddPropertyChangedHandler(TextBox.TextProperty, OnTextPropertyChanged);
+        protected override void OnAttached()
+        {
+            AddPropertyChangedHandler(TextBox.TextProperty, OnTextPropertyChanged);
+            base.OnAttached();
+        }
 
         protected override void OnDetached()
         {
