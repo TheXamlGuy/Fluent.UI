@@ -110,11 +110,35 @@ namespace Fluent.UI.Controls
 
         private void ChangePlaceholderVisualState(bool useTransitions = true) => VisualStateManager.GoToState(AttachedFrameworkElement, AttachedFrameworkElement.Password.Length > 0 ? CommonVisualState.PlaceholderCollapsed : CommonVisualState.PlaceholderVisible, useTransitions);
 
-        private void OnRevealButtonPointerDown(object sender, RoutedEventArgs args)
+        private void OnRevealButtonPointerPressed(object sender, RoutedEventArgs args)
         {
             if (Mouse.PrimaryDevice.LeftButton == MouseButtonState.Pressed)
             {
                 RevealPassword();
+            }
+        }
+
+        private void OnRevealButtonPointerEnter(object sender, RoutedEventArgs args)
+        {
+            if (Mouse.PrimaryDevice.LeftButton == MouseButtonState.Pressed)
+            {
+                RevealPassword();
+            }
+        }    
+
+        private void OnRevealButtonPointerReleased(object sender, RoutedEventArgs args)
+        {
+            if (Mouse.PrimaryDevice.LeftButton == MouseButtonState.Released)
+            {
+                HidePassword();
+            }
+        }
+
+        private void OnRevealButtonPointerLeaeve(object sender, RoutedEventArgs args)
+        {
+            if (Mouse.PrimaryDevice.LeftButton == MouseButtonState.Pressed)
+            {
+                HidePassword();
             }
         }
 
@@ -144,8 +168,22 @@ namespace Fluent.UI.Controls
 
         private void RegisterRevealButtonEvent()
         {
-            _revealButton.RemoveHandler(UIElement.MouseLeftButtonDownEvent, (MouseButtonEventHandler)OnRevealButtonPointerDown);
-            _revealButton.AddHandler(UIElement.MouseLeftButtonDownEvent, (MouseButtonEventHandler)OnRevealButtonPointerDown, true);
+            _revealButton.AddHandler(UIElement.MouseLeftButtonDownEvent, (MouseButtonEventHandler)OnRevealButtonPointerPressed, true);
+            _revealButton.AddHandler(UIElement.MouseLeftButtonUpEvent, (MouseButtonEventHandler)OnRevealButtonPointerReleased, true);
+            _revealButton.AddHandler(UIElement.MouseLeaveEvent, (RoutedEventHandler)OnRevealButtonPointerLeaeve, true);
+            _revealButton.AddHandler(UIElement.MouseEnterEvent, (RoutedEventHandler)OnRevealButtonPointerEnter, true);
+
+        }
+
+        private void HidePassword()
+        {
+            var start = _revealTextBox.SelectionStart;
+            var length = _revealTextBox.SelectionLength;
+
+            _revealTextBox.Visibility = Visibility.Collapsed;
+            AttachedFrameworkElement.Focus();
+
+            AttachedFrameworkElement.GetType().GetMethod("Select", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(AttachedFrameworkElement, new object[] { start, length });
         }
 
         private void RevealPassword()
@@ -168,7 +206,7 @@ namespace Fluent.UI.Controls
         {
             if (_revealButton != null)
             {
-                _revealButton.Click -= OnRevealButtonPointerDown;
+
             }
         }
     }
