@@ -14,7 +14,7 @@ namespace Fluent.UI.Core
                 typeof(ElementTheme), typeof(FrameworkElementExtension),
                 new PropertyMetadata(ElementTheme.Default, OnRequestedThemePropertyChanged));
 
-        internal static DependencyProperty AttachedTemplatetProperty =
+        internal static DependencyProperty AttachedTemplateProperty =
             DependencyProperty.RegisterAttached("AttachedTemplate",
               typeof(IAttachedFrameworkElementTemplate), typeof(FrameworkElementExtension));
 
@@ -32,13 +32,13 @@ namespace Fluent.UI.Core
             dependencyObject.SetValue(RequestedThemeProperty, value);
         }
 
-        public static IAttachedFrameworkElementTemplate GetAttachedTemplate(DependencyObject dependencyObject) => (IAttachedFrameworkElementTemplate)dependencyObject.GetValue(AttachedTemplatetProperty);
+        public static IAttachedFrameworkElementTemplate GetAttachedTemplate(DependencyObject dependencyObject) => (IAttachedFrameworkElementTemplate)dependencyObject.GetValue(AttachedTemplateProperty);
 
         public static bool GetIsAttached(DependencyObject dependencyObject) => (bool)dependencyObject.GetValue(IsAttachedProperty);
 
         internal static bool GetIsRequestedTheme(DependencyObject dependencyObject) => (bool)dependencyObject.GetValue(IsRequestedThemeProperty);
 
-        internal static void SetAttachedTemplate(DependencyObject dependencyObject, IAttachedFrameworkElementTemplate extension) => dependencyObject.SetValue(AttachedTemplatetProperty, extension);
+        internal static void SetAttachedTemplate(DependencyObject dependencyObject, IAttachedFrameworkElementTemplate extension) => dependencyObject.SetValue(AttachedTemplateProperty, extension);
 
         internal static void SetIsRequestedTheme(DependencyObject dependencyObject, bool value) => dependencyObject.SetValue(IsRequestedThemeProperty, value);
 
