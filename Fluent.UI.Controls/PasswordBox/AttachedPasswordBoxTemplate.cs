@@ -1,16 +1,30 @@
 ﻿using Fluent.UI.Core;
+using Fluent.UI.Core.Extensions;
+using System;
+using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
 
 namespace Fluent.UI.Controls
 {
+    internal struct TextControlSelection
+    {
+        public int Start;
+        public int End;
+    }
+
     [DefaultStyleTarget(typeof(PasswordBox))]
     internal class AttachedPasswordBoxTemplate : AttachedControlTemplate<PasswordBox>
     {
-        private Button _deleteButton;
         private object _header;
         private DataTemplate _headerTemplate;
+        private ToggleButton _revealButton;
+        private TextBox _revealTextBox;
 
         public void SetHeader(object header = null)
         {
@@ -49,33 +63,45 @@ namespace Fluent.UI.Controls
 
         protected override void OnApplyTemplate()
         {
-            _deleteButton = GetTemplateChild<Button>("DeleteButton");
-            if (_deleteButton != null)
+            _revealButton = GetTemplateChild<ToggleButton>("RevealButton");
+            _revealTextBox = GetTemplateChild<TextBox>("RevealTextBox");
+
+            if (_revealButton != null)
             {
-                _deleteButton.Click -= OnDeleteButtonClick;
-                _deleteButton.Click += OnDeleteButtonClick;
+                RegisterRevealButtonEvent();
             }
 
             var scrollViewer = GetTemplateChild<ScrollViewer>("PART_ContentHost");
-            var binding = new Binding
+            if (scrollViewer != null)
             {
-                Source = scrollViewer,
-                Path = new PropertyPath("Foreground"),
-                Mode = BindingMode.OneWay
-            };
+                var binding = new Binding
+                {
+                    Source = scrollViewer,
+                    Path = new PropertyPath("Foreground"),
+                    Mode = BindingMode.OneWay
+                };
 
-            BindingOperations.SetBinding(AttachedFrameworkElement, Control.ForegroundProperty, binding);
+                BindingOperations.SetBinding(AttachedFrameworkElement, Control.ForegroundProperty, binding);
+            }
 
             ChangeHeaderVisualState(false);
             ChangePlaceholderVisualState(false);
         }
 
-        protected override void OnDetached()
+        protected override void OnIsFocusedPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
-            if (_deleteButton != null)
-            {
-                _deleteButton.Click -= OnDeleteButtonClick;
-            }
+            ChangeDeleteButtonVisualState();
+            ChangeVisualState();
+        }
+
+        protected override void RegisterEvents()
+        {
+            AddPropertyChangedHandler(TextBox.TextProperty, OnTextPropertyChanged);
+        }
+
+        protected override void UnregisterEvents()
+        {
+            UnregisterRevealButtonEvent();
         }
 
         private void ChangeDeleteButtonVisualState(bool useTransitions = true) => GoToVisualState(AttachedFrameworkElement.IsFocused && AttachedFrameworkElement.Password.Length > 0 ? CommonVisualState.ButtonVisible : CommonVisualState.ButtonCollapsed, useTransitions);
@@ -84,14 +110,66 @@ namespace Fluent.UI.Controls
 
         private void ChangePlaceholderVisualState(bool useTransitions = true) => VisualStateManager.GoToState(AttachedFrameworkElement, AttachedFrameworkElement.Password.Length > 0 ? CommonVisualState.PlaceholderCollapsed : CommonVisualState.PlaceholderVisible, useTransitions);
 
-        private void OnDeleteButtonClick(object sender, RoutedEventArgs args) => AttachedFrameworkElement.Password = "";
+        private void OnRevealButtonPointerDown(object sender, RoutedEventArgs args)
+        {
+            if (Mouse.PrimaryDevice.LeftButton == MouseButtonState.Pressed)
+            {
+                RevealPassword();
+            }
+        }
 
-        private void OnFocusedChanged() => ChangeDeleteButtonVisualState();
-
-        private void OnTextChanged()
+        private void OnTextPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
             ChangePlaceholderVisualState();
             ChangeDeleteButtonVisualState();
+        }
+
+        private TextControlSelection GetSelection()
+        {
+            var selection = AttachedFrameworkElement.GetValue<TextSelection>("Selection", BindingFlags.NonPublic | BindingFlags.Instance);
+            var textRangeType = selection.GetType().GetInterfaces().FirstOrDefault(x => x.Name == "ITextRange");
+
+            var startTextPointer = textRangeType.GetValue<object>(selection, "Start");
+            var endEndTextPointer = textRangeType.GetValue<object>(selection, "End");
+
+            var start = startTextPointer.GetValue<int>("Offset", BindingFlags.Instance | BindingFlags.NonPublic);
+            var end = endEndTextPointer.GetValue<int>("Offset", BindingFlags.Instance | BindingFlags.NonPublic);
+
+            return new TextControlSelection
+            { 
+                Start = start, 
+                End = end 
+            };
+        }
+
+        private void RegisterRevealButtonEvent()
+        {
+            _revealButton.RemoveHandler(UIElement.MouseLeftButtonDownEvent, (MouseButtonEventHandler)OnRevealButtonPointerDown);
+            _revealButton.AddHandler(UIElement.MouseLeftButtonDownEvent, (MouseButtonEventHandler)OnRevealButtonPointerDown, true);
+        }
+
+        private void RevealPassword()
+        {
+            if (_revealTextBox == null)
+            {
+                return;
+            }
+
+            var selection = GetSelection();
+            _revealTextBox.Visibility = Visibility.Visible;
+            _revealTextBox.Focus();
+
+            _revealTextBox.Text = AttachedFrameworkElement.Password;
+            _revealTextBox.SelectionStart = selection.Start;
+            _revealTextBox.SelectionLength = selection.End - selection.Start;
+        }
+
+        private void UnregisterRevealButtonEvent()
+        {
+            if (_revealButton != null)
+            {
+                _revealButton.Click -= OnRevealButtonPointerDown;
+            }
         }
     }
 }

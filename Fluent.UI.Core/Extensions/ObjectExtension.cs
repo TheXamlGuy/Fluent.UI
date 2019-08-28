@@ -1,17 +1,14 @@
-﻿namespace Fluent.UI.Core.Extensions
+﻿using System;
+using System.Reflection;
+
+namespace Fluent.UI.Core.Extensions
 {
     public static class ObjectExtension
     {
-        public static T GetPropertyValue<T>(this object obj, string propertyName)
+        public static TValue GetValue<TValue>(this object source, string propertyName, BindingFlags flags)
         {
-            var propertyInfo = obj?.GetType().GetProperty(propertyName);
-            return (T)propertyInfo?.GetValue(obj, null);
-        }
-
-        public static object GetPropertyValue(this object obj, string propertyName)
-        {
-            var propertyInfo = obj?.GetType().GetProperty(propertyName);
-            return propertyInfo?.GetValue(obj, null);
+            var propertyInfo = source?.GetType().GetProperty(propertyName, flags);
+            return (TValue)propertyInfo?.GetMethod.Invoke(source, null);
         }
     }
 }

@@ -14,5 +14,12 @@ namespace Fluent.UI.Core.Extensions
 
             return default;
         }
+
+
+        public static TValue GetValue<TValue>(this Type target, object source, string propertyName)
+        {
+            var propertyInfo = target?.GetProperty(propertyName);
+            return (TValue)propertyInfo?.GetMethod.Invoke(source, null);
+        }
     }
 }

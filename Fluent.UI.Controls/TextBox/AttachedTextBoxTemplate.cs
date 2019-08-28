@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Input;
 
 namespace Fluent.UI.Controls
 {
@@ -51,11 +50,7 @@ namespace Fluent.UI.Controls
         protected override void OnApplyTemplate()
         {
             _deleteButton = GetTemplateChild<Button>("DeleteButton");
-            if (_deleteButton != null)
-            {
-                _deleteButton.Click -= OnDeleteButtonClick;
-                _deleteButton.Click += OnDeleteButtonClick;
-            }
+            RegisterDeleteButtonEvent();
 
             var scrollViewer = GetTemplateChild<ScrollViewer>("PART_ContentHost");
             var binding = new Binding
@@ -71,20 +66,18 @@ namespace Fluent.UI.Controls
             ChangePlaceholderVisualState(false);
         }
 
-        protected override void RegisterEvents()
+        protected override void OnIsFocusedPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
-            AddPropertyChangedHandler(TextBox.TextProperty, OnTextPropertyChanged);
+            ChangeDeleteButtonVisualState();
+            ChangeVisualState();
         }
 
-        protected override void OnDetached()
-        {
-            if (_deleteButton != null)
-            {
-                _deleteButton.Click -= OnDeleteButtonClick;
-            }
-        }
+        protected override void RegisterEvents() => AddPropertyChangedHandler(TextBox.TextProperty, OnTextPropertyChanged);
 
-        protected override void OnIsFocusedPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeDeleteButtonVisualState(true);
+        protected override void UnregisterEvents()
+        {
+            UnregisterDeleteButtonEvent();
+        }
 
         private void ChangeDeleteButtonVisualState(bool useTransitions = true) => GoToVisualState(AttachedFrameworkElement.IsFocused && AttachedFrameworkElement.Text.Length > 0 ? CommonVisualState.ButtonVisible : CommonVisualState.ButtonCollapsed, useTransitions);
 
@@ -98,6 +91,22 @@ namespace Fluent.UI.Controls
         {
             ChangePlaceholderVisualState();
             ChangeDeleteButtonVisualState();
+        }
+
+        private void RegisterDeleteButtonEvent()
+        {
+            if (_deleteButton != null)
+            {
+                _deleteButton.Click -= OnDeleteButtonClick;
+                _deleteButton.Click += OnDeleteButtonClick;
+            }
+        }
+        private void UnregisterDeleteButtonEvent()
+        {
+            if (_deleteButton != null)
+            {
+                _deleteButton.Click -= OnDeleteButtonClick;
+            }
         }
     }
 }

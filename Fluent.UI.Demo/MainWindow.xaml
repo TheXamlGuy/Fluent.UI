@@ -97,7 +97,7 @@
                             </TextBox>
                         </StackPanel>
                         <StackPanel Margin="8">
-                            <ComboBox />
+                            <PasswordBox />
                         </StackPanel>
                     </WrapPanel>
                 </TabItem>
