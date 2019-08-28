@@ -134,34 +134,19 @@ namespace Fluent.UI.Controls
 
         private void ChangeCheckedVisualState(bool useTransitions = true)
         {
-            string visualState;
-            if (AttachedFrameworkElement.IsChecked)
-            {
-                visualState = CommonVisualState.Checked;
-            }
-            else
-            {
-                visualState = CommonVisualState.Unchecked;
-            }
-
+            var visualState = AttachedFrameworkElement.IsChecked ? CommonVisualState.Checked : CommonVisualState.Unchecked;
             GoToVisualState(visualState, useTransitions);
         }
 
         private void ChangePlacementVisualState(bool useTransitions = true)
         {
-            string visualState = "";
-            if (AttachedFrameworkElement.Role == MenuItemRole.TopLevelHeader)
+            var visualState = AttachedFrameworkElement.Role switch
             {
-                visualState = "TopLevelHeader";
-            }
-            else if (AttachedFrameworkElement.Role == MenuItemRole.SubmenuHeader)
-            {
-                visualState = "SubmenuHeader";
-            }
-            else if (AttachedFrameworkElement.Role == MenuItemRole.SubmenuItem)
-            {
-                visualState = "SubmenuItem";
-            }
+                MenuItemRole.TopLevelHeader => "TopLevelHeader",
+                MenuItemRole.SubmenuHeader => "SubmenuHeader",
+                MenuItemRole.SubmenuItem => "SubmenuItem",
+                _ => ""
+            };
 
             GoToVisualState(visualState, useTransitions);
         }
@@ -191,15 +176,15 @@ namespace Fluent.UI.Controls
             }
         }
 
-        private void OnIconPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeCheckAndIconPlaceholderVisualState(true);
+        private void OnIconPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeCheckAndIconPlaceholderVisualState();
 
-        private void OnIsCheckablePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeCheckAndIconPlaceholderVisualState(true);
+        private void OnIsCheckablePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeCheckAndIconPlaceholderVisualState();
 
-        private void OnIsCheckedPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeCheckedVisualState(true);
+        private void OnIsCheckedPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeCheckedVisualState();
 
-        private void OnPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeVisualState(true);
+        private void OnPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeVisualState();
 
-        private void OnRolePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangePlacementVisualState(true);
+        private void OnRolePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangePlacementVisualState();
 
         private void UpdateSiblings()
         {
