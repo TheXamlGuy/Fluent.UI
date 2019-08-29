@@ -55,7 +55,7 @@ namespace Fluent.UI.Core
 
         }
 
-        protected override void OnPointerLeave(object sender, RoutedEventArgs args)
+        protected override void OnPointerLeave(object sender, MouseEventArgs args)
         {
 
         }

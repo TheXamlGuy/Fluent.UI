@@ -58,23 +58,19 @@ namespace Fluent.UI.Controls
             AddPropertyChangedHandler(TabItem.IsSelectedProperty, OnPropertyChanged);
         }
 
-        protected override void OnPointerPressed(object sender, MouseButtonEventArgs args)
-        {
-            if (args.Source is TabItem)
-            {
-                base.OnPointerPressed(sender, args);
-            }
-        }
-
         protected override void OnPointerReleased(object sender, MouseButtonEventArgs args)
         {
             if (args.Source is TabItem)
             {
-                AttachedFrameworkElement.IsSelected = true;
                 base.OnPointerReleased(sender, args);
             }
         }
-        
+
+        protected override void OnClick()
+        {
+            AttachedFrameworkElement.IsSelected = true;
+        }
+
         private void OnPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
             ChangeVisualState(true);

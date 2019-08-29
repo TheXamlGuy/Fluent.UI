@@ -1,8 +1,6 @@
 ﻿using Fluent.UI.Core;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace Fluent.UI.Controls
 {
@@ -58,67 +56,9 @@ namespace Fluent.UI.Controls
 
         private void OnPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeVisualState(true);
 
-        protected override void OnPointerPressed(object sender, MouseButtonEventArgs args)
+        protected override void OnClick()
         {
-            if (args.Source is ListBoxItem)
-            {
-                base.OnPointerPressed(sender, args);
-            }
+            AttachedFrameworkElement.IsSelected = true;
         }
-
-        protected override void OnPointerReleased(object sender, MouseButtonEventArgs args)
-        {
-            if (args.Source is ListBoxItem)
-            {
-                AttachedFrameworkElement.IsSelected = true;
-                base.OnPointerReleased(sender, args);
-            }
-        }
-
-        //protected override void OnPointerLeave(object sender, RoutedEventArgs args)
-        //{
-        //    OverrideFocusable(true);
-        //    base.OnPointerLeave(sender, args);
-        //    ChangeVisualState(true);
-        //}
-
-        //protected override void OnPointerReleased(object sender, MouseButtonEventArgs args)
-        //{
-        //    if (args.ButtonState == MouseButtonState.Released)
-        //    {
-        //        OverrideFocusable(true);
-
-        //        if (AttachedFrameworkElement.IsEnabled)
-        //        {
-        //            base.OnPointerReleased(sender, args);
-        //            ChangeVisualState(true);
-
-        //            AttachedFrameworkElement.IsSelected = true;
-        //        }
-        //    }
-        //}
-
-        //protected override void OnPointerPressed(object sender, MouseButtonEventArgs args)
-        //{
-        //    if (!IsEnabled)
-        //    {
-        //        args.Handled = true;
-        //    }
-
-        //    if (args.ButtonState == MouseButtonState.Pressed)
-        //    {
-        //        OverrideFocusable();
-        //        base.OnPointerPressed(sender, args);
-        //        ChangeVisualState(true);
-        //    }
-        //}
-
-        //private void OverrideFocusable(bool isFocusable = false)
-        //{
-        //    if (AttachedFrameworkElement.Focusable)
-        //    {
-        //        AttachedFrameworkElement.SetCurrentValue(UIElement.FocusableProperty, isFocusable);
-        //    }
-        //}
     }
 }

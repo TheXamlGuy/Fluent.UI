@@ -104,7 +104,9 @@
                 <TabItem Header="Items">
                     <WrapPanel Margin="4">
                         <ListBox Width="400" Margin="4">
-                            <ListBoxItem Content="Item1" />
+                            <ListBoxItem>
+                                <Button Content="Hello world" />
+                            </ListBoxItem>
                             <ListBoxItem Content="Item2" />
                             <ListBoxItem Content="Item3" />
                         </ListBox>
