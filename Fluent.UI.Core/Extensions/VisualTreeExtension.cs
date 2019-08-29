@@ -7,6 +7,87 @@ namespace Fluent.UI.Core.Extensions
 {
     public static class VisualTreeExtension
     {
+        public static TDependencyObject FindAscendant<TDependencyObject>(this DependencyObject element) where TDependencyObject : DependencyObject
+        {
+            var parent = VisualTreeHelper.GetParent(element);
+
+            switch (parent)
+            {
+                case null:
+                    return null;
+                case TDependencyObject _:
+                    return parent as TDependencyObject;
+                default:
+                    break;
+            }
+
+            return parent.FindAscendant<TDependencyObject>();
+        }
+
+        public static int FindAscendantCount<TDependencyObject>(this DependencyObject element) where TDependencyObject : DependencyObject
+        {
+            var parent = VisualTreeHelper.GetParent(element);
+
+            int count = 0;
+            while (!(parent is TDependencyObject) && parent != null)
+            {
+                parent = VisualTreeHelper.GetParent(parent);
+                if (parent is TDependencyObject)
+                {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+
+        public static FrameworkElement FindAscendantByName(this DependencyObject element, string name)
+        {
+            if (element == null || string.IsNullOrWhiteSpace(name))
+            {
+                return null;
+            }
+
+            var parent = VisualTreeHelper.GetParent(element);
+
+            if (parent == null)
+            {
+                return null;
+            }
+
+            if (name.Equals((parent as FrameworkElement)?.Name, StringComparison.OrdinalIgnoreCase))
+            {
+                return parent as FrameworkElement;
+            }
+
+            return parent.FindAscendantByName(name);
+        }
+
+        public static TDependencyObject FindDescendant<TDependencyObject>(this DependencyObject element) where TDependencyObject : DependencyObject
+        {
+            TDependencyObject retValue = null;
+            var childrenCount = VisualTreeHelper.GetChildrenCount(element);
+
+            for (var i = 0; i < childrenCount; i++)
+            {
+                var child = VisualTreeHelper.GetChild(element, i);
+                if (child is TDependencyObject type)
+                {
+                    retValue = type;
+                    break;
+                }
+
+                retValue = FindDescendant<TDependencyObject>(child);
+
+                if (retValue != null)
+                {
+                    break;
+                }
+            }
+
+            return retValue;
+        }
+
         public static FrameworkElement FindDescendantByName(this DependencyObject element, string name)
         {
             if (element == null || string.IsNullOrWhiteSpace(name))
@@ -32,72 +113,23 @@ namespace Fluent.UI.Core.Extensions
             return null;
         }
 
-        public static T FindDescendant<T>(this DependencyObject element)
-            where T : DependencyObject
-        {
-            T retValue = null;
-            var childrenCount = VisualTreeHelper.GetChildrenCount(element);
-
-            for (var i = 0; i < childrenCount; i++)
-            {
-                var child = VisualTreeHelper.GetChild(element, i);
-                if (child is T type)
-                {
-                    retValue = type;
-                    break;
-                }
-
-                retValue = FindDescendant<T>(child);
-
-                if (retValue != null)
-                {
-                    break;
-                }
-            }
-
-            return retValue;
-        }
-
-        public static IEnumerable<T> FindDescendants<T>(this DependencyObject element)
-            where T : DependencyObject
+        public static IEnumerable<TDependencyObject> FindDescendants<TDependencyObject>(this DependencyObject element) where TDependencyObject : DependencyObject
         {
             var childrenCount = VisualTreeHelper.GetChildrenCount(element);
 
             for (var i = 0; i < childrenCount; i++)
             {
                 var child = VisualTreeHelper.GetChild(element, i);
-                if (child is T type)
+                if (child is TDependencyObject type)
                 {
                     yield return type;
                 }
 
-                foreach (var childofChild in child.FindDescendants<T>())
+                foreach (var childofChild in child.FindDescendants<TDependencyObject>())
                 {
                     yield return childofChild;
                 }
             }
-        }
-
-        public static FrameworkElement FindAscendantByName(this DependencyObject element, string name)
-        {
-            if (element == null || string.IsNullOrWhiteSpace(name))
-            {
-                return null;
-            }
-
-            var parent = VisualTreeHelper.GetParent(element);
-
-            if (parent == null)
-            {
-                return null;
-            }
-
-            if (name.Equals((parent as FrameworkElement)?.Name, StringComparison.OrdinalIgnoreCase))
-            {
-                return parent as FrameworkElement;
-            }
-
-            return parent.FindAscendantByName(name);
         }
 
         public static bool IsChildOf(this FrameworkElement child, FrameworkElement parent)
@@ -120,23 +152,6 @@ namespace Fluent.UI.Core.Extensions
             {
                 return IsChildOf(parentObject, parent);
             }
-        }
-
-        public static T FindAscendant<T>(this DependencyObject element)
-            where T : DependencyObject
-        {
-            var parent = VisualTreeHelper.GetParent(element);
-
-            switch (parent)
-            {
-                case null:
-                    return null;
-
-                case T _:
-                    return parent as T;
-            }
-
-            return parent.FindAscendant<T>();
         }
     }
 }

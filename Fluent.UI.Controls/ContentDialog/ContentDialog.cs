@@ -15,18 +15,15 @@ namespace Fluent.UI.Controls
     {
         public static readonly DependencyProperty PopupBackgroundProperty =
             DependencyProperty.Register(nameof(PopupBackground),
-                typeof(Brush), typeof(ContentDialog),
-                new PropertyMetadata(null));
+                typeof(Brush), typeof(ContentDialog));
 
         public static DependencyProperty CloseButtonCommandParameterProperty =
             DependencyProperty.Register(nameof(CloseButtonCommandParameter),
-                typeof(object), typeof(ContentDialog),
-                new PropertyMetadata(null));
+                typeof(object), typeof(ContentDialog));
 
         public static DependencyProperty CloseButtonCommandProperty =
             DependencyProperty.Register(nameof(CloseButtonCommand),
-                typeof(ICommand), typeof(ContentDialog),
-                new PropertyMetadata(null));
+                typeof(ICommand), typeof(ContentDialog));
 
         public static DependencyProperty CloseButtonStyleProperty =
             DependencyProperty.Register(nameof(CloseButtonStyle),
@@ -55,13 +52,11 @@ namespace Fluent.UI.Controls
 
         public static DependencyProperty PrimaryButtonCommandParameterProperty =
             DependencyProperty.Register(nameof(PrimaryButtonCommandParameter),
-                typeof(object), typeof(ContentDialog),
-                new PropertyMetadata(null));
+                typeof(object), typeof(ContentDialog));
 
         public static DependencyProperty PrimaryButtonCommandProperty =
             DependencyProperty.Register(nameof(PrimaryButtonCommand),
-                typeof(ICommand), typeof(ContentDialog),
-                new PropertyMetadata(null));
+                typeof(ICommand), typeof(ContentDialog));
 
         public static DependencyProperty PrimaryButtonStyleProperty =
             DependencyProperty.Register(nameof(PrimaryButtonStyle),
@@ -75,13 +70,11 @@ namespace Fluent.UI.Controls
 
         public static DependencyProperty SecondaryButtonCommandParameterProperty =
             DependencyProperty.Register(nameof(SecondaryButtonCommandParameter),
-                typeof(object), typeof(ContentDialog),
-                new PropertyMetadata(null));
+                typeof(object), typeof(ContentDialog));
 
         public static DependencyProperty SecondaryButtonCommandProperty =
             DependencyProperty.Register(nameof(SecondaryButtonCommand),
-                typeof(ICommand), typeof(ContentDialog),
-                new PropertyMetadata(null));
+                typeof(ICommand), typeof(ContentDialog));
 
         public static DependencyProperty SecondaryButtonStyleProperty =
             DependencyProperty.Register(nameof(SecondaryButtonStyle),
@@ -95,13 +88,11 @@ namespace Fluent.UI.Controls
 
         public static DependencyProperty TitleProperty =
             DependencyProperty.Register(nameof(Title),
-                typeof(string), typeof(ContentDialog),
-                new PropertyMetadata(null));
+                typeof(string), typeof(ContentDialog));
 
         public static DependencyProperty TitleTemplateProperty =
             DependencyProperty.Register(nameof(TitleTemplate),
-                typeof(DataTemplate), typeof(ContentDialog),
-                new PropertyMetadata(null));
+                typeof(DataTemplate), typeof(ContentDialog));
 
         private ContentDialogAdorner _adornerDialog;
         private Button _closeButton;

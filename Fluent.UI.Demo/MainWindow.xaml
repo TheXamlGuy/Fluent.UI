@@ -110,6 +110,12 @@
                             <ListBoxItem Content="Item2" />
                             <ListBoxItem Content="Item3" />
                         </ListBox>
+                        <TreeView Width="400" Margin="4">
+                            <TreeViewItem Header="fsdfsd" IsExpanded="True">
+                                <TreeViewItem Header="fsdfsd" />
+                                <TreeViewItem Header="fsdfsd" />
+                            </TreeViewItem>
+                        </TreeView>
                     </WrapPanel>
                 </TabItem>
                 <TabItem Header="Popups">

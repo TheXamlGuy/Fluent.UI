@@ -51,7 +51,7 @@ namespace Fluent.UI.Controls
         protected override void RegisterEvents()
         {
             AttachedFrameworkElement.SetCurrentValue(UIElement.FocusableProperty, false);
-            AddPropertyChangedHandler(TabItem.IsSelectedProperty, OnPropertyChanged);
+            AddPropertyChangedHandler(ListBoxItem.IsSelectedProperty, OnPropertyChanged);
         }
 
         private void OnPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeVisualState(true);
