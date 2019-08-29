@@ -12,22 +12,10 @@ namespace Fluent.UI.Controls
 
         protected override void RegisterEvents()
         {
+            base.RegisterEvents();
             AddPropertyChangedHandler(ToggleButton.IsCheckedProperty, OnIsCheckedPropertyChanged);
         }
 
-        private void ChangeCheckedVisualState(bool useTransitions = true)
-        {
-            string visualState;
-            if (IsChecked == true)
-            {
-                visualState = CommonVisualState.Checked;
-            }
-            else
-            {
-                visualState = CommonVisualState.Unchecked;
-            }
-
-            GoToVisualState(visualState, useTransitions);
-        }
+        private void ChangeCheckedVisualState(bool useTransitions = true) => GoToVisualState(IsChecked == true ? CommonVisualState.Checked : CommonVisualState.Unchecked, useTransitions);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Fluent.UI.Core.Extensions;
 using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -114,17 +115,37 @@ namespace Fluent.UI.Core
 
         protected virtual void OnPointerPressed(object sender, MouseButtonEventArgs args)
         {
-            if (args.ButtonState == MouseButtonState.Pressed && !IsPressed)
+            if (Mouse.Captured == null)
             {
-                SetIsPressed(true);
+                AttachedFrameworkElement.Focus();
+                AttachedFrameworkElement.CaptureMouse();
+
+                if (AttachedFrameworkElement.IsMouseCaptured)
+                {
+                    if (args.ButtonState == MouseButtonState.Pressed)
+                    {
+                        if (!IsPressed)
+                        {
+                            SetIsPressed(true);
+                        }
+                    }
+                    else
+                    {
+                        AttachedFrameworkElement.ReleaseMouseCapture();
+                    }
+                }
             }
         }
 
         protected virtual void OnPointerReleased(object sender, MouseButtonEventArgs args)
         {
-            if (args.ButtonState == MouseButtonState.Released && IsPressed)
+            if (args.ButtonState == MouseButtonState.Released)
             {
-                SetIsPressed(false);
+                if (Mouse.Captured != null)
+                {
+                    AttachedFrameworkElement.ReleaseMouseCapture();
+                    SetIsPressed(false);
+                }
             }
         }
 
@@ -142,8 +163,6 @@ namespace Fluent.UI.Core
         {
 
         }
-
-        
 
         private static void OnInternalIsPointOverPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {

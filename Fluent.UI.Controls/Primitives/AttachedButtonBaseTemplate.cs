@@ -1,14 +1,13 @@
 ﻿using Fluent.UI.Core;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls.Primitives;
-using System.Windows.Input;
 
 namespace Fluent.UI.Controls
 {
-    public class AttachedButtonBaseTemplate<TButtonBase> : AttachedControlTemplate<TButtonBase>
-        where TButtonBase : ButtonBase
+    public class AttachedButtonBaseTemplate<TButtonBase> : AttachedControlTemplate<TButtonBase> where TButtonBase : ButtonBase
     {
+        public new bool IsPressed => AttachedFrameworkElement.IsPressed;
+
         protected override void ChangeVisualState(bool useTransitions = true)
         {
             string visualState;
@@ -31,5 +30,9 @@ namespace Fluent.UI.Controls
 
             GoToVisualState(visualState, useTransitions);
         }
+
+        protected override void RegisterEvents() => AddPropertyChangedHandler(ButtonBase.IsPressedProperty, OnIsPressedPropertyChanged);
+
+        protected override void OnIsPressedPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeVisualState();
     }
 }
