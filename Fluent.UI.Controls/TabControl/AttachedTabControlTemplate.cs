@@ -5,8 +5,8 @@ using System.Windows.Controls;
 namespace Fluent.UI.Controls
 {
     [DefaultStyleTarget(typeof(TabControl))]
-    public class AttachedTabControlTemplate : AttachedItemsControlTemplate<TabControl>
+    public class AttachedTabControlTemplate : AttachedControlTemplate<TabControl>
     {
-        protected override Type GetContainerTypeForItem() => typeof(TabItem);
+
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Fluent.UI.Core;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -7,8 +6,6 @@ namespace Fluent.UI.Controls
 {
     public class MenuItemExtension : FrameworkElementExtension
     {
-        public static Dictionary<MenuItem, string> ElementToGroupNames = new Dictionary<MenuItem, string>();
-
         public static readonly DependencyProperty GroupNameProperty =
             DependencyProperty.RegisterAttached("GroupName",
                 typeof(string), typeof(MenuItemExtension),

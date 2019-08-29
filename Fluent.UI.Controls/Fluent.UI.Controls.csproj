@@ -85,5 +85,8 @@
     <Page Update="RadioButton\RadioButton.Light.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="TreeViewItem\TreeViewItem.Light.xaml">
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 </Project>
