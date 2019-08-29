@@ -32,9 +32,9 @@ namespace Fluent.UI.Controls
             ChangeHeaderVisualState();
         }
 
-        public void SetHeaderTemplate(DataTemplate headertemplate = null)
+        public void SetHeaderTemplate(DataTemplate headerTemplate = null)
         {
-            _headerTemplate = headertemplate;
+            _headerTemplate = headerTemplate;
             ChangeHeaderVisualState();
         }
 
@@ -134,14 +134,6 @@ namespace Fluent.UI.Controls
             }
         }
 
-        private void OnRevealButtonPointerLeaeve(object sender, RoutedEventArgs args)
-        {
-            if (Mouse.PrimaryDevice.LeftButton == MouseButtonState.Pressed)
-            {
-                HidePassword();
-            }
-        }
-
         private void OnTextPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
             ChangePlaceholderVisualState();
@@ -161,8 +153,8 @@ namespace Fluent.UI.Controls
 
             return new TextControlSelection
             { 
-                Start = start, 
-                End = end 
+                Start = start,
+                End = end
             };
         }
 
@@ -170,7 +162,6 @@ namespace Fluent.UI.Controls
         {
             _revealButton.AddHandler(UIElement.MouseLeftButtonDownEvent, (MouseButtonEventHandler)OnRevealButtonPointerPressed, true);
             _revealButton.AddHandler(UIElement.MouseLeftButtonUpEvent, (MouseButtonEventHandler)OnRevealButtonPointerReleased, true);
-            _revealButton.AddHandler(UIElement.MouseLeaveEvent, (RoutedEventHandler)OnRevealButtonPointerLeaeve, true);
             _revealButton.AddHandler(UIElement.MouseEnterEvent, (RoutedEventHandler)OnRevealButtonPointerEnter, true);
 
         }
