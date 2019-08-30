@@ -11,11 +11,14 @@ namespace Fluent.UI.Controls
         {
         }
 
-        public void Complete() => _taskCompletionSource.TrySetResult(null);
-
         public void Dispose()
         {
             Complete();
+        }
+
+        public void Complete()
+        {
+            _taskCompletionSource.TrySetResult(null);
         }
 
         internal async Task WaitForCompletion()

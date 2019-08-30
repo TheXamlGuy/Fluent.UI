@@ -10,7 +10,7 @@ namespace Fluent.UI.Controls
 
         public Thickness ItemIndentThicknessDelta
         {
-            get => (Thickness)GetValue(ItemIndentThicknessDeltaProperty);
+            get => (Thickness) GetValue(ItemIndentThicknessDeltaProperty);
             set => SetValue(ItemIndentThicknessDeltaProperty, value);
         }
     }

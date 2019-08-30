@@ -1,6 +1,6 @@
-﻿using Fluent.UI.Core;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
+using Fluent.UI.Core;
 
 namespace Fluent.UI.Controls
 {
@@ -10,8 +10,14 @@ namespace Fluent.UI.Controls
             DependencyProperty.RegisterAttached("TabPresenter",
                 typeof(TabItem), typeof(TabItemExtension));
 
-        internal static TabItem GetTabPresenter(DependencyObject dependencyObject) => (TabItem)dependencyObject.GetValue(TabPresenterProperty);
+        internal static TabItem GetTabPresenter(DependencyObject dependencyObject)
+        {
+            return (TabItem) dependencyObject.GetValue(TabPresenterProperty);
+        }
 
-        internal static void SetTabPresenter(DependencyObject dependencyObject, TabItem tabItem) => dependencyObject.SetValue(TabPresenterProperty, tabItem);
+        internal static void SetTabPresenter(DependencyObject dependencyObject, TabItem tabItem)
+        {
+            dependencyObject.SetValue(TabPresenterProperty, tabItem);
+        }
     }
 }

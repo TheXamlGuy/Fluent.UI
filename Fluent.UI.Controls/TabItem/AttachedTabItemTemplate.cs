@@ -1,7 +1,7 @@
-﻿using Fluent.UI.Core;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Fluent.UI.Core;
 
 namespace Fluent.UI.Controls
 {
@@ -9,6 +9,7 @@ namespace Fluent.UI.Controls
     public class AttachedTabItemTemplate : AttachedItemContainerTemplate<TabItem>
     {
         private Border _tabContainer;
+
         protected override void OnApplyTemplate()
         {
             _tabContainer = GetTemplateChild<Border>("TabContainer");
@@ -24,17 +25,11 @@ namespace Fluent.UI.Controls
             else if (AttachedFrameworkElement.IsSelected)
             {
                 if (!IsPressed && IsPointerOver)
-                {
                     visualState = CommonVisualState.SelectedPointerOver;
-                }
                 else if (IsPressed)
-                {
                     visualState = CommonVisualState.SelectedPressed;
-                }
                 else
-                {
                     visualState = CommonVisualState.Selected;
-                }
             }
             else if (IsPressed)
             {
@@ -60,10 +55,7 @@ namespace Fluent.UI.Controls
 
         protected override void OnPointerReleased(object sender, MouseButtonEventArgs args)
         {
-            if (args.Source is TabItem)
-            {
-                base.OnPointerReleased(sender, args);
-            }
+            if (args.Source is TabItem) base.OnPointerReleased(sender, args);
         }
 
         protected override void OnClick()
@@ -73,7 +65,7 @@ namespace Fluent.UI.Controls
 
         private void OnPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
-            ChangeVisualState(true);
+            ChangeVisualState();
         }
     }
 }

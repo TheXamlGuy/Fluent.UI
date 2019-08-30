@@ -1,5 +1,5 @@
-﻿using Fluent.UI.Core;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
+using Fluent.UI.Core;
 
 namespace Fluent.UI.Controls
 {
@@ -8,5 +8,3 @@ namespace Fluent.UI.Controls
     {
     }
 }
-
-

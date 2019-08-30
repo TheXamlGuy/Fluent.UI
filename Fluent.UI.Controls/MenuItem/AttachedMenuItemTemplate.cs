@@ -1,19 +1,20 @@
-﻿using Fluent.UI.Core;
-using Fluent.UI.Core.Extensions;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Fluent.UI.Core;
+using Fluent.UI.Core.Extensions;
+using FrameworkElementExtension = Fluent.UI.Core.FrameworkElementExtension;
 
 namespace Fluent.UI.Controls
 {
     [DefaultStyleTarget(typeof(MenuItem))]
     public class AttachedMenuItemTemplate : AttachedItemContainerTemplate<MenuItem>
     {
-        internal bool IsRadioCheckable;
         private string _groupName;
+        internal bool IsRadioCheckable;
 
         internal void SetGroupName(string groupName)
         {
@@ -37,21 +38,13 @@ namespace Fluent.UI.Controls
             else
             {
                 if (!IsEnabled)
-                {
                     visualState = CommonVisualState.Disabled;
-                }
                 else if (AttachedFrameworkElement.IsPressed)
-                {
                     visualState = CommonVisualState.Pressed;
-                }
                 else if (IsPointerOver)
-                {
                     visualState = CommonVisualState.PointerOver;
-                }
                 else
-                {
                     visualState = CommonVisualState.Normal;
-                }
             }
 
             GoToVisualState(visualState, useTransitions);
@@ -83,45 +76,32 @@ namespace Fluent.UI.Controls
         private void ChangeCheckAndIconPlaceholderVisualState(bool useTransitions = true, bool once = false)
         {
             if (VisualTreeHelper.GetParent(AttachedFrameworkElement) is Panel parent)
-            {
-                if (!once || (once && parent.Children.IndexOf(AttachedFrameworkElement) == 0))
+                if (!once || once && parent.Children.IndexOf(AttachedFrameworkElement) == 0)
                 {
                     var visualStates = new List<string>();
                     foreach (var child in parent.FindChildren<MenuItem>())
-                    {
-                        if (MenuItemExtension.GetAttachedTemplate(child) is AttachedMenuItemTemplate attachedTemplate)
+                        if (FrameworkElementExtension.GetAttachedTemplate(child) is AttachedMenuItemTemplate
+                            attachedTemplate)
                         {
                             var menuItem = attachedTemplate.AttachedFrameworkElement;
                             if (menuItem.Icon != null && !attachedTemplate.IsRadioCheckable && menuItem.IsCheckable)
-                            {
                                 visualStates.Add("CheckAndIconPlaceholder");
-                            }
                             else if (menuItem.Icon != null && attachedTemplate.IsRadioCheckable)
-                            {
                                 visualStates.Add("RadioCheckAndIconPlaceholder");
-                            }
                             else if (menuItem.Icon != null)
-                            {
                                 visualStates.Add("IconPlaceholder");
-                            }
                             else if (attachedTemplate.IsRadioCheckable)
-                            {
                                 visualStates.Add("RadioCheckPlaceholder");
-                            }
                             else if (menuItem.IsCheckable)
-                            {
                                 visualStates.Add("CheckPlaceholder");
-                            }
                             else
-                            {
                                 visualStates.Add("NoPlaceholder");
-                            }
                         }
-                    }
 
                     if (visualStates.Any())
                     {
-                        var mostCommonVisualState = visualStates.GroupBy(x => x).OrderBy(g => g.Key).FirstOrDefault().Key;
+                        var mostCommonVisualState =
+                            visualStates.GroupBy(x => x).OrderBy(g => g.Key).FirstOrDefault().Key;
                         foreach (var child in GetSiblings())
                         {
                             VisualStateManager.GoToState(child, mostCommonVisualState, useTransitions);
@@ -129,12 +109,13 @@ namespace Fluent.UI.Controls
                         }
                     }
                 }
-            }
         }
 
         private void ChangeCheckedVisualState(bool useTransitions = true)
         {
-            var visualState = AttachedFrameworkElement.IsChecked ? CommonVisualState.Checked : CommonVisualState.Unchecked;
+            var visualState = AttachedFrameworkElement.IsChecked
+                ? CommonVisualState.Checked
+                : CommonVisualState.Unchecked;
             GoToVisualState(visualState, useTransitions);
         }
 
@@ -154,48 +135,53 @@ namespace Fluent.UI.Controls
         private IEnumerable<MenuItem> GetSiblings()
         {
             if (VisualTreeHelper.GetParent(AttachedFrameworkElement) is FrameworkElement parent)
-            {
                 foreach (var child in parent.FindChildren<MenuItem>())
-                {
                     yield return child;
-                }
-            }
         }
 
         private void OnClick(object sender, RoutedEventArgs args)
         {
             if (IsRadioCheckable)
             {
-                if (AttachedFrameworkElement.IsChecked)
-                {
-                    return;
-                }
+                if (AttachedFrameworkElement.IsChecked) return;
 
                 AttachedFrameworkElement.IsChecked = true;
                 UpdateSiblings();
             }
         }
 
-        private void OnIconPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeCheckAndIconPlaceholderVisualState();
+        private void OnIconPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        {
+            ChangeCheckAndIconPlaceholderVisualState();
+        }
 
-        private void OnIsCheckablePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeCheckAndIconPlaceholderVisualState();
+        private void OnIsCheckablePropertyChanged(DependencyObject dependencyObject,
+            DependencyPropertyChangedEventArgs args)
+        {
+            ChangeCheckAndIconPlaceholderVisualState();
+        }
 
-        private void OnIsCheckedPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeCheckedVisualState();
+        private void OnIsCheckedPropertyChanged(DependencyObject dependencyObject,
+            DependencyPropertyChangedEventArgs args)
+        {
+            ChangeCheckedVisualState();
+        }
 
-        private void OnPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeVisualState();
+        private void OnPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        {
+            ChangeVisualState();
+        }
 
-        private void OnRolePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangePlacementVisualState();
+        private void OnRolePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        {
+            ChangePlacementVisualState();
+        }
 
         private void UpdateSiblings()
         {
             foreach (var child in GetSiblings())
-            {
                 if (child != AttachedFrameworkElement && MenuItemExtension.GetGroupName(child) == _groupName)
-                {
                     child.IsChecked = false;
-                }
-            }
         }
     }
 }
-

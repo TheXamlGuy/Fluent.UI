@@ -1,7 +1,4 @@
-﻿using Fluent.UI.Core;
-using Fluent.UI.Core.Extensions;
-using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,6 +6,8 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using Fluent.UI.Core;
+using Fluent.UI.Core.Extensions;
 
 namespace Fluent.UI.Controls
 {
@@ -42,21 +41,13 @@ namespace Fluent.UI.Controls
         {
             string visualState;
             if (!IsEnabled)
-            {
                 visualState = CommonVisualState.Disabled;
-            }
             else if (IsFocused)
-            {
                 visualState = CommonVisualState.Focused;
-            }
             else if (IsPointerOver)
-            {
                 visualState = CommonVisualState.PointerOver;
-            }
             else
-            {
                 visualState = CommonVisualState.Normal;
-            }
 
             GoToVisualState(visualState, useTransitions);
         }
@@ -66,10 +57,7 @@ namespace Fluent.UI.Controls
             _revealButton = GetTemplateChild<ToggleButton>("RevealButton");
             _revealTextBox = GetTemplateChild<TextBox>("RevealTextBox");
 
-            if (_revealButton != null)
-            {
-                RegisterRevealButtonEvent();
-            }
+            if (_revealButton != null) RegisterRevealButtonEvent();
 
             var scrollViewer = GetTemplateChild<ScrollViewer>("PART_ContentHost");
             if (scrollViewer != null)
@@ -88,7 +76,8 @@ namespace Fluent.UI.Controls
             ChangePlaceholderVisualState(false);
         }
 
-        protected override void OnIsFocusedPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        protected override void OnIsFocusedPropertyChanged(DependencyObject dependencyObject,
+            DependencyPropertyChangedEventArgs args)
         {
             ChangeDeleteButtonVisualState();
             ChangeVisualState();
@@ -104,34 +93,43 @@ namespace Fluent.UI.Controls
             UnregisterRevealButtonEvent();
         }
 
-        private void ChangeDeleteButtonVisualState(bool useTransitions = true) => GoToVisualState(AttachedFrameworkElement.IsFocused && AttachedFrameworkElement.Password.Length > 0 ? CommonVisualState.ButtonVisible : CommonVisualState.ButtonCollapsed, useTransitions);
+        private void ChangeDeleteButtonVisualState(bool useTransitions = true)
+        {
+            GoToVisualState(
+                AttachedFrameworkElement.IsFocused && AttachedFrameworkElement.Password.Length > 0
+                    ? CommonVisualState.ButtonVisible
+                    : CommonVisualState.ButtonCollapsed, useTransitions);
+        }
 
-        private void ChangeHeaderVisualState(bool useTransitions = true) => VisualStateManager.GoToState(AttachedFrameworkElement, _headerTemplate == null && _header == null ? CommonVisualState.HeaderCollapsed : CommonVisualState.HeaderVisible, useTransitions);
+        private void ChangeHeaderVisualState(bool useTransitions = true)
+        {
+            VisualStateManager.GoToState(AttachedFrameworkElement,
+                _headerTemplate == null && _header == null
+                    ? CommonVisualState.HeaderCollapsed
+                    : CommonVisualState.HeaderVisible, useTransitions);
+        }
 
-        private void ChangePlaceholderVisualState(bool useTransitions = true) => VisualStateManager.GoToState(AttachedFrameworkElement, AttachedFrameworkElement.Password.Length > 0 ? CommonVisualState.PlaceholderCollapsed : CommonVisualState.PlaceholderVisible, useTransitions);
+        private void ChangePlaceholderVisualState(bool useTransitions = true)
+        {
+            VisualStateManager.GoToState(AttachedFrameworkElement,
+                AttachedFrameworkElement.Password.Length > 0
+                    ? CommonVisualState.PlaceholderCollapsed
+                    : CommonVisualState.PlaceholderVisible, useTransitions);
+        }
 
         private void OnRevealButtonPointerPressed(object sender, RoutedEventArgs args)
         {
-            if (Mouse.PrimaryDevice.LeftButton == MouseButtonState.Pressed)
-            {
-                RevealPassword();
-            }
+            if (Mouse.PrimaryDevice.LeftButton == MouseButtonState.Pressed) RevealPassword();
         }
 
         private void OnRevealButtonPointerEnter(object sender, RoutedEventArgs args)
         {
-            if (Mouse.PrimaryDevice.LeftButton == MouseButtonState.Pressed)
-            {
-                RevealPassword();
-            }
-        }    
+            if (Mouse.PrimaryDevice.LeftButton == MouseButtonState.Pressed) RevealPassword();
+        }
 
         private void OnRevealButtonPointerReleased(object sender, RoutedEventArgs args)
         {
-            if (Mouse.PrimaryDevice.LeftButton == MouseButtonState.Released)
-            {
-                HidePassword();
-            }
+            if (Mouse.PrimaryDevice.LeftButton == MouseButtonState.Released) HidePassword();
         }
 
         private void OnTextPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
@@ -142,7 +140,9 @@ namespace Fluent.UI.Controls
 
         private TextControlSelection GetSelection()
         {
-            var selection = AttachedFrameworkElement.GetValue<TextSelection>("Selection", BindingFlags.NonPublic | BindingFlags.Instance);
+            var selection =
+                AttachedFrameworkElement.GetValue<TextSelection>("Selection",
+                    BindingFlags.NonPublic | BindingFlags.Instance);
             var textRangeType = selection.GetType().GetInterfaces().FirstOrDefault(x => x.Name == "ITextRange");
 
             var startTextPointer = textRangeType.GetValue<object>(selection, "Start");
@@ -152,7 +152,7 @@ namespace Fluent.UI.Controls
             var end = endEndTextPointer.GetValue<int>("Offset", BindingFlags.Instance | BindingFlags.NonPublic);
 
             return new TextControlSelection
-            { 
+            {
                 Start = start,
                 End = end
             };
@@ -160,10 +160,11 @@ namespace Fluent.UI.Controls
 
         private void RegisterRevealButtonEvent()
         {
-            _revealButton.AddHandler(UIElement.MouseLeftButtonDownEvent, (MouseButtonEventHandler)OnRevealButtonPointerPressed, true);
-            _revealButton.AddHandler(UIElement.MouseLeftButtonUpEvent, (MouseButtonEventHandler)OnRevealButtonPointerReleased, true);
-            _revealButton.AddHandler(UIElement.MouseEnterEvent, (RoutedEventHandler)OnRevealButtonPointerEnter, true);
-
+            _revealButton.AddHandler(UIElement.MouseLeftButtonDownEvent,
+                (MouseButtonEventHandler) OnRevealButtonPointerPressed, true);
+            _revealButton.AddHandler(UIElement.MouseLeftButtonUpEvent,
+                (MouseButtonEventHandler) OnRevealButtonPointerReleased, true);
+            _revealButton.AddHandler(UIElement.MouseEnterEvent, (RoutedEventHandler) OnRevealButtonPointerEnter, true);
         }
 
         private void HidePassword()
@@ -174,15 +175,13 @@ namespace Fluent.UI.Controls
             _revealTextBox.Visibility = Visibility.Collapsed;
             AttachedFrameworkElement.Focus();
 
-            AttachedFrameworkElement.GetType().GetMethod("Select", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(AttachedFrameworkElement, new object[] { start, length });
+            AttachedFrameworkElement.GetType().GetMethod("Select", BindingFlags.Instance | BindingFlags.NonPublic)
+                .Invoke(AttachedFrameworkElement, new object[] {start, length});
         }
 
         private void RevealPassword()
         {
-            if (_revealTextBox == null)
-            {
-                return;
-            }
+            if (_revealTextBox == null) return;
 
             var selection = GetSelection();
             _revealTextBox.Visibility = Visibility.Visible;
@@ -197,7 +196,6 @@ namespace Fluent.UI.Controls
         {
             if (_revealButton != null)
             {
-
             }
         }
     }

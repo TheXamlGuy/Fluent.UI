@@ -18,7 +18,6 @@
             <StaticResource x:Key="RadioButtonPointerOverBorderBrush" ResourceKey="SystemControlTransparentBrush" />
             <StaticResource x:Key="RadioButtonPressedBorderBrush" ResourceKey="SystemControlTransparentBrush" />
             <StaticResource x:Key="RadioButtonDisabledBorderBrush" ResourceKey="SystemControlTransparentBrush" />
-
             <StaticResource x:Key="RadioButtonOuterEllipseStroke" ResourceKey="SystemControlForegroundBaseMediumHighBrush" />
             <StaticResource x:Key="RadioButtonPointerOverOuterEllipseStroke" ResourceKey="SystemControlHighlightBaseHighBrush" />
             <StaticResource x:Key="RadioButtonPressedOuterEllipseStroke" ResourceKey="SystemControlHighlightBaseMediumBrush" />

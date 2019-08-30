@@ -1,56 +1,41 @@
-﻿using Fluent.UI.Core;
-using Fluent.UI.Core.Extensions;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
+using Fluent.UI.Core;
+using Fluent.UI.Core.Extensions;
 
 namespace Fluent.UI.Controls
 {
     [DefaultStyleTarget(typeof(TreeViewItem))]
     public class AttachedTreeViewItemTemplate : AttachedControlTemplate<TreeViewItem>
     {
+        private TreeViewItemTemplateSettings _templateSettings;
+
         protected override void ChangeVisualState(bool useTransitions = true)
         {
             string visualState;
             if (AttachedFrameworkElement.IsSelected)
             {
                 if (!IsPressed && IsPointerOver)
-                {
                     visualState = CommonVisualState.SelectedPointerOver;
-                }
                 else if (IsPressed)
-                {
                     visualState = CommonVisualState.SelectedPressed;
-                }
                 else
-                {
                     visualState = CommonVisualState.Selected;
-                }
             }
             else
             {
                 if (!AttachedFrameworkElement.IsEnabled)
-                {
                     visualState = CommonVisualState.Disabled;
-                }
                 else if (IsPressed)
-                {
                     visualState = CommonVisualState.Pressed;
-                }
                 else if (IsPointerOver)
-                {
                     visualState = CommonVisualState.PointerOver;
-                }
                 else
-                {
                     visualState = CommonVisualState.Normal;
-                }
             }
 
             GoToVisualState(visualState, useTransitions);
         }
-
-        private TreeViewItemTemplateSettings _templateSettings;
 
         protected override void OnApplyTemplate()
         {
@@ -67,7 +52,8 @@ namespace Fluent.UI.Controls
             var count = AttachedFrameworkElement.FindAscendantCount<TreeViewItem, TreeView>();
             var leftIndentLengthDelta = count > 0 ? indentLength * count : 0;
 
-            _templateSettings.SetValue(TreeViewItemTemplateSettings.ItemIndentThicknessDeltaProperty, new Thickness(leftIndentLengthDelta, 0, 0, 0));
+            _templateSettings.SetValue(TreeViewItemTemplateSettings.ItemIndentThicknessDeltaProperty,
+                new Thickness(leftIndentLengthDelta, 0, 0, 0));
         }
 
 
@@ -77,7 +63,10 @@ namespace Fluent.UI.Controls
             AddPropertyChangedHandler(TreeViewItem.IsSelectedProperty, OnPropertyChanged);
         }
 
-        private void OnPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeVisualState(true);
+        private void OnPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        {
+            ChangeVisualState();
+        }
 
         protected override void OnClick()
         {
@@ -85,4 +74,3 @@ namespace Fluent.UI.Controls
         }
     }
 }
-

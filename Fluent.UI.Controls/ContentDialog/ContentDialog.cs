@@ -1,12 +1,12 @@
-﻿using Fluent.UI.Core;
-using Fluent.UI.Core.Extensions;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using Fluent.UI.Core;
+using Fluent.UI.Core.Extensions;
 
 namespace Fluent.UI.Controls
 {
@@ -28,7 +28,8 @@ namespace Fluent.UI.Controls
         public static DependencyProperty CloseButtonStyleProperty =
             DependencyProperty.Register(nameof(CloseButtonStyle),
                 typeof(Style), typeof(ContentDialog),
-                new PropertyMetadata(new Style(typeof(Button), (Style)Application.Current.FindResource(typeof(Button)))));
+                new PropertyMetadata(
+                    new Style(typeof(Button), (Style) Application.Current.FindResource(typeof(Button)))));
 
         public static DependencyProperty CloseButtonTextProperty =
             DependencyProperty.Register(nameof(CloseButtonText),
@@ -61,7 +62,8 @@ namespace Fluent.UI.Controls
         public static DependencyProperty PrimaryButtonStyleProperty =
             DependencyProperty.Register(nameof(PrimaryButtonStyle),
                 typeof(Style), typeof(ContentDialog),
-                new PropertyMetadata(new Style(typeof(Button), (Style)Application.Current.FindResource(typeof(Button)))));
+                new PropertyMetadata(
+                    new Style(typeof(Button), (Style) Application.Current.FindResource(typeof(Button)))));
 
         public static DependencyProperty PrimaryButtonTextProperty =
             DependencyProperty.Register(nameof(PrimaryButtonText),
@@ -79,7 +81,8 @@ namespace Fluent.UI.Controls
         public static DependencyProperty SecondaryButtonStyleProperty =
             DependencyProperty.Register(nameof(SecondaryButtonStyle),
                 typeof(Style), typeof(ContentDialog),
-                new PropertyMetadata(new Style(typeof(Button), (Style)Application.Current.FindResource(typeof(Button)))));
+                new PropertyMetadata(
+                    new Style(typeof(Button), (Style) Application.Current.FindResource(typeof(Button)))));
 
         public static DependencyProperty SecondaryButtonTextProperty =
             DependencyProperty.Register(nameof(SecondaryButtonText),
@@ -106,7 +109,118 @@ namespace Fluent.UI.Controls
         private Button _secondaryButton;
         private TaskCompletionSource<object> _taskCompletionSource;
 
-        public ContentDialog() => DefaultStyleKey = typeof(ContentDialog);
+        public ContentDialog()
+        {
+            DefaultStyleKey = typeof(ContentDialog);
+        }
+
+        public ICommand CloseButtonCommand
+        {
+            get => (ICommand) GetValue(CloseButtonCommandParameterProperty);
+            set => SetValue(CloseButtonCommandParameterProperty, value);
+        }
+
+        public object CloseButtonCommandParameter
+        {
+            get => GetValue(CloseButtonCommandParameterProperty);
+            set => SetValue(CloseButtonCommandParameterProperty, value);
+        }
+
+        public Style CloseButtonStyle
+        {
+            get => (Style) GetValue(CloseButtonStyleProperty);
+            set => SetValue(CloseButtonStyleProperty, value);
+        }
+
+        public string CloseButtonText
+        {
+            get => (string) GetValue(CloseButtonTextProperty);
+            set => SetValue(CloseButtonTextProperty, value);
+        }
+
+        public ContentDialogButton DefaultButton
+        {
+            get => (ContentDialogButton) GetValue(DefaultButtonProperty);
+            set => SetValue(DefaultButtonProperty, value);
+        }
+
+        public bool IsPrimaryButtonEnabled
+        {
+            get => (bool) GetValue(IsPrimaryButtonEnabledProperty);
+            set => SetValue(IsPrimaryButtonEnabledProperty, value);
+        }
+
+        public bool IsSecondaryButtonEnabled
+        {
+            get => (bool) GetValue(IsSecondaryButtonEnabledProperty);
+            set => SetValue(IsSecondaryButtonEnabledProperty, value);
+        }
+
+        public Brush PopupBackground
+        {
+            get => (Brush) GetValue(PopupBackgroundProperty);
+            set => SetValue(PopupBackgroundProperty, value);
+        }
+
+        public ICommand PrimaryButtonCommand
+        {
+            get => (ICommand) GetValue(PrimaryButtonCommandProperty);
+            set => SetValue(PrimaryButtonCommandProperty, value);
+        }
+
+        public object PrimaryButtonCommandParameter
+        {
+            get => GetValue(PrimaryButtonCommandParameterProperty);
+            set => SetValue(PrimaryButtonCommandParameterProperty, value);
+        }
+
+        public Style PrimaryButtonStyle
+        {
+            get => (Style) GetValue(PrimaryButtonStyleProperty);
+            set => SetValue(PrimaryButtonStyleProperty, value);
+        }
+
+        public string PrimaryButtonText
+        {
+            get => (string) GetValue(PrimaryButtonTextProperty);
+            set => SetValue(PrimaryButtonTextProperty, value);
+        }
+
+        public ICommand SecondaryButtonCommand
+        {
+            get => (ICommand) GetValue(SecondaryButtonCommandProperty);
+            set => SetValue(SecondaryButtonCommandProperty, value);
+        }
+
+        public object SecondaryButtonCommandParameter
+        {
+            get => GetValue(SecondaryButtonCommandParameterProperty);
+            set => SetValue(SecondaryButtonCommandParameterProperty, value);
+        }
+
+        public Style SecondaryButtonStyle
+        {
+            get => (Style) GetValue(SecondaryButtonStyleProperty);
+            set => SetValue(SecondaryButtonStyleProperty, value);
+        }
+
+        public string SecondaryButtonText
+        {
+            get => (string) GetValue(SecondaryButtonTextProperty);
+            set => SetValue(SecondaryButtonTextProperty, value);
+        }
+
+        public object Title
+        {
+            get => (string) GetValue(TitleProperty);
+            set => SetValue(TitleProperty, value);
+        }
+
+        public DataTemplate TitleTemplate
+        {
+            get => (DataTemplate) GetValue(TitleTemplateProperty);
+            set => SetValue(TitleTemplateProperty, value);
+        }
 
         public event TypedEventHandler<ContentDialog, ContentDialogButtonClickEventArgs> CloseButtonClick;
 
@@ -121,114 +235,6 @@ namespace Fluent.UI.Controls
         public event TypedEventHandler<ContentDialog, ContentDialogButtonClickEventArgs> PrimaryButtonClick;
 
         public event TypedEventHandler<ContentDialog, ContentDialogButtonClickEventArgs> SecondaryButtonClick;
-
-        public ICommand CloseButtonCommand
-        {
-            get => (ICommand)GetValue(CloseButtonCommandParameterProperty);
-            set => SetValue(CloseButtonCommandParameterProperty, value);
-        }
-
-        public object CloseButtonCommandParameter
-        {
-            get => GetValue(CloseButtonCommandParameterProperty);
-            set => SetValue(CloseButtonCommandParameterProperty, value);
-        }
-
-        public Style CloseButtonStyle
-        {
-            get => (Style)GetValue(CloseButtonStyleProperty);
-            set => SetValue(CloseButtonStyleProperty, value);
-        }
-
-        public string CloseButtonText
-        {
-            get => (string)GetValue(CloseButtonTextProperty);
-            set => SetValue(CloseButtonTextProperty, value);
-        }
-
-        public ContentDialogButton DefaultButton
-        {
-            get => (ContentDialogButton)GetValue(DefaultButtonProperty);
-            set => SetValue(DefaultButtonProperty, value);
-        }
-
-        public bool IsPrimaryButtonEnabled
-        {
-            get => (bool)GetValue(IsPrimaryButtonEnabledProperty);
-            set => SetValue(IsPrimaryButtonEnabledProperty, value);
-        }
-
-        public bool IsSecondaryButtonEnabled
-        {
-            get => (bool)GetValue(IsSecondaryButtonEnabledProperty);
-            set => SetValue(IsSecondaryButtonEnabledProperty, value);
-        }
-
-        public Brush PopupBackground
-        {
-            get => (Brush)GetValue(PopupBackgroundProperty);
-            set => SetValue(PopupBackgroundProperty, value);
-        }
-
-        public ICommand PrimaryButtonCommand
-        {
-            get => (ICommand)GetValue(PrimaryButtonCommandProperty);
-            set => SetValue(PrimaryButtonCommandProperty, value);
-        }
-
-        public object PrimaryButtonCommandParameter
-        {
-            get => GetValue(PrimaryButtonCommandParameterProperty);
-            set => SetValue(PrimaryButtonCommandParameterProperty, value);
-        }
-
-        public Style PrimaryButtonStyle
-        {
-            get => (Style)GetValue(PrimaryButtonStyleProperty);
-            set => SetValue(PrimaryButtonStyleProperty, value);
-        }
-
-        public string PrimaryButtonText
-        {
-            get => (string)GetValue(PrimaryButtonTextProperty);
-            set => SetValue(PrimaryButtonTextProperty, value);
-        }
-
-        public ICommand SecondaryButtonCommand
-        {
-            get => (ICommand)GetValue(SecondaryButtonCommandProperty);
-            set => SetValue(SecondaryButtonCommandProperty, value);
-        }
-
-        public object SecondaryButtonCommandParameter
-        {
-            get => GetValue(SecondaryButtonCommandParameterProperty);
-            set => SetValue(SecondaryButtonCommandParameterProperty, value);
-        }
-
-        public Style SecondaryButtonStyle
-        {
-            get => (Style)GetValue(SecondaryButtonStyleProperty);
-            set => SetValue(SecondaryButtonStyleProperty, value);
-        }
-
-        public string SecondaryButtonText
-        {
-            get => (string)GetValue(SecondaryButtonTextProperty);
-            set => SetValue(SecondaryButtonTextProperty, value);
-        }
-
-        public object Title
-        {
-            get => (string)GetValue(TitleProperty);
-            set => SetValue(TitleProperty, value);
-        }
-
-        public DataTemplate TitleTemplate
-        {
-            get => (DataTemplate)GetValue(TitleTemplateProperty);
-            set => SetValue(TitleTemplateProperty, value);
-        }
 
         public override void OnApplyTemplate()
         {
@@ -261,10 +267,7 @@ namespace Fluent.UI.Controls
 
             UpdateButtonVisualStates();
 
-            if (_isShowing)
-            {
-                UpdateShowingVisualStates();
-            }
+            if (_isShowing) UpdateShowingVisualStates();
         }
 
         public async Task ShowAsync(ContentDialogPlacement placement)
@@ -281,25 +284,29 @@ namespace Fluent.UI.Controls
             await _taskCompletionSource.Task.ConfigureAwait(false);
         }
 
-        private static void OnCloseButtonTextPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        private static void OnCloseButtonTextPropertyChanged(DependencyObject dependencyObject,
+            DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             var contentDialog = dependencyObject as ContentDialog;
             contentDialog?.UpdateButtonVisualStates();
         }
 
-        private static void OnDefaultButtonPropertyChangek(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        private static void OnDefaultButtonPropertyChangek(DependencyObject dependencyObject,
+            DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             var contentDialog = dependencyObject as ContentDialog;
             contentDialog?.OnDefaultButtonPropertyChange();
         }
 
-        private static void OnPrimaryButtonTextPropertChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        private static void OnPrimaryButtonTextPropertChanged(DependencyObject dependencyObject,
+            DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             var contentDialog = dependencyObject as ContentDialog;
             contentDialog?.UpdateButtonVisualStates();
         }
 
-        private static void OnSecondaryButtonTextPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        private static void OnSecondaryButtonTextPropertyChanged(DependencyObject dependencyObject,
+            DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             var contentDialog = dependencyObject as ContentDialog;
             contentDialog?.UpdateButtonVisualStates();
@@ -344,19 +351,13 @@ namespace Fluent.UI.Controls
                 var eventArgs = new ContentDialogButtonClickEventArgs();
                 foreach (var eventDelegate in CloseButtonClick.GetInvocationList())
                 {
-                    var handler = (TypedEventHandler<ContentDialog, ContentDialogButtonClickEventArgs>)eventDelegate;
+                    var handler = (TypedEventHandler<ContentDialog, ContentDialogButtonClickEventArgs>) eventDelegate;
                     handler(this, eventArgs);
 
                     var deferral = eventArgs.GetCurrentDeferralAndReset();
-                    if (deferral != null)
-                    {
-                        await deferral.WaitForCompletion();
-                    }
+                    if (deferral != null) await deferral.WaitForCompletion();
 
-                    if (eventArgs.Cancel)
-                    {
-                        return;
-                    }
+                    if (eventArgs.Cancel) return;
                 }
             }
 
@@ -364,22 +365,19 @@ namespace Fluent.UI.Controls
             PrepareClosing();
         }
 
-        private void OnDefaultButtonPropertyChange() => PrepareDefaultButton();
+        private void OnDefaultButtonPropertyChange()
+        {
+            PrepareDefaultButton();
+        }
 
         private void OnDialogClosingCompleted(object sender, EventArgs args)
         {
-            if (!_isShowing && _isOpen)
-            {
-                FinalizeClosing();
-            }
+            if (!_isShowing && _isOpen) FinalizeClosing();
         }
 
         private void OnDialogShowingCompleted(object sender, EventArgs args)
         {
-            if (_isShowing)
-            {
-                FinalizeOpening();
-            }
+            if (_isShowing) FinalizeOpening();
         }
 
         private async void OnPrimaryButtonClick(object sender, RoutedEventArgs routedEventArgs)
@@ -389,19 +387,13 @@ namespace Fluent.UI.Controls
                 var eventArgs = new ContentDialogButtonClickEventArgs();
                 foreach (var eventDelegate in PrimaryButtonClick.GetInvocationList())
                 {
-                    var handler = (TypedEventHandler<ContentDialog, ContentDialogButtonClickEventArgs>)eventDelegate;
+                    var handler = (TypedEventHandler<ContentDialog, ContentDialogButtonClickEventArgs>) eventDelegate;
                     handler(this, eventArgs);
 
                     var deferral = eventArgs.GetCurrentDeferralAndReset();
-                    if (deferral != null)
-                    {
-                        await deferral.WaitForCompletion();
-                    }
+                    if (deferral != null) await deferral.WaitForCompletion();
 
-                    if (eventArgs.Cancel)
-                    {
-                        return;
-                    }
+                    if (eventArgs.Cancel) return;
                 }
             }
 
@@ -416,19 +408,13 @@ namespace Fluent.UI.Controls
                 var eventArgs = new ContentDialogButtonClickEventArgs();
                 foreach (var eventDelegate in SecondaryButtonClick.GetInvocationList())
                 {
-                    var handler = (TypedEventHandler<ContentDialog, ContentDialogButtonClickEventArgs>)eventDelegate;
+                    var handler = (TypedEventHandler<ContentDialog, ContentDialogButtonClickEventArgs>) eventDelegate;
                     handler(this, eventArgs);
 
                     var deferral = eventArgs.GetCurrentDeferralAndReset();
-                    if (deferral != null)
-                    {
-                        await deferral.WaitForCompletion();
-                    }
+                    if (deferral != null) await deferral.WaitForCompletion();
 
-                    if (eventArgs.Cancel)
-                    {
-                        return;
-                    }
+                    if (eventArgs.Cancel) return;
                 }
             }
 
@@ -464,26 +450,17 @@ namespace Fluent.UI.Controls
         {
             if (Closing != null)
             {
-                var args = new ContentDialogClosingEventArgs
-                {
-                    // Result = result
-                };
+                var args = new ContentDialogClosingEventArgs();
 
                 foreach (var eventDelegate in Closing.GetInvocationList())
                 {
-                    var handler = (TypedEventHandler<ContentDialog, ContentDialogClosingEventArgs>)eventDelegate;
+                    var handler = (TypedEventHandler<ContentDialog, ContentDialogClosingEventArgs>) eventDelegate;
                     handler(this, args);
 
                     var deferral = args.GetCurrentDeferralAndReset();
-                    if (deferral != null)
-                    {
-                        await deferral.WaitForCompletion();
-                    }
+                    if (deferral != null) await deferral.WaitForCompletion();
 
-                    if (args.Cancel)
-                    {
-                        return;
-                    }
+                    if (args.Cancel) return;
                 }
             }
 
@@ -492,20 +469,11 @@ namespace Fluent.UI.Controls
 
         private void PrepareDefaultButton()
         {
-            if (_primaryButton != null)
-            {
-                _primaryButton.IsDefault = false;
-            }
+            if (_primaryButton != null) _primaryButton.IsDefault = false;
 
-            if (_secondaryButton != null)
-            {
-                _secondaryButton.IsDefault = true;
-            }
+            if (_secondaryButton != null) _secondaryButton.IsDefault = true;
 
-            if (_closeButton != null)
-            {
-                _closeButton.IsDefault = false;
-            }
+            if (_closeButton != null) _closeButton.IsDefault = false;
 
             var state = "NoDefaultButton";
 
@@ -520,6 +488,7 @@ namespace Fluent.UI.Controls
                         _primaryButton.IsDefault = true;
                         state = "PrimaryAsDefaultButton";
                     }
+
                     break;
 
                 case ContentDialogButton.Secondary:
@@ -528,6 +497,7 @@ namespace Fluent.UI.Controls
                         _secondaryButton.IsDefault = true;
                         state = "SecondaryAsDefaultButton";
                     }
+
                     break;
 
                 case ContentDialogButton.Close:
@@ -536,6 +506,7 @@ namespace Fluent.UI.Controls
                         _closeButton.IsDefault = true;
                         state = "CloseAsDefaultButton";
                     }
+
                     break;
 
                 default:
@@ -552,19 +523,13 @@ namespace Fluent.UI.Controls
                 var args = new ContentDialogOpeningEventArgs();
                 foreach (var eventDelegate in Opening.GetInvocationList())
                 {
-                    var handler = (TypedEventHandler<ContentDialog, ContentDialogOpeningEventArgs>)eventDelegate;
+                    var handler = (TypedEventHandler<ContentDialog, ContentDialogOpeningEventArgs>) eventDelegate;
                     handler(this, args);
-                    if (args.Cancel)
-                    {
-                        return;
-                    }
+                    if (args.Cancel) return;
                 }
             }
 
-            if (!_isTemplateReady)
-            {
-                ApplyTemplate();
-            }
+            if (!_isTemplateReady) ApplyTemplate();
 
             if (_placement == ContentDialogPlacement.Popup)
             {
@@ -649,37 +614,21 @@ namespace Fluent.UI.Controls
             string state;
 
             if (isPrimaryButtonVisible && isSecondaryButtonVisible && isCloseButtonVisible)
-            {
                 state = "AllVisible";
-            }
             else if (isPrimaryButtonVisible && isSecondaryButtonVisible)
-            {
                 state = "PrimaryAndSecondaryVisible";
-            }
             else if (isPrimaryButtonVisible && isCloseButtonVisible)
-            {
                 state = "PrimaryAndCloseVisible";
-            }
             else if (isSecondaryButtonVisible && isCloseButtonVisible)
-            {
                 state = "SecondaryAndCloseVisible";
-            }
             else if (isPrimaryButtonVisible)
-            {
                 state = "PrimaryVisible";
-            }
             else if (isSecondaryButtonVisible)
-            {
                 state = "SecondaryVisible";
-            }
             else if (isCloseButtonVisible)
-            {
                 state = "CloseVisible";
-            }
             else
-            {
                 state = "NoneVisible";
-            }
 
             VisualStateManager.GoToState(this, state, true);
         }
@@ -687,9 +636,7 @@ namespace Fluent.UI.Controls
         private void UpdateShowingVisualStates()
         {
             if (_isTemplateReady)
-            {
                 VisualStateManager.GoToState(this, _isShowing ? "DialogShowing" : "DialogHidden", true);
-            }
         }
     }
 }

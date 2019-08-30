@@ -1,7 +1,5 @@
-﻿using Fluent.UI.Core;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
+﻿using System.Windows.Controls;
+using Fluent.UI.Core;
 
 namespace Fluent.UI.Controls
 {
@@ -28,16 +26,15 @@ namespace Fluent.UI.Controls
             //    visualState = CommonVisualState.Normal;
             //}
 
-        //    GoToVisualState(visualState, useTransitions);
+            //    GoToVisualState(visualState, useTransitions);
         }
 
         protected override void OnAttached()
         {
-          // AddEventHandler<MouseButtonEventArgs>("MouseLeftButtonDown", grid_ButtonMOuseDown2);
+            // AddEventHandler<MouseButtonEventArgs>("MouseLeftButtonDown", grid_ButtonMOuseDown2);
             //AttachedFrameworkElement.MouseLeftButtonDown += AttachedFrameworkElement_MouseLeftButtonDown;
-           // AttachedFrameworkElement.AddHandler(ComboBox.MouseLeftButtonDownEvent, new RoutedEventHandler(grid_ButtonMOuseDown), true);
+            // AttachedFrameworkElement.AddHandler(ComboBox.MouseLeftButtonDownEvent, new RoutedEventHandler(grid_ButtonMOuseDown), true);
             base.OnAttached();
         }
-
     }
 }

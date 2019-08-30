@@ -1,7 +1,7 @@
-﻿using Fluent.UI.Core;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using Fluent.UI.Core;
 
 namespace Fluent.UI.Controls
 {
@@ -18,9 +18,9 @@ namespace Fluent.UI.Controls
             ChangeHeaderVisualState();
         }
 
-        public void SetHeaderTemplate(DataTemplate headertemplate = null)
+        public void SetHeaderTemplate(DataTemplate headerTemplate = null)
         {
-            _headerTemplate = headertemplate;
+            _headerTemplate = headerTemplate;
             ChangeHeaderVisualState();
         }
 
@@ -28,21 +28,13 @@ namespace Fluent.UI.Controls
         {
             string visualState;
             if (!IsEnabled)
-            {
                 visualState = CommonVisualState.Disabled;
-            }
             else if (IsFocused)
-            {
                 visualState = CommonVisualState.Focused;
-            }
             else if (IsPointerOver)
-            {
                 visualState = CommonVisualState.PointerOver;
-            }
             else
-            {
                 visualState = CommonVisualState.Normal;
-            }
 
             GoToVisualState(visualState, useTransitions);
         }
@@ -66,26 +58,51 @@ namespace Fluent.UI.Controls
             ChangePlaceholderVisualState(false);
         }
 
-        protected override void OnIsFocusedPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        protected override void OnIsFocusedPropertyChanged(DependencyObject dependencyObject,
+            DependencyPropertyChangedEventArgs args)
         {
             ChangeDeleteButtonVisualState();
             ChangeVisualState();
         }
 
-        protected override void RegisterEvents() => AddPropertyChangedHandler(TextBox.TextProperty, OnTextPropertyChanged);
+        protected override void RegisterEvents()
+        {
+            AddPropertyChangedHandler(TextBox.TextProperty, OnTextPropertyChanged);
+        }
 
         protected override void UnregisterEvents()
         {
             UnregisterDeleteButtonEvent();
         }
 
-        private void ChangeDeleteButtonVisualState(bool useTransitions = true) => GoToVisualState(AttachedFrameworkElement.IsFocused && AttachedFrameworkElement.Text.Length > 0 ? CommonVisualState.ButtonVisible : CommonVisualState.ButtonCollapsed, useTransitions);
+        private void ChangeDeleteButtonVisualState(bool useTransitions = true)
+        {
+            GoToVisualState(
+                AttachedFrameworkElement.IsFocused && AttachedFrameworkElement.Text.Length > 0
+                    ? CommonVisualState.ButtonVisible
+                    : CommonVisualState.ButtonCollapsed, useTransitions);
+        }
 
-        private void ChangeHeaderVisualState(bool useTransitions = true) => VisualStateManager.GoToState(AttachedFrameworkElement, _headerTemplate == null && _header == null ? CommonVisualState.HeaderCollapsed : CommonVisualState.HeaderVisible, useTransitions);
+        private void ChangeHeaderVisualState(bool useTransitions = true)
+        {
+            VisualStateManager.GoToState(AttachedFrameworkElement,
+                _headerTemplate == null && _header == null
+                    ? CommonVisualState.HeaderCollapsed
+                    : CommonVisualState.HeaderVisible, useTransitions);
+        }
 
-        private void ChangePlaceholderVisualState(bool useTransitions = true) => VisualStateManager.GoToState(AttachedFrameworkElement, AttachedFrameworkElement.Text.Length > 0 ? CommonVisualState.PlaceholderCollapsed : CommonVisualState.PlaceholderVisible, useTransitions);
+        private void ChangePlaceholderVisualState(bool useTransitions = true)
+        {
+            VisualStateManager.GoToState(AttachedFrameworkElement,
+                AttachedFrameworkElement.Text.Length > 0
+                    ? CommonVisualState.PlaceholderCollapsed
+                    : CommonVisualState.PlaceholderVisible, useTransitions);
+        }
 
-        private void OnDeleteButtonClick(object sender, RoutedEventArgs args) => AttachedFrameworkElement.Text = "";
+        private void OnDeleteButtonClick(object sender, RoutedEventArgs args)
+        {
+            AttachedFrameworkElement.Text = "";
+        }
 
         private void OnTextPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
@@ -101,12 +118,10 @@ namespace Fluent.UI.Controls
                 _deleteButton.Click += OnDeleteButtonClick;
             }
         }
+
         private void UnregisterDeleteButtonEvent()
         {
-            if (_deleteButton != null)
-            {
-                _deleteButton.Click -= OnDeleteButtonClick;
-            }
+            if (_deleteButton != null) _deleteButton.Click -= OnDeleteButtonClick;
         }
     }
 }

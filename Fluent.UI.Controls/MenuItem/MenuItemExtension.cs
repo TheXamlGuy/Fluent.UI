@@ -1,6 +1,6 @@
-﻿using Fluent.UI.Core;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
+using Fluent.UI.Core;
 
 namespace Fluent.UI.Controls
 {
@@ -11,16 +11,21 @@ namespace Fluent.UI.Controls
                 typeof(string), typeof(MenuItemExtension),
                 new PropertyMetadata(null, OnGroupNamePropertyChanged));
 
-        public static void SetGroupName(MenuItem menuItem, string value) => menuItem.SetValue(GroupNameProperty, value);
+        public static void SetGroupName(MenuItem menuItem, string value)
+        {
+            menuItem.SetValue(GroupNameProperty, value);
+        }
 
-        public static string GetGroupName(MenuItem menuItem) => (string)menuItem.GetValue(GroupNameProperty);
+        public static string GetGroupName(MenuItem menuItem)
+        {
+            return (string) menuItem.GetValue(GroupNameProperty);
+        }
 
-        private static void OnGroupNamePropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        private static void OnGroupNamePropertyChanged(DependencyObject dependencyObject,
+            DependencyPropertyChangedEventArgs args)
         {
             if (TryAttachTemplate(dependencyObject as FrameworkElement, out AttachedMenuItemTemplate attachedTemplate))
-            {
-                attachedTemplate.SetGroupName((string)args.NewValue);
-            }
+                attachedTemplate.SetGroupName((string) args.NewValue);
         }
     }
 }

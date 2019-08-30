@@ -14,6 +14,8 @@ namespace Fluent.UI.Controls
             _adornerLayer = AdornerLayer.GetAdornerLayer(adornedElement);
         }
 
+        protected override int VisualChildrenCount => _adorningElement == null ? 0 : 1;
+
         public void Add(UIElement adorningElement)
         {
             _adornerLayer.Add(this);
@@ -32,14 +34,9 @@ namespace Fluent.UI.Controls
             _adorningElement = null;
         }
 
-        protected override int VisualChildrenCount => _adorningElement == null ? 0 : 1;
-
         protected override Visual GetVisualChild(int index)
         {
-            if (index == 0 && _adorningElement != null)
-            {
-                return _adorningElement;
-            }
+            if (index == 0 && _adorningElement != null) return _adorningElement;
             return base.GetVisualChild(index);
         }
 
@@ -47,9 +44,10 @@ namespace Fluent.UI.Controls
         {
             if (_adorningElement != null)
             {
-                Point adorningPoint = new Point(0, 0);
+                var adorningPoint = new Point(0, 0);
                 _adorningElement.Arrange(new Rect(adorningPoint, AdornedElement.RenderSize));
             }
+
             return finalSize;
         }
     }
