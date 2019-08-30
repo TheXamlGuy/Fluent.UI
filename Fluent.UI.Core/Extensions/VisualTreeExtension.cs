@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace Fluent.UI.Core.Extensions
@@ -24,6 +25,34 @@ namespace Fluent.UI.Core.Extensions
                 element = parent;
             }
         }
+
+        public static int FindAscendantCount<TDependencyParent, TDependencyGrandfather>(this DependencyObject dependencyChild) where TDependencyParent : DependencyObject where TDependencyGrandfather : DependencyObject
+        {
+            var count = 0;
+            while (true)
+            {
+                var dependencyParent = VisualTreeHelper.GetParent(dependencyChild);
+                if (dependencyParent == null)
+                {
+                    return count;
+                }
+
+                if (dependencyParent is TDependencyGrandfather)
+                {
+                    break;
+                }
+
+                if (dependencyParent is TDependencyParent)
+                {
+                    count++;
+                }
+
+                dependencyChild = dependencyParent;
+            }
+
+            return count;
+        }
+
 
         public static FrameworkElement FindAscendantByName(this DependencyObject element, string name)
         {

@@ -64,24 +64,12 @@ namespace Fluent.UI.Controls
         {
             var indentLength = TreeViewItemExtension.GetItemIndentLength(AttachedFrameworkElement);
 
-            var count = 1;
+            var count = AttachedFrameworkElement.FindAscendantCount<TreeViewItem, TreeView>();
             var leftIndentLengthDelta = count > 0 ? indentLength * count : 0;
-            var foo = GetDepth(AttachedFrameworkElement);
 
             _templateSettings.SetValue(TreeViewItemTemplateSettings.ItemIndentThicknessDeltaProperty, new Thickness(leftIndentLengthDelta, 0, 0, 0));
         }
 
-        private TreeViewItem GetParent(TreeViewItem item)
-        {
-            TreeViewItem parent;
-
-            while (!(parent is TreeViewItem || parent is TreeView) && parent != null)
-            {
-                parent = VisualTreeHelper.GetParent(parent);
-            }
-
-            return parent;
-        }
 
         protected override void RegisterEvents()
         {
