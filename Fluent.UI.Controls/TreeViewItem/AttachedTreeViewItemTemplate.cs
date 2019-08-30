@@ -51,7 +51,13 @@ namespace Fluent.UI.Controls
             GoToVisualState(visualState, useTransitions);
         }
 
-        protected override void OnApplyTemplate()
+        //var pos = Mouse.PrimaryDevice.GetPosition(_contentPresenterBorder);
+        //    if (pos.X >= 0 && pos.X <= _contentPresenterBorder.ActualWidth && pos.Y >= 0 && pos.Y <= _contentPresenterBorder.ActualHeight)
+        //{
+        //    base.OnPointerPressed(sender, args);
+        //}
+
+    protected override void OnApplyTemplate()
         {
             _templateSettings = new TreeViewItemTemplateSettings();
             TreeViewItemExtension.SetTemplateSettings(AttachedFrameworkElement, _templateSettings);
