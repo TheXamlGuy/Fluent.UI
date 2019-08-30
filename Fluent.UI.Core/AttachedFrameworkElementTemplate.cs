@@ -99,7 +99,7 @@ namespace Fluent.UI.Core
 
         protected virtual void OnIsPressedPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeVisualState();
 
-        protected virtual void OnPointerEnter(object sender, MouseEventArgs args)
+        protected virtual void OnPointerOver(object sender, MouseEventArgs args)
         {
             SetIsPointerOver(true);
         }
@@ -235,7 +235,7 @@ namespace Fluent.UI.Core
             AddEventHandler<MouseButtonEventHandler>(UIElement.MouseLeftButtonUpEvent, OnPointerReleased);
             AddEventHandler<MouseEventHandler>(UIElement.MouseMoveEvent, OnPointerMove);
             AddEventHandler<MouseEventHandler>(UIElement.MouseLeaveEvent, OnPointerLeave);
-            AddEventHandler<MouseEventHandler>(UIElement.MouseEnterEvent, OnPointerEnter);
+            AddEventHandler<MouseEventHandler>(UIElement.MouseEnterEvent, OnPointerOver);
             AddEventHandler<MouseEventHandler>(UIElement.LostMouseCaptureEvent, OnPointerLostCapture);
         }
 
@@ -243,7 +243,7 @@ namespace Fluent.UI.Core
         {
             if (pointerOver)
             {
-                SetValue(IsPointerOverPropertyKey, pointerOver);
+                SetValue(IsPointerOverPropertyKey, true);
             }
             else
             {
@@ -255,7 +255,7 @@ namespace Fluent.UI.Core
         {
             if (pressed)
             {
-                SetValue(IsPressedPropertyKey, pressed);
+                SetValue(IsPressedPropertyKey, true);
             }
             else
             {
@@ -271,7 +271,7 @@ namespace Fluent.UI.Core
             RemoveEventHandler<MouseButtonEventHandler>(UIElement.MouseLeftButtonUpEvent, OnPointerReleased);
             RemoveEventHandler<MouseEventHandler>(UIElement.MouseMoveEvent, OnPointerMove);
             RemoveEventHandler<MouseEventHandler>(UIElement.MouseLeaveEvent, OnPointerLeave);
-            RemoveEventHandler<MouseEventHandler>(UIElement.MouseEnterEvent, OnPointerEnter);
+            RemoveEventHandler<MouseEventHandler>(UIElement.MouseEnterEvent, OnPointerOver);
             AddEventHandler<MouseEventHandler>(UIElement.LostMouseCaptureEvent, OnPointerLostCapture);
         }
 
