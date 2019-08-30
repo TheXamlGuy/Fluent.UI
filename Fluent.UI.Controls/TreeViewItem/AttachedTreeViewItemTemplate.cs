@@ -54,21 +54,33 @@ namespace Fluent.UI.Controls
 
         protected override void OnApplyTemplate()
         {
-            _templateSettings = new TreeViewItemTemplateSettings
-            {
-                LeftIndentLength = 50
-            };
-
+            _templateSettings = new TreeViewItemTemplateSettings();
             TreeViewItemExtension.SetTemplateSettings(AttachedFrameworkElement, _templateSettings);
+
             SetLeftIndentLengthSettings();
         }
 
         public void SetLeftIndentLengthSettings()
         {
-            var count = AttachedFrameworkElement.FindAscendantCount<TreeViewItem>();
-            var leftIndentLengthDelta = count > 0 ? _templateSettings.LeftIndentLength * count : 0;
+            var indentLength = TreeViewItemExtension.GetItemIndentLength(AttachedFrameworkElement);
 
-            _templateSettings.SetValue(TreeViewItemTemplateSettings.LeftIndentThickessDeltaProperty, new Thickness(leftIndentLengthDelta, 0, 0, 0));
+            var count = 1;
+            var leftIndentLengthDelta = count > 0 ? indentLength * count : 0;
+            var foo = GetDepth(AttachedFrameworkElement);
+
+            _templateSettings.SetValue(TreeViewItemTemplateSettings.ItemIndentThicknessDeltaProperty, new Thickness(leftIndentLengthDelta, 0, 0, 0));
+        }
+
+        private TreeViewItem GetParent(TreeViewItem item)
+        {
+            TreeViewItem parent;
+
+            while (!(parent is TreeViewItem || parent is TreeView) && parent != null)
+            {
+                parent = VisualTreeHelper.GetParent(parent);
+            }
+
+            return parent;
         }
 
         protected override void RegisterEvents()

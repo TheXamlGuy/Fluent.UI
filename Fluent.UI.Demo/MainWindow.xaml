@@ -113,7 +113,25 @@
                         <TreeView Width="400" Margin="4">
                             <TreeViewItem Header="fsdfsd" IsExpanded="True">
                                 <TreeViewItem Header="fsdfsd" />
-                                <TreeViewItem Header="fsdfsd" />
+                                <TreeViewItem Header="fsdfsd">
+                                    <TreeViewItem Header="fsdfsd" />
+                                    <TreeViewItem Header="fsdfsd">
+                                        <TreeViewItem Header="fsdfsd">
+                                            <TreeViewItem Header="fsdfsd" />
+                                            <TreeViewItem Header="fsdfsd">
+                                                <TreeViewItem Header="fsdfsd" />
+                                                <TreeViewItem Header="fsdfsd" />
+                                                <TreeViewItem Header="fsdfsd" />
+                                                <TreeViewItem Header="fsdfsd" />
+                                                <TreeViewItem Header="fsdfsd" />
+                                                <TreeViewItem Header="fsdfsd" />
+                                            </TreeViewItem>
+                                            <TreeViewItem Header="fsdfsd" />
+                                            <TreeViewItem Header="fsdfsd" />
+                                        </TreeViewItem>
+                                    </TreeViewItem>
+                                    <TreeViewItem Header="fsdfsd" />
+                                </TreeViewItem>
                             </TreeViewItem>
                         </TreeView>
                     </WrapPanel>

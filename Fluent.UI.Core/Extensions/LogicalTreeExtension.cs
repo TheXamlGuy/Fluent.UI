@@ -22,34 +22,21 @@ namespace Fluent.UI.Core.Extensions
                 return element;
             }
 
-            if (element is Panel panel)
+            switch (element)
             {
-                foreach (var child in panel.Children)
+                case Panel panel:
+                    return panel.Children.Cast<object>().Select(child => (child as FrameworkElement)?.FindChildByName(name)).FirstOrDefault(result => result != null);
+                case ItemsControl control:
+                    return control.Items.Cast<object>().Select(item => (item as FrameworkElement)?.FindChildByName(name)).FirstOrDefault(result => result != null);
+                default:
                 {
-                    var result = (child as FrameworkElement)?.FindChildByName(name);
+                    var result = (element.GetContentControl() as FrameworkElement)?.FindChildByName(name);
                     if (result != null)
                     {
                         return result;
                     }
-                }
-            }
-            else if (element is ItemsControl)
-            {
-                foreach (var item in ((ItemsControl)element).Items)
-                {
-                    var result = (item as FrameworkElement)?.FindChildByName(name);
-                    if (result != null)
-                    {
-                        return result;
-                    }
-                }
-            }
-            else
-            {
-                var result = (element.GetContentControl() as FrameworkElement)?.FindChildByName(name);
-                if (result != null)
-                {
-                    return result;
+
+                    break;
                 }
             }
 
@@ -58,51 +45,46 @@ namespace Fluent.UI.Core.Extensions
 
         public static T FindChild<T>(this FrameworkElement element) where T : FrameworkElement
         {
-            if (element == null)
+            switch (element)
             {
-                return null;
-            }
-
-            if (element is Panel panel)
-            {
-                foreach (var child in panel.Children)
+                case null:
+                    return null;
+                case Panel panel:
                 {
-                    if (child is T)
+                    foreach (var child in panel.Children)
                     {
-                        return child as T;
+                        if (child is T frameworkElement)
+                        {
+                            return frameworkElement;
+                        }
+
+                        var result = (child as FrameworkElement)?.FindChild<T>();
+                        if (result != null)
+                        {
+                            return result;
+                        }
                     }
 
-                    var result = (child as FrameworkElement)?.FindChild<T>();
+                    break;
+                }
+                case ItemsControl control:
+                    return control.Items.Cast<object>().Select(item => (item as FrameworkElement)?.FindChild<T>()).FirstOrDefault(result => result != null);
+                default:
+                {
+                    var content = element.GetContentControl();
+
+                    if (content is T frameworkElement)
+                    {
+                        return frameworkElement;
+                    }
+
+                    var result = (content as FrameworkElement)?.FindChild<T>();
                     if (result != null)
                     {
                         return result;
                     }
-                }
-            }
-            else if (element is ItemsControl)
-            {
-                foreach (var item in ((ItemsControl)element).Items)
-                {
-                    var result = (item as FrameworkElement)?.FindChild<T>();
-                    if (result != null)
-                    {
-                        return result;
-                    }
-                }
-            }
-            else
-            {
-                var content = element.GetContentControl();
 
-                if (content is T)
-                {
-                    return content as T;
-                }
-
-                var result = (content as FrameworkElement)?.FindChild<T>();
-                if (result != null)
-                {
-                    return result;
+                    break;
                 }
             }
 
@@ -111,82 +93,98 @@ namespace Fluent.UI.Core.Extensions
 
         public static IEnumerable<T> FindChildren<T>(this FrameworkElement element) where T : FrameworkElement
         {
-            if (element == null)
+            switch (element)
             {
-                yield break;
-            }
-
-            if (element is Panel panel)
-            {
-                foreach (var child in panel.Children)
+                case null:
+                    yield break;
+                case Panel panel:
                 {
-                    if (child is T)
+                    foreach (var child in panel.Children)
                     {
-                        yield return child as T;
+                        if (child is T frameworkElement)
+                        {
+                            yield return frameworkElement;
+                        }
+
+                        if (child is FrameworkElement childFrameworkElement)
+                        {
+                            foreach (var childOfChild in childFrameworkElement.FindChildren<T>())
+                            {
+                                yield return childOfChild;
+                            }
+                        }
                     }
 
-                    if (child is FrameworkElement childFrameworkElement)
+                    break;
+                }
+                case ItemsControl control:
+                {
+                    foreach (var item in control.Items)
+                    {
+                        if (item is FrameworkElement childFrameworkElement)
+                        {
+                            foreach (var childOfChild in childFrameworkElement.FindChildren<T>())
+                            {
+                                yield return childOfChild;
+                            }
+                        }
+                    }
+
+                    break;
+                }
+                default:
+                {
+                    var content = element.GetContentControl();
+                    if (content is T frameworkElement)
+                    {
+                        yield return frameworkElement;
+                    }
+
+                    if (content is FrameworkElement childFrameworkElement)
                     {
                         foreach (var childOfChild in childFrameworkElement.FindChildren<T>())
                         {
                             yield return childOfChild;
                         }
                     }
-                }
-            }
-            else if (element is ItemsControl)
-            {
-                foreach (var item in ((ItemsControl)element).Items)
-                {
-                    if (item is FrameworkElement childFrameworkElement)
-                    {
-                        foreach (var childOfChild in childFrameworkElement.FindChildren<T>())
-                        {
-                            yield return childOfChild;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                var content = element.GetContentControl();
-                if (content is T)
-                {
-                    yield return content as T;
-                }
 
-                if (content is FrameworkElement childFrameworkElement)
-                {
-                    foreach (var childOfChild in childFrameworkElement.FindChildren<T>())
-                    {
-                        yield return childOfChild;
-                    }
+                    break;
                 }
             }
         }
 
         public static FrameworkElement FindParentByName(this FrameworkElement element, string name)
         {
-            if (element == null || string.IsNullOrWhiteSpace(name))
+            while (true)
             {
-                return null;
-            }
+                if (element == null || string.IsNullOrWhiteSpace(name))
+                {
+                    return null;
+                }
 
-            return name.Equals(element.Name, StringComparison.OrdinalIgnoreCase) ? element : (element.Parent as FrameworkElement)?.FindParentByName(name);
+                if (name.Equals(element.Name, StringComparison.OrdinalIgnoreCase))
+                {
+                    return element;
+                }
+                element = element.Parent as FrameworkElement;
+            }
         }
 
         public static T FindParent<T>(this FrameworkElement element) where T : FrameworkElement
         {
-            switch (element.Parent)
+            while (true)
             {
-                case null:
-                    return null;
+                switch (element?.Parent)
+                {
+                    case null:
+                        return null;
 
-                case T _:
-                    return element.Parent as T;
+                    case T parent:
+                        return parent;
+                }
+
+                element = element.Parent as FrameworkElement;
             }
-
-            return (element.Parent as FrameworkElement).FindParent<T>();
         }
 
         public static UIElement GetContentControl(this FrameworkElement element)

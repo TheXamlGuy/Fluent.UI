@@ -4,14 +4,14 @@ namespace Fluent.UI.Controls
 {
     public class TreeViewItemTemplateSettings : DependencyObject
     {
-        public static readonly DependencyProperty ItemIndentThickessDeltaProperty =
-            DependencyProperty.Register(nameof(ItemIndentThickessDelta),
+        public static readonly DependencyProperty ItemIndentThicknessDeltaProperty =
+            DependencyProperty.Register(nameof(ItemIndentThicknessDelta),
                 typeof(Thickness), typeof(TreeViewItemTemplateSettings));
 
-        public Thickness ItemIndentThickessDelta
+        public Thickness ItemIndentThicknessDelta
         {
-            get => (Thickness)GetValue(ItemIndentThickessDeltaProperty);
-            set => SetValue(ItemIndentThickessDeltaProperty, value);
+            get => (Thickness)GetValue(ItemIndentThicknessDeltaProperty);
+            set => SetValue(ItemIndentThicknessDeltaProperty, value);
         }
     }
 }

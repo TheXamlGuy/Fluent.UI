@@ -9,58 +9,44 @@ namespace Fluent.UI.Core.Extensions
     {
         public static TDependencyObject FindAscendant<TDependencyObject>(this DependencyObject element) where TDependencyObject : DependencyObject
         {
-            var parent = VisualTreeHelper.GetParent(element);
-
-            switch (parent)
+            while (true)
             {
-                case null:
-                    return null;
-                case TDependencyObject _:
-                    return parent as TDependencyObject;
-                default:
-                    break;
-            }
+                var parent = VisualTreeHelper.GetParent(element);
 
-            return parent.FindAscendant<TDependencyObject>();
-        }
-
-        public static int FindAscendantCount<TDependencyObject>(this DependencyObject element) where TDependencyObject : DependencyObject
-        {
-            var parent = VisualTreeHelper.GetParent(element);
-
-            int count = 0;
-            while (!(parent is TDependencyObject) && parent != null)
-            {
-                parent = VisualTreeHelper.GetParent(parent);
-                if (parent is TDependencyObject)
+                switch (parent)
                 {
-                    count++;
+                    case null:
+                        return null;
+                    case TDependencyObject dependencyObject:
+                        return dependencyObject;
                 }
-            }
 
-            return count;
+                element = parent;
+            }
         }
 
         public static FrameworkElement FindAscendantByName(this DependencyObject element, string name)
         {
-            if (element == null || string.IsNullOrWhiteSpace(name))
+            while (true)
             {
-                return null;
+                if (element == null || string.IsNullOrWhiteSpace(name))
+                {
+                    return null;
+                }
+
+                var parent = VisualTreeHelper.GetParent(element);
+                if (parent == null)
+                {
+                    return null;
+                }
+
+                if (name.Equals((parent as FrameworkElement)?.Name, StringComparison.OrdinalIgnoreCase))
+                {
+                    return parent as FrameworkElement;
+                }
+
+                element = parent;
             }
-
-            var parent = VisualTreeHelper.GetParent(element);
-
-            if (parent == null)
-            {
-                return null;
-            }
-
-            if (name.Equals((parent as FrameworkElement)?.Name, StringComparison.OrdinalIgnoreCase))
-            {
-                return parent as FrameworkElement;
-            }
-
-            return parent.FindAscendantByName(name);
         }
 
         public static TDependencyObject FindDescendant<TDependencyObject>(this DependencyObject element) where TDependencyObject : DependencyObject
@@ -125,32 +111,35 @@ namespace Fluent.UI.Core.Extensions
                     yield return type;
                 }
 
-                foreach (var childofChild in child.FindDescendants<TDependencyObject>())
+                foreach (var childOfChild in child.FindDescendants<TDependencyObject>())
                 {
-                    yield return childofChild;
+                    yield return childOfChild;
                 }
             }
         }
 
         public static bool IsChildOf(this FrameworkElement child, FrameworkElement parent)
         {
-            if (child == null)
+            while (true)
             {
-                return false;
-            }
+                if (child == null)
+                {
+                    return false;
+                }
 
-            if (!(child.Parent is FrameworkElement parentObject))
-            {
-                return false;
-            }
+                if (!(child.Parent is FrameworkElement parentObject))
+                {
+                    return false;
+                }
 
-            if (ReferenceEquals(parent, parentObject))
-            {
-                return true;
-            }
-            else
-            {
-                return IsChildOf(parentObject, parent);
+                if (ReferenceEquals(parent, parentObject))
+                {
+                    return true;
+                }
+                else
+                {
+                    child = parentObject;
+                }
             }
         }
     }

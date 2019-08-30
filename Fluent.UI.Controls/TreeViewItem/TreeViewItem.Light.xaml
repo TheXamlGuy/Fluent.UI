@@ -40,12 +40,14 @@
     <system:Double x:Key="TreeViewItemGlyphFontSize">12</system:Double>
     <system:String x:Key="TreeViewItemExpandedGlyph">&#xE70D;</system:String>
     <system:String x:Key="TreeViewItemCollapsedGlyph">&#xE76C;</system:String>
+    <system:Double x:Key="TreeViewItemIndentLength">36</system:Double>
     <Style TargetType="TreeViewItem">
         <Setter Property="Background" Value="{StaticResource TreeViewItemBackground}" />
         <Setter Property="BorderBrush" Value="{StaticResource TreeViewItemBorderBrush}" />
         <Setter Property="BorderThickness" Value="{StaticResource TreeViewItemBorderThickness}" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="controls:TreeViewItemExtension.ItemIndentLength" Value="{StaticResource TreeViewItemIndentLength}" />
         <Setter Property="controls:TreeViewItemExtension.IsAttached" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -62,7 +64,7 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
-                            <Grid Margin="{Binding Path=(controls:TreeViewItemExtension.TemplateSettings).ItemIndentThickessDelta, RelativeSource={RelativeSource TemplatedParent}}">
+                            <Grid Margin="{Binding Path=(controls:TreeViewItemExtension.TemplateSettings).ItemIndentThicknessDelta, RelativeSource={RelativeSource TemplatedParent}}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition />
