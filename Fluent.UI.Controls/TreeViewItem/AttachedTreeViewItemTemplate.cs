@@ -48,16 +48,11 @@ namespace Fluent.UI.Controls
                     visualState = CommonVisualState.Normal;
             }
 
+            Debug.WriteLine(visualState);
             GoToVisualState(visualState, useTransitions);
         }
 
-        //var pos = Mouse.PrimaryDevice.GetPosition(_contentPresenterBorder);
-        //    if (pos.X >= 0 && pos.X <= _contentPresenterBorder.ActualWidth && pos.Y >= 0 && pos.Y <= _contentPresenterBorder.ActualHeight)
-        //{
-        //    base.OnPointerPressed(sender, args);
-        //}
-
-    protected override void OnApplyTemplate()
+        protected override void OnApplyTemplate()
         {
             _templateSettings = new TreeViewItemTemplateSettings();
             TreeViewItemExtension.SetTemplateSettings(AttachedFrameworkElement, _templateSettings);
@@ -68,36 +63,24 @@ namespace Fluent.UI.Controls
 
         protected override void OnClick() => AttachedFrameworkElement.IsSelected = true;
 
-        //protected override void OnPointerMove(object sender, MouseEventArgs args)
-        //{
-        //    if (Mouse.Captured == null)
-        //    {
-        //        var pos = Mouse.PrimaryDevice.GetPosition(_contentPresenterBorder);
-        //        IsPointerOver = !(pos.Y >= _contentPresenterBorder.ActualHeight);
-        //    }
-
-        //    base.OnPointerMove(sender, args);
-        //}
-
-        //protected override void OnPointerOver(object sender, MouseEventArgs args)
-        //{
-        //    var pos = Mouse.PrimaryDevice.GetPosition(_contentPresenterBorder);
-        //    if (pos.X >= 0 && pos.X <= _contentPresenterBorder.ActualWidth && pos.Y >= 0 && pos.Y <= _contentPresenterBorder.ActualHeight)
-        //    {
-        //        base.OnPointerOver(sender, args);
-        //    }
-        //}
-
-        private void SetIsPressed(bool pressed)
+        protected override void OnPointerMove(object sender, MouseEventArgs args)
         {
-            if (pressed)
+            if (Mouse.Captured == null)
             {
-                SetValue(IsPressedPropertyKey, true);
+                if (!IsPointerInPosition())
+                {
+                    SetIsPointerOver(false);
+                }
+                //var pos = Mouse.PrimaryDevice.GetPosition(_contentPresenterBorder);
+                //IsPointerOver = !(pos.Y >= _contentPresenterBorder.ActualHeight);
             }
-            else
-            {
-                ClearValue(IsPressedPropertyKey);
-            }
+
+            base.OnPointerMove(sender, args);
+        }
+
+        protected override void OnPointerOver(object sender, MouseEventArgs args)
+        {
+            UpdateIsPointerOver();
         }
 
         protected override void OnPointerPressed(object sender, MouseButtonEventArgs args)
@@ -113,7 +96,7 @@ namespace Fluent.UI.Controls
                     {
                         if (!IsPressed)
                         {
-                            SetIsPressed(true);
+                            SetIsPressed();
                         }
                     }
                     else
@@ -124,12 +107,95 @@ namespace Fluent.UI.Controls
             }
         }
 
+        protected override void OnPointerReleased(object sender, MouseButtonEventArgs args)
+        {
+            if (Mouse.Captured != null && _contentPresenterBorder.IsMouseCaptured)
+            {
+                if (IsPressed && args.ButtonState == MouseButtonState.Released)
+                {
+                    OnClick();
+                }
+
+                _contentPresenterBorder.ReleaseMouseCapture();
+            }
+
+            if (_contentPresenterBorder.IsMouseCaptured && Mouse.PrimaryDevice.LeftButton == MouseButtonState.Pressed)
+            {
+                UpdateIsPressed();
+            }
+        }
+
         protected override void RegisterEvents()
         {
             AttachedFrameworkElement.SetCurrentValue(UIElement.FocusableProperty, false);
             AddPropertyChangedHandler(TreeViewItem.IsSelectedProperty, OnPropertyChanged);
         }
 
+        protected void UpdateIsPointerOver()
+        {
+            if (IsPointerInPosition())
+            {
+                if (!IsPointerOver)
+                {
+                    SetIsPointerOver();
+                }
+            }
+            else if (IsPressed)
+            {
+                SetIsPointerOver(false);
+            }
+        }
+
+        protected void UpdateIsPressed()
+        {
+            if (IsPointerInPosition())
+            {
+                if (!IsPressed)
+                {
+                    SetIsPressed();
+                }
+            }
+            else if (IsPressed)
+            {
+                SetIsPressed(false);
+            }
+        }
+
+        private bool IsPointerInPosition()
+        {
+            var pos = Mouse.PrimaryDevice.GetPosition(_contentPresenterBorder);
+            if (pos.X >= 0 && pos.X <= _contentPresenterBorder.ActualWidth && pos.Y >= 0 && pos.Y <= _contentPresenterBorder.ActualHeight)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         private void OnPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeVisualState();
+
+        private void SetIsPointerOver(bool isPointerOver = true)
+        {
+            if (isPointerOver)
+            {
+                SetValue(IsPointerOverPropertyKey, true);
+            }
+            else
+            {
+                ClearValue(IsPointerOverPropertyKey);
+            }
+        }
+
+        private void SetIsPressed(bool isPressed = true)
+        {
+            if (isPressed)
+            {
+                SetValue(IsPressedPropertyKey, true);
+            }
+            else
+            {
+                ClearValue(IsPressedPropertyKey);
+            }
+        }
     }
 }

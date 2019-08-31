@@ -87,6 +87,11 @@ namespace Fluent.UI.Core
         {
         }
 
+        protected virtual void OnClick()
+        {
+
+        }
+
         protected virtual void OnDetached()
         {
         }
@@ -99,17 +104,11 @@ namespace Fluent.UI.Core
 
         protected virtual void OnIsPressedPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args) => ChangeVisualState();
 
-        protected virtual void OnPointerOver(object sender, MouseEventArgs args)
-        {
-            SetIsPointerOver(true);
-        }
-
         protected virtual void OnPointerLeave(object sender, MouseEventArgs args)
         {
             SetIsPressed(false);
             SetIsPointerOver(false);
         }
-        
 
         protected virtual void OnPointerLostCapture(object sender, MouseEventArgs args)
         {
@@ -119,7 +118,6 @@ namespace Fluent.UI.Core
             }
         }
 
-
         protected virtual void OnPointerMove(object sender, MouseEventArgs args)
         {
             if (AttachedFrameworkElement.IsMouseCaptured && Mouse.PrimaryDevice.LeftButton == MouseButtonState.Pressed)
@@ -128,6 +126,10 @@ namespace Fluent.UI.Core
             }
         }
 
+        protected virtual void OnPointerOver(object sender, MouseEventArgs args)
+        {
+            SetIsPointerOver(true);
+        }
         protected virtual void OnPointerPressed(object sender, MouseButtonEventArgs args)
         {
             if (Mouse.Captured == null)
@@ -151,12 +153,6 @@ namespace Fluent.UI.Core
                 }
             }
         }
-
-        protected virtual void OnClick()
-        {
-
-        }
-
         protected virtual void OnPointerReleased(object sender, MouseButtonEventArgs args)
         {
             if (Mouse.Captured != null && AttachedFrameworkElement.IsMouseCaptured)
@@ -195,6 +191,17 @@ namespace Fluent.UI.Core
         {
             var sender = dependencyObject as AttachedFrameworkElementTemplate<TFrameworkElement>;
             sender?.OnIsPressedPropertyChanged(dependencyObject, dependencyPropertyChangedEventArgs);
+        }
+
+        private bool IsPointerInPosition()
+        {
+            var pos = Mouse.PrimaryDevice.GetPosition(AttachedFrameworkElement);
+            if (pos.X >= 0 && pos.X <= AttachedFrameworkElement.ActualWidth && pos.Y >= 0 && pos.Y <= AttachedFrameworkElement.ActualHeight)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs args)
@@ -277,8 +284,7 @@ namespace Fluent.UI.Core
 
         private void UpdateIsPressed()
         {
-            var pos = Mouse.PrimaryDevice.GetPosition(AttachedFrameworkElement);
-            if (pos.X >= 0 && pos.X <= AttachedFrameworkElement.ActualWidth && pos.Y >= 0 && pos.Y <= AttachedFrameworkElement.ActualHeight)
+            if (IsPointerInPosition())          
             {
                 if (!IsPressed)
                 {
