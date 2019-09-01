@@ -43,6 +43,7 @@ namespace Fluent.UI.Core
             get => (bool)GetValue(IsPressedProperty);
             set => SetValue(IsPressedPropertyKey, value);
         }
+
         public void ApplyRequestedTheme()
         {
             OnApplyRequestedTheme(_requestedTheme);
@@ -112,7 +113,7 @@ namespace Fluent.UI.Core
 
         protected virtual void OnPointerLostCapture(object sender, MouseEventArgs args)
         {
-            if (args.OriginalSource.Equals(AttachedFrameworkElement))
+            if (args.OriginalSource.Equals(PointerTarget()))
             {
                 SetIsPressed(false);
             }
@@ -120,7 +121,9 @@ namespace Fluent.UI.Core
 
         protected virtual void OnPointerMove(object sender, MouseEventArgs args)
         {
-            if (AttachedFrameworkElement.IsMouseCaptured && Mouse.PrimaryDevice.LeftButton == MouseButtonState.Pressed)
+            UpdateIsPointerOver();
+
+            if (PointerTarget().IsMouseCaptured && Mouse.PrimaryDevice.LeftButton == MouseButtonState.Pressed)
             {
                 UpdateIsPressed();
             }
@@ -130,14 +133,15 @@ namespace Fluent.UI.Core
         {
             SetIsPointerOver(true);
         }
+
         protected virtual void OnPointerPressed(object sender, MouseButtonEventArgs args)
         {
             if (Mouse.Captured == null)
             {
-                AttachedFrameworkElement.Focus();
-                AttachedFrameworkElement.CaptureMouse();
+                PointerTarget().Focus();
+                PointerTarget().CaptureMouse();
 
-                if (AttachedFrameworkElement.IsMouseCaptured)
+                if (PointerTarget().IsMouseCaptured)
                 {
                     if (args.ButtonState == MouseButtonState.Pressed)
                     {
@@ -148,21 +152,21 @@ namespace Fluent.UI.Core
                     }
                     else
                     {
-                        AttachedFrameworkElement.ReleaseMouseCapture();
+                        PointerTarget().ReleaseMouseCapture();
                     }
                 }
             }
         }
         protected virtual void OnPointerReleased(object sender, MouseButtonEventArgs args)
         {
-            if (Mouse.Captured != null && AttachedFrameworkElement.IsMouseCaptured)
+            if (Mouse.Captured != null && PointerTarget().IsMouseCaptured)
             {
                 if (IsPressed && args.ButtonState == MouseButtonState.Released)
                 {
                     OnClick();
                 }
 
-                AttachedFrameworkElement.ReleaseMouseCapture();
+                PointerTarget().ReleaseMouseCapture();
             }
         }
 
@@ -193,10 +197,15 @@ namespace Fluent.UI.Core
             sender?.OnIsPressedPropertyChanged(dependencyObject, dependencyPropertyChangedEventArgs);
         }
 
+        protected virtual FrameworkElement PointerTarget()
+        {
+            return AttachedFrameworkElement;
+        }
+
         private bool IsPointerInPosition()
         {
-            var pos = Mouse.PrimaryDevice.GetPosition(AttachedFrameworkElement);
-            if (pos.X >= 0 && pos.X <= AttachedFrameworkElement.ActualWidth && pos.Y >= 0 && pos.Y <= AttachedFrameworkElement.ActualHeight)
+            var pos = Mouse.PrimaryDevice.GetPosition(PointerTarget());
+            if (pos.X >= 0 && pos.X <= PointerTarget().ActualWidth && pos.Y >= 0 && pos.Y <= PointerTarget().ActualHeight)
             {
                 return true;
             }
@@ -246,7 +255,7 @@ namespace Fluent.UI.Core
             AddEventHandler<MouseEventHandler>(UIElement.LostMouseCaptureEvent, OnPointerLostCapture);
         }
 
-        private void SetIsPointerOver(bool pointerOver)
+        private void SetIsPointerOver(bool pointerOver = true)
         {
             if (pointerOver)
             {
@@ -258,7 +267,7 @@ namespace Fluent.UI.Core
             }
         }
 
-        private void SetIsPressed(bool pressed)
+        private void SetIsPressed(bool pressed = true)
         {
             if (pressed)
             {
@@ -279,7 +288,22 @@ namespace Fluent.UI.Core
             RemoveEventHandler<MouseEventHandler>(UIElement.MouseMoveEvent, OnPointerMove);
             RemoveEventHandler<MouseEventHandler>(UIElement.MouseLeaveEvent, OnPointerLeave);
             RemoveEventHandler<MouseEventHandler>(UIElement.MouseEnterEvent, OnPointerOver);
-            AddEventHandler<MouseEventHandler>(UIElement.LostMouseCaptureEvent, OnPointerLostCapture);
+            RemoveEventHandler<MouseEventHandler>(UIElement.LostMouseCaptureEvent, OnPointerLostCapture);
+        }
+
+       private void UpdateIsPointerOver()
+        {
+            if (IsPointerInPosition())
+            {
+                if (!IsPointerOver)
+                {
+                    SetIsPointerOver();
+                }
+            }
+            else if (IsPointerOver)
+            {
+                SetIsPointerOver(false);
+            }
         }
 
         private void UpdateIsPressed()
@@ -288,7 +312,7 @@ namespace Fluent.UI.Core
             {
                 if (!IsPressed)
                 {
-                    SetIsPressed(true);
+                    SetIsPressed();
                 }
             }
             else if (IsPressed)
